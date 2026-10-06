@@ -1,0 +1,7 @@
+.action-button {
+  border: 1px solid #888;
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin: 4px;
+  cursor: pointer;
+}
