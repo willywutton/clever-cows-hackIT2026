@@ -5,7 +5,8 @@ import { useState } from 'react'
 import { causes } from './data/causes'
 
 // { result } is the player's top trait, handed down from App (e.g. "Heart").
-function MatchFeed ({result}){
+// { onPlayAgain } is App's function for going back to the start of the quiz.
+function MatchFeed ({result, onPlayAgain}){
     // .filter keeps only the causes whose identity list includes the player's trait.
     const matchingCauses = causes.filter((cause)=>
         cause.identity.includes(result)
@@ -56,6 +57,8 @@ function MatchFeed ({result}){
                 )}
             </div>
          ))}
+
+           <button className="action-button" onClick={onPlayAgain}>Play again</button>
         </div>
     )
 }

@@ -17,6 +17,14 @@ function App() {
     setQuizResult(topTrait)
   }
 
+  // MatchFeed calls this when "Play again" is clicked.
+  // Setting the result back to null brings the quiz back. The quiz starts
+  // fresh (scores at 0, Scene 1) because React throws away a component's
+  // remembered values when it stops being shown, and starts new ones next time.
+  function handlePlayAgain() {
+    setQuizResult(null)
+  }
+
   // No result yet -> show the quiz. Otherwise -> show the matching causes.
   let content
   if (quizResult === null) {
@@ -25,7 +33,7 @@ function App() {
     content =<Quiz whenDone={handleQuizFinish}/>
   }
   else {
-    content = <MatchFeed result ={quizResult}/>
+    content = <MatchFeed result ={quizResult} onPlayAgain={handlePlayAgain}/>
   }
   return(
     <div>
