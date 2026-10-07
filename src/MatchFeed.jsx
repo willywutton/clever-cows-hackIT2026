@@ -31,34 +31,36 @@ function MatchFeed ({result, onPlayAgain}){
     }
 
     return (
-        <div>
-           <h2>Your causes ({result})</h2>
+        <div className="match-feed">
+           <h2 className="match-title">Your causes ({result})</h2>
            {/* .map turns each matching cause into a card.
                key gives each card a unique name so React can tell them apart. */}
            {matchingCauses.map((cause) =>(
-            <div key= {cause.id}>
-                <h3> {cause.name} </h3>
-                <p>{ cause.description} </p>
+            <div className="cause-card card" key= {cause.id}>
+                <h3>{cause.name}</h3>
+                <p className="cause-description">{cause.description}</p>
 
                 {/* One button per action. Each button remembers which cause card it is in. */}
-                {cause.actions.map((action) => (
-                    <button
-                    className = "action-button"
-                    key ={action.type}
-                    onClick={() => setChosenAction({ cause, action })}
-                    >
-                        {action.label}
-                    </button>
-                ))}
+                <div className="cause-actions">
+                    {cause.actions.map((action) => (
+                        <button
+                        className = "action-button"
+                        key ={action.type}
+                        onClick={() => setChosenAction({ cause, action })}
+                        >
+                            {action.label}
+                        </button>
+                    ))}
+                </div>
 
                 {/* Only the card that was clicked shows the message. */}
                 {chosenAction !== null && chosenAction.cause.id === cause.id && (
-                    <p>Great choice for {cause.name}! {message}</p>
+                    <p className="cause-message">Great choice for {cause.name}! {message}</p>
                 )}
             </div>
          ))}
 
-           <button className="action-button" onClick={onPlayAgain}>Play again</button>
+           <button className="button-primary" onClick={onPlayAgain}>Play again</button>
         </div>
     )
 }

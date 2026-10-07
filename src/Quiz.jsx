@@ -62,13 +62,13 @@ function Quiz({whenDone}){
 
 
         return (
-            <div className="quiz">
-                <div className="quiz-card">
-                    <h2>You are: {result.name}</h2>
+            <div>
+                <div className="quiz-card card">
+                    <h2>You are: <span className="quiz-identity">{result.name}</span></h2>
                     <p>{result.description}</p>
-                    <p>Best matched with: {result.matchesWith}</p>
+                    <p className="quiz-matches">Best matched with: {result.matchesWith}</p>
                     {/* The arrow "() =>" means: only call whenDone when clicked, not straight away. */}
-                    <button onClick={() => whenDone(topTrait)}>See my causes</button>
+                    <button className="button-primary" onClick={() => whenDone(topTrait)}>See my causes</button>
                 </div>
             </div>
         )
@@ -77,19 +77,19 @@ function Quiz({whenDone}){
     // Still playing: get the scene we're on.
     const chapter = chapters[currentChapter]
     return (
-    <div className="quiz">
-        <div className="quiz-card">
+    <div>
+        <div className="quiz-card card">
             <h2>{chapter.title}</h2>
 
             {/* "condition && (...)" means: only show this part when the condition is true. */}
             {!showingResult && (
                 <>
-                <p>{chapter.story}</p>
+                <p className="quiz-story">{chapter.story}</p>
                 <div className="quiz-choices">
                     {/* .map turns each choice in the list into a button.
                         key gives each button a unique name so React can tell them apart. */}
                     {chapter.choices.map((choice) => (
-                        <button key={choice.key} onClick={() => handleChoice(choice)}>
+                        <button className="quiz-choice" key={choice.key} onClick={() => handleChoice(choice)}>
                         {choice.text}
                         </button>
                     ))}
@@ -99,8 +99,8 @@ function Quiz({whenDone}){
 
             {showingResult && (
                 <>
-                <p>{lastResultText}</p>
-                <button className="quiz-continue" onClick={handleContinue}>Continue</button>
+                <p className="quiz-story">{lastResultText}</p>
+                <button className="button-primary" onClick={handleContinue}>Continue</button>
                 </>
             )}
         </div>

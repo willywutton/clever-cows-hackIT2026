@@ -1,7 +1,53 @@
+/* Styles for the matched causes screen. Shared colours and .card / .button-primary are in index.css. */
+
+.match-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.match-title {
+  text-align: center;
+}
+
+.cause-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cause-description {
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+/* flex-wrap lets the buttons move onto a new line when the screen is narrow. */
+.cause-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .action-button {
-  border: 1px solid #888;
+  padding: 10px 14px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.action-button:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+/* The thank-you message shown after picking an action. */
+.cause-message {
+  background: var(--grass-soft);
+  border-left: 4px solid var(--grass);
   border-radius: 8px;
-  padding: 8px 14px;
-  margin: 4px;
-  cursor: pointer;
+  padding: 10px 14px;
+}
+
+.match-feed > .button-primary {
+  align-self: center;
 }
