@@ -121,7 +121,7 @@ function App() {
         {content}
       </div>
       <div hidden={view !== 'organisation'}>
-        <OrgDashboard/>
+        <OrgDashboard fedActions={fedActions}/>
       </div>
     </div>
   )

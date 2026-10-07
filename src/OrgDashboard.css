@@ -57,6 +57,13 @@
   border-bottom: none;
 }
 
+/* The player's own rows get a soft highlight so they stand out in a demo. */
+.org-row-demo {
+  background: var(--hay-soft);
+  margin: 0 -24px;
+  padding: 14px 24px;
+}
+
 .org-student {
   display: flex;
   flex-direction: column;
