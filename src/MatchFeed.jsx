@@ -6,7 +6,8 @@ import { causes } from './data/causes'
 
 // { result } is the player's top trait, handed down from App (e.g. "Heart").
 // { onPlayAgain } is App's function for going back to the start of the quiz.
-function MatchFeed ({result, onPlayAgain}){
+// { onAction } is App's function for feeding Clover Cowdini when an action is picked.
+function MatchFeed ({result, onPlayAgain, onAction}){
     // .filter keeps only the causes whose identity list includes the player's trait.
     const matchingCauses = causes.filter((cause)=>
         cause.identity.includes(result)
@@ -46,7 +47,10 @@ function MatchFeed ({result, onPlayAgain}){
                         <button
                         className = "action-button"
                         key ={action.type}
-                        onClick={() => setChosenAction({ cause, action })}
+                        onClick={() => {
+                            setChosenAction({ cause, action })
+                            onAction(cause.id, action.type)
+                        }}
                         >
                             {action.label}
                         </button>
