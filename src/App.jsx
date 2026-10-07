@@ -63,11 +63,15 @@ function App() {
   // Each action feeds the cow once per cause, so clicking the same button
   // again doesn't add more grass. Grass is only ever added, never removed.
   function handleAction(causeId, actionType) {
-    const actionId = `${causeId}:${actionType}`
-    if (fedActions.includes(actionId)) {
+    if (hasFed(causeId, actionType)) {
       return
     }
-    setFedActions([...fedActions, actionId])
+    setFedActions([...fedActions, `${causeId}:${actionType}`])
+  }
+
+  // True if this action for this cause has already fed the cow.
+  function hasFed(causeId, actionType) {
+    return fedActions.includes(`${causeId}:${actionType}`)
   }
 
   // No result yet -> show the quiz. Otherwise -> show the cow and the matching causes.
@@ -82,7 +86,7 @@ function App() {
     content = (
       <>
         <CloverCowdini grass={grass}/>
-        <MatchFeed result ={quizResult} onPlayAgain={handlePlayAgain} onAction={handleAction}/>
+        <MatchFeed result ={quizResult} onPlayAgain={handlePlayAgain} onAction={handleAction} hasFed={hasFed}/>
       </>
     )
   }
