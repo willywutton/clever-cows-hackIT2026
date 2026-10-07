@@ -1,9 +1,11 @@
 // App.jsx is the top of the app. It remembers the quiz result and the
 // group's grass count, and decides which screen to show: the Quiz or the matched causes.
+// It also switches between the student view and the mock organisation view.
 import { useState, useEffect } from 'react'
 import Quiz from './Quiz'
 import MatchFeed from './MatchFeed'
 import CloverCowdini from './CloverCowdini'
+import OrgDashboard from './OrgDashboard'
 
 // The name the grass is saved under in the browser's storage (localStorage).
 // localStorage keeps small bits of text on this device, even after a refresh.
@@ -25,6 +27,9 @@ function App() {
   // quizResult is the value, setQuizResult is the only way to change it.
   // It starts as null, meaning "the quiz hasn't been finished yet".
   const [quizResult, setQuizResult] = useState(null)
+
+  // Which view is showing: 'student' (quiz and causes) or 'organisation' (mock dashboard).
+  const [view, setView] = useState('student')
 
   // Every action that has fed the cow, e.g. ["cause_02:share", "cause_02:time"].
   // Passing the function loadFedActions (without brackets) means React only
@@ -92,7 +97,32 @@ function App() {
   }
   return(
     <div>
-      {content}
+      {/* Switch between the student app and the mock organisation view.
+          aria-pressed tells screen readers which button is currently selected. */}
+      <div className="view-toggle">
+        <button
+          aria-pressed={view === 'student'}
+          onClick={() => setView('student')}
+        >
+          Student
+        </button>
+        <button
+          aria-pressed={view === 'organisation'}
+          onClick={() => setView('organisation')}
+        >
+          Organisation
+        </button>
+      </div>
+
+      {/* Both views stay on the page and the other one is just hidden.
+          This way switching back and forth doesn't lose quiz progress
+          or the attendance the organisation has marked. */}
+      <div hidden={view !== 'student'}>
+        {content}
+      </div>
+      <div hidden={view !== 'organisation'}>
+        <OrgDashboard/>
+      </div>
     </div>
   )
 

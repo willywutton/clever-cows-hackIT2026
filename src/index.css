@@ -88,6 +88,28 @@ button:focus-visible {
   background: var(--barn-dark);
 }
 
+/* The Student / Organisation switch at the top of the page. */
+.view-toggle {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.view-toggle button {
+  padding: 8px 18px;
+  background: #fff;
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+}
+
+/* aria-pressed="true" is the selected button. */
+.view-toggle button[aria-pressed="true"] {
+  background: var(--barn);
+  border-color: var(--barn);
+  color: #fff;
+}
+
 /* A white rounded box used for the quiz and each cause. */
 .card {
   background: var(--card);
