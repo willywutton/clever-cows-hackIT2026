@@ -21,11 +21,16 @@ function Quiz({whenDone}){
     const [showingResult, setShowingResult] = useState(false)
     // The "what happened" text for the choice the player just made.
     const [lastResultText, setLastResultText] = useState("")
+    // Every trait picked so far, in order, e.g. ["Heart", "Craft", "Heart"].
+    // Used to break ties at the end.
+    const [picks, setPicks] = useState([])
 
     // Runs when a choice button is clicked.
     function handleChoice(choice){
         // Copy the old scores (...scores) and add 1 to this choice's trait.
         setScores({ ...scores, [choice.trait]: scores[choice.trait] + 1})
+        // Copy the old list (...picks) and add this trait to the end.
+        setPicks([...picks, choice.trait])
         setLastResultText(choice.result)
         setShowingResult(true)
     }
@@ -40,11 +45,18 @@ function Quiz({whenDone}){
     if (currentChapter >= chapters.length){
         // Find the trait with the highest score.
         // Object.keys(scores) gives ["Heart", "Strategy", "Community", "Craft"].
-        // reduce compares them two at a time and keeps the higher one each round.
+        // reduce compares them two at a time and keeps the winner each round.
         // "condition ? a : b" means: if the condition is true use a, otherwise use b.
-        const topTrait = Object.keys(scores).reduce((a, b) =>
-            scores[a] > scores[b] ? a : b
-        )
+        const topTrait = Object.keys(scores).reduce((a, b) => {
+            // Different scores: the higher score wins.
+            if (scores[a] !== scores[b]) {
+                return scores[a] > scores[b] ? a : b
+            }
+            // Tie-break: the trait picked most recently wins.
+            // lastIndexOf gives the position of a trait's latest pick in the list;
+            // a bigger number means it was picked later in the story.
+            return picks.lastIndexOf(a) > picks.lastIndexOf(b) ? a : b
+        })
         // Look up the name and description for that trait in chapters.js.
         const result = results[topTrait]
 
