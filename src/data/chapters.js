@@ -1,5 +1,10 @@
 // Chapter data for "The Day Mooville Needed You" quiz
-// Each choice has a key (used for scoring), a short label, and a result shown after picking
+// Each scene has a title, the story text, and four choices.
+// Each choice has:
+//   key     a unique name for the button (React needs this when drawing a list)
+//   text    what the button says
+//   trait   which trait gets +1 point when this choice is picked
+//   result  what happens in the story after picking it
 
 export const chapters = [
   {

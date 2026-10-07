@@ -1,6 +1,12 @@
 // Mock cause dataset for Clever Cows
 // Each cause has an id, name, description, trait tag(s), and ladder actions
 // Traits match the quiz results: Heart, Strategy, Community, Craft
+//
+// How to read one cause:
+//   id        a unique code, used by React to tell causes apart
+//   identity  which quiz traits this cause matches (a cause can match more than one)
+//   actions   the ways to help, from smallest to biggest commitment.
+//             Every action is equally welcome; donating is never required.
 
 export const causes = [
   {
