@@ -6,17 +6,6 @@
   gap: 20px;
 }
 
-.profile-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.profile-emoji {
-  font-size: 40px;
-  line-height: 1;
-}
-
 .profile-section {
   display: flex;
   flex-direction: column;

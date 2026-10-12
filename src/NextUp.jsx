@@ -7,7 +7,8 @@ import AddToCalendar from './AddToCalendar'
 import './NextUp.css'
 
 // { signedUp } is App's list of sign-ups. { userRegion } is for the "Near you" tag.
-function NextUp({ signedUp, userRegion }) {
+// { onReflect } opens the reflection screen for a cause.
+function NextUp({ signedUp, userRegion, onReflect }) {
     const sessions = upcomingSessions(signedUp)
 
     return (
@@ -29,6 +30,9 @@ function NextUp({ signedUp, userRegion }) {
                         </p>
                     )}
                     <AddToCalendar cause={cause} entry={entry}/>
+                    <button className="next-up-went" onClick={() => onReflect(cause.id)}>
+                        I went to this session <span>(demo)</span>
+                    </button>
                 </div>
             ))}
         </section>

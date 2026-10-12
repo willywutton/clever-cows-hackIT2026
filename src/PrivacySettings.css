@@ -1,0 +1,63 @@
+/* Styles for the privacy switches on Profile. Shared colours and .card are in index.css. */
+
+.privacy {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.privacy-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* A checkbox drawn as a sliding switch. */
+.privacy-option input {
+  appearance: none;
+  flex-shrink: 0;
+  position: relative;
+  width: 44px;
+  height: 24px;
+  margin: 0;
+  background: var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.privacy-option input::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+
+.privacy-option input:checked {
+  background: var(--grass);
+}
+
+.privacy-option input:checked::after {
+  transform: translateX(20px);
+}
+
+.privacy-option input:focus-visible {
+  outline: 3px solid var(--hay);
+  outline-offset: 2px;
+}
+
+.privacy-note {
+  font-size: 14px;
+  color: var(--text-soft);
+}

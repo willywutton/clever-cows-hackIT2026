@@ -1,0 +1,45 @@
+/* Styles for the diary on Profile. Shared colours and .card are in index.css. */
+
+.collection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.collection-empty {
+  color: var(--text-soft);
+}
+
+.collection-entry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 12px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+}
+
+.collection-photo {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.collection-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 160px;
+}
+
+.collection-text p {
+  white-space: pre-line;
+}
+
+.collection-meta {
+  font-size: 14px;
+  color: var(--text-soft);
+}

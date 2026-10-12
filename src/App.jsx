@@ -14,6 +14,7 @@ import OrgDashboard from './OrgDashboard'
 import NavBar from './NavBar'
 import Profile from './Profile'
 import HomeNextUp from './HomeNextUp'
+import Reflection from './Reflection'
 import { causes } from './data/causes'
 
 // The name the grass is saved under in the browser's storage (localStorage).
@@ -38,18 +39,28 @@ function App() {
   const [quizResult, setQuizResult] = useState(null)
 
   // Which screen the student is on: 'welcome', 'about', 'quiz', 'home', 'cause',
-  // 'signup', 'signup-done' or 'profile'.
+  // 'signup', 'signup-done', 'reflection' or 'profile'.
   const [screen, setScreen] = useState('welcome')
 
   // The id of the cause whose page is open, e.g. "cause_02".
   const [openCauseId, setOpenCauseId] = useState(null)
 
-  // The student's optional About you answers. An empty string means not answered.
-  const [profile, setProfile] = useState({ goal: '', area: '', ageGroup: '', region: '' })
+  // The student's nickname and optional About you answers. An empty string means not answered.
+  const [profile, setProfile] = useState({ nickname: '', goal: '', area: '', ageGroup: '', region: '' })
 
   // Every session the student has signed up for, one entry per cause.
   // See people.js for what an entry looks like.
   const [signedUp, setSignedUp] = useState([])
+
+  // Every action the student takes, in order, e.g. { type: 'share', causeId: 'cause_02', at: '...' }.
+  // Used for the History counts and to work out titles (see titles.js).
+  const [history, setHistory] = useState([])
+
+  // The student's diary entries from the reflection screen, oldest first.
+  const [diary, setDiary] = useState([])
+
+  // The student's privacy choices. Both are off unless the student turns them on.
+  const [settings, setSettings] = useState({ showTitles: false, shareDiary: false })
 
   // Which view is showing: 'student' (quiz and causes) or 'organisation' (mock dashboard).
   const [view, setView] = useState('student')
@@ -105,8 +116,22 @@ function App() {
   function handleConfirmSignup(entry) {
     const others = signedUp.filter((item) => item.causeId !== entry.causeId)
     setSignedUp([...others, entry])
-    handleAction(entry.causeId, 'signup')
+    handleAction(entry.causeId, 'signup', { weekly: entry.weekly, mode: entry.mode })
     setScreen('signup-done')
+  }
+
+  // Next up calls this from "I went to this session".
+  function handleReflect(causeId) {
+    setOpenCauseId(causeId)
+    setScreen('reflection')
+  }
+
+  // Reflection calls this with { message, photoUrl } when the student saves.
+  function handleSaveReflection(reflection) {
+    const entry = { id: `diary_${diary.length + 1}`, causeId: openCauseId, at: new Date().toISOString(), ...reflection }
+    setDiary([...diary, entry])
+    handleAction(openCauseId, 'reflection')
+    setScreen('profile')
   }
 
   // Marks a sign-up's calendar prompt as answered, so it is never asked again.
@@ -116,10 +141,14 @@ function App() {
     ))
   }
 
-  // CausePage calls this when an action is taken.
-  // Each action feeds the cow once per cause, so clicking the same button
-  // again doesn't add more grass. Grass is only ever added, never removed.
-  function handleAction(causeId, actionType) {
+  // Called whenever the student takes an action. { details } adds extra facts
+  // to the history item, e.g. { weekly: true, mode: 'relay' } for a sign-up.
+  // Every action goes into the history. Each action feeds the cow once per cause,
+  // so clicking the same button again doesn't add more grass.
+  // Grass is only ever added, never removed.
+  function handleAction(causeId, actionType, details = {}) {
+    // prev => [...] uses the latest list, even if two updates happen together.
+    setHistory((prev) => [...prev, { type: actionType, causeId, at: new Date().toISOString(), ...details }])
     if (hasFed(causeId, actionType)) {
       return
     }
@@ -193,8 +222,31 @@ function App() {
       />
     )
   }
+  else if (screen === 'reflection') {
+    const openCause = causes.find((cause) => cause.id === openCauseId)
+    content = (
+      <Reflection
+        cause={openCause}
+        shared={settings.shareDiary}
+        onSave={handleSaveReflection}
+        onCancel={() => setScreen('profile')}
+      />
+    )
+  }
   else if (screen === 'profile') {
-    content = <Profile quizResult={quizResult} profile={profile} signedUp={signedUp}/>
+    content = (
+      <Profile
+        quizResult={quizResult}
+        profile={profile}
+        onNicknameChange={(nickname) => setProfile({ ...profile, nickname })}
+        onReflect={handleReflect}
+        signedUp={signedUp}
+        history={history}
+        diary={diary}
+        settings={settings}
+        onSettingsChange={setSettings}
+      />
+    )
   }
 
   // The menu only appears once there is a quiz result to build on.

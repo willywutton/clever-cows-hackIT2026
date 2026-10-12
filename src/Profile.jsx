@@ -1,6 +1,12 @@
-// Profile.jsx shows the student's character, upcoming sessions and About you answers.
+// Profile.jsx shows the student's profile, in this order: header, Next up,
+// My collection, History, About me and Privacy.
 import { results } from './data/chapters'
+import { earnedTitles } from './titles'
+import ProfileHeader from './ProfileHeader'
 import NextUp from './NextUp'
+import MyCollection from './MyCollection'
+import HistorySection from './HistorySection'
+import PrivacySettings from './PrivacySettings'
 import './Profile.css'
 
 const ABOUT_LABELS = [
@@ -11,18 +17,28 @@ const ABOUT_LABELS = [
 ]
 
 // { quizResult } is the student's top trait, e.g. "Heart".
-// { profile } holds their optional About you answers. { signedUp } is their list of sign-ups.
-function Profile({ quizResult, profile, signedUp }) {
+// { profile } holds their nickname and optional About you answers.
+// { onNicknameChange } updates the nickname. { onReflect } opens the reflection screen.
+// { signedUp }, { history } and { diary } come from App.
+// { settings } holds the privacy choices and { onSettingsChange } updates them.
+function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, history, diary, settings, onSettingsChange }) {
     const character = results[quizResult]
+    const titles = earnedTitles(history)
 
     return (
         <div className="profile">
-            <div className="profile-header card">
-                <span className="profile-emoji" aria-hidden="true">🐮</span>
-                <h2>{character.name}</h2>
-            </div>
+            <ProfileHeader
+                nickname={profile.nickname}
+                onNicknameChange={onNicknameChange}
+                character={character}
+                latestTitle={titles[titles.length - 1]}
+            />
 
-            <NextUp signedUp={signedUp} userRegion={profile.region}/>
+            <NextUp signedUp={signedUp} userRegion={profile.region} onReflect={onReflect}/>
+
+            <MyCollection diary={diary} shared={settings.shareDiary}/>
+
+            <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
 
             <section className="card profile-section">
                 <h3>About me</h3>
@@ -35,6 +51,8 @@ function Profile({ quizResult, profile, signedUp }) {
                     ))}
                 </dl>
             </section>
+
+            <PrivacySettings settings={settings} onChange={onSettingsChange}/>
         </div>
     )
 }
