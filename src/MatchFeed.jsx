@@ -4,6 +4,8 @@
 import './MatchFeed.css'
 import { causes } from './data/causes'
 import { clashesWith, describeSlot, findFreeSlot } from './freeTime'
+import SurpriseMe from './SurpriseMe'
+import HostEvent from './HostEvent'
 
 // The sign-up action of a cause.
 function signupOf(cause) {
@@ -68,6 +70,10 @@ function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, si
                 </button>
             </div>
          ))}
+
+           <SurpriseMe result={result} fitsMyWeek={fitsMyWeek} onOpenCause={onOpenCause}/>
+
+           <HostEvent/>
 
            <button className="button-primary" onClick={onPlayAgain}>Play again</button>
         </div>
