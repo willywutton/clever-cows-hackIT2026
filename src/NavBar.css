@@ -1,0 +1,28 @@
+/* Styles for the Home / Profile menu. Shared colours are in index.css. */
+
+.nav-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.nav-bar button {
+  flex: 1;
+  padding: 10px 12px;
+  background: var(--card);
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+  font-weight: 600;
+}
+
+.nav-bar button:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+/* aria-current="page" marks the screen showing now. */
+.nav-bar button[aria-current="page"] {
+  background: var(--hay-soft);
+  border-color: var(--barn);
+  color: var(--text);
+}

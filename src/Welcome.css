@@ -1,0 +1,50 @@
+/* Styles for the welcome screen. Shared colours and .card / .button-primary are in index.css. */
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.welcome-emoji {
+  font-size: 56px;
+  line-height: 1;
+}
+
+.welcome-intro {
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.welcome-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+}
+
+.welcome-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+}
+
+/* The reassurance that donating is optional. */
+.welcome-note {
+  background: var(--grass-soft);
+  color: var(--text);
+  font-weight: 600;
+  border-left: 4px solid var(--grass);
+  border-radius: 8px;
+  padding: 8px 14px;
+}

@@ -1,11 +1,15 @@
 // App.jsx is the top of the app. It remembers the quiz result and the
-// group's grass count, and decides which screen to show: the Quiz or the matched causes.
+// group's grass count, and decides which screen to show.
 // It also switches between the student view and the mock organisation view.
 import { useState, useEffect } from 'react'
+import Welcome from './Welcome'
+import AboutYou from './AboutYou'
 import Quiz from './Quiz'
 import MatchFeed from './MatchFeed'
 import CloverCowdini from './CloverCowdini'
 import OrgDashboard from './OrgDashboard'
+import NavBar from './NavBar'
+import Profile from './Profile'
 
 // The name the grass is saved under in the browser's storage (localStorage).
 // localStorage keeps small bits of text on this device, even after a refresh.
@@ -28,6 +32,12 @@ function App() {
   // It starts as null, meaning "the quiz hasn't been finished yet".
   const [quizResult, setQuizResult] = useState(null)
 
+  // Which screen the student is on: 'welcome', 'about', 'quiz', 'home' or 'profile'.
+  const [screen, setScreen] = useState('welcome')
+
+  // The student's optional About you answers. An empty string means not answered.
+  const [profile, setProfile] = useState({ goal: '', area: '', ageGroup: '' })
+
   // Which view is showing: 'student' (quiz and causes) or 'organisation' (mock dashboard).
   const [view, setView] = useState('student')
 
@@ -49,19 +59,26 @@ function App() {
     }
   }, [fedActions])
 
+  // AboutYou calls this with the answers when the student continues or skips.
+  function handleAboutDone(answers) {
+    setProfile(answers)
+    setScreen('quiz')
+  }
+
   // Quiz calls this when the player clicks "See my causes",
   // passing in their top trait (e.g. "Heart").
   function handleQuizFinish(topTrait) {
     setQuizResult(topTrait)
+    setScreen('home')
   }
 
-  // MatchFeed calls this when "Play again" is clicked.
-  // Setting the result back to null brings the quiz back. The quiz starts
-  // fresh (scores at 0, Scene 1) because React throws away a component's
-  // remembered values when it stops being shown, and starts new ones next time.
-  // The grass is kept, because it lives here in App, which is always shown.
+  // MatchFeed calls this when "Play again" is clicked, and goes back to Welcome.
+  // The quiz will start fresh (scores at 0, Scene 1) because React throws away
+  // a component's remembered values when it stops being shown, and starts
+  // new ones next time. The grass and About you answers are kept, because they live here in App.
   function handlePlayAgain() {
     setQuizResult(null)
+    setScreen('welcome')
   }
 
   // MatchFeed calls this when an action button is clicked.
@@ -79,14 +96,20 @@ function App() {
     return fedActions.includes(`${causeId}:${actionType}`)
   }
 
-  // No result yet -> show the quiz. Otherwise -> show the cow and the matching causes.
+  // Pick what to draw for the current screen.
   let content
-  if (quizResult === null) {
+  if (screen === 'welcome') {
+    content = <Welcome onStart={() => setScreen('about')}/>
+  }
+  else if (screen === 'about') {
+    content = <AboutYou profile={profile} onDone={handleAboutDone}/>
+  }
+  else if (screen === 'quiz') {
     // whenDone is a "prop": a value handed down to the Quiz component.
     // Here we hand it our function so Quiz can report back when it's finished.
-    content =<Quiz whenDone={handleQuizFinish}/>
+    content = <Quiz whenDone={handleQuizFinish}/>
   }
-  else {
+  else if (screen === 'home') {
     // <> and </> group two components together without adding an extra box around them.
     content = (
       <>
@@ -95,6 +118,13 @@ function App() {
       </>
     )
   }
+  else if (screen === 'profile') {
+    content = <Profile quizResult={quizResult} profile={profile}/>
+  }
+
+  // The menu only appears once there is a quiz result to build on.
+  const showNavBar = quizResult !== null
+
   return(
     <div>
       {/* Switch between the student app and the mock organisation view.
@@ -118,6 +148,7 @@ function App() {
           This way switching back and forth doesn't lose quiz progress
           or the attendance the organisation has marked. */}
       <div hidden={view !== 'student'}>
+        {showNavBar && <NavBar screen={screen} onNavigate={setScreen}/>}
         {content}
       </div>
       <div hidden={view !== 'organisation'}>

@@ -1,0 +1,74 @@
+/* Styles for the About you screen. Shared colours and .card / .button-primary are in index.css. */
+
+.about {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-intro {
+  color: var(--text-soft);
+}
+
+.about-question {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.about-question legend {
+  font-weight: 600;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+/* flex-wrap lets the options move onto a new line when the screen is narrow. */
+.about-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Each option looks like a pill; the real radio button sits inside it. */
+.about-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.about-option:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.about-option:has(input:checked) {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+}
+
+.about-option input {
+  accent-color: var(--barn);
+  margin: 0;
+}
+
+.about-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.about-skip {
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+}
+
+.about-skip:hover {
+  background: #fff;
+}
