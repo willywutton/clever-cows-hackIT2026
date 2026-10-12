@@ -1,0 +1,160 @@
+/* Styles for one cause's page. Shared colours and .card / .button-primary are in index.css. */
+
+.cause-page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cause-back {
+  align-self: flex-start;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid transparent;
+}
+
+.cause-back:hover {
+  border-color: var(--border);
+  background: var(--card);
+}
+
+.cause-page-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cause-page-description {
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+/* The three actions share one style, so none looks more important than the others. */
+.cause-page-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cause-page-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.cause-page-action:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.cause-page-action span {
+  color: var(--text-soft);
+  font-size: 15px;
+}
+
+.cause-page-action em {
+  font-weight: 400;
+  color: var(--text-soft);
+}
+
+/* The once / weekly sign-up choice. */
+.cause-signup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cause-signup-time {
+  font-weight: 600;
+}
+
+.cause-signup-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cause-signup-choice legend {
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.cause-signup-choice label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.cause-signup-choice label:has(input:checked) {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+}
+
+.cause-signup-choice input {
+  accent-color: var(--barn);
+  margin: 0;
+}
+
+.cause-signup-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cause-cancel {
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+}
+
+.cause-cancel:hover {
+  background: #fff;
+}
+
+/* The thank-you message shown after an action. */
+.cause-message {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--grass-soft);
+  border-left: 4px solid var(--grass);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+/* The gentle sign-up suggestion under the thank-you message. */
+.cause-next {
+  color: var(--text-soft);
+  font-size: 15px;
+}
+
+.next-step-button {
+  margin-top: 4px;
+  padding: 6px 12px;
+  background: #fff;
+  color: var(--grass);
+  border: 2px solid var(--grass);
+  font-weight: 600;
+}
+
+.next-step-button:hover {
+  background: var(--grass);
+  color: #fff;
+}

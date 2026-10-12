@@ -1,0 +1,40 @@
+/* Styles for the demo pledge screen. Shared colours and .button-primary are in index.css. */
+
+.pledge {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* The "Demo" label stays visible so no one mistakes this for a real payment. */
+.pledge-label {
+  align-self: flex-start;
+  padding: 4px 10px;
+  background: var(--hay-soft);
+  border: 2px dashed var(--hay);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.pledge-note {
+  color: var(--text-soft);
+  font-size: 15px;
+}
+
+.pledge-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pledge-back {
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+}
+
+.pledge-back:hover {
+  background: #fff;
+}

@@ -7,7 +7,7 @@ import { orgCauseId, signups } from './data/signups'
 import './OrgDashboard.css'
 
 // Actions that happen in person, so attendance can be confirmed.
-const IN_PERSON_ACTIONS = ["time", "recurring"]
+const IN_PERSON_ACTIONS = ["signup"]
 
 // { fedActions } is App's list of actions the player has clicked,
 // e.g. ["cause_02:share", "cause_05:time"]. It is used to add the player's own rows.
@@ -28,6 +28,8 @@ function OrgDashboard({ fedActions }) {
     // the part after is the action type. split(":") cuts it into those two parts.
     const demoRows = fedActions
         .filter((actionId) => actionId.startsWith(`${orgCauseId}:`))
+        // Skip action types the cause no longer has (e.g. saved before "time" became "signup").
+        .filter((actionId) => cause.actions.some((action) => action.type === actionId.split(":")[1]))
         .map((actionId) => {
             const actionType = actionId.split(":")[1]
             return {
@@ -43,9 +45,11 @@ function OrgDashboard({ fedActions }) {
     // The made-up students first, then the player's own rows at the bottom.
     const allRows = [...rows, ...demoRows]
 
-    // Look up the button label (e.g. "Visit for an afternoon") for an action type.
-    function actionLabel(actionType) {
-        return cause.actions.find((action) => action.type === actionType).label
+    // Look up the label (e.g. "Visit for an afternoon") for a row's action.
+    // Weekly sign-ups use the weekly wording, e.g. "Become a regular visitor".
+    function actionLabel(row) {
+        const action = cause.actions.find((a) => a.type === row.actionType)
+        return row.weekly ? action.weeklyLabel : action.label
     }
 
     // Add 1 to one student's attendance.
@@ -96,7 +100,7 @@ function OrgDashboard({ fedActions }) {
                     <div className={row.isDemo ? "org-row org-row-demo" : "org-row"} key={row.id}>
                         <div className="org-student">
                             <strong>{row.name}</strong>
-                            <span className="org-action">{actionLabel(row.actionType)}</span>
+                            <span className="org-action">{actionLabel(row)}</span>
                         </div>
 
                         {/* Only in-person actions get an attendance count and button. */}

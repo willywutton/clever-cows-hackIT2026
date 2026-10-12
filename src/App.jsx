@@ -6,10 +6,12 @@ import Welcome from './Welcome'
 import AboutYou from './AboutYou'
 import Quiz from './Quiz'
 import MatchFeed from './MatchFeed'
+import CausePage from './CausePage'
 import CloverCowdini from './CloverCowdini'
 import OrgDashboard from './OrgDashboard'
 import NavBar from './NavBar'
 import Profile from './Profile'
+import { causes } from './data/causes'
 
 // The name the grass is saved under in the browser's storage (localStorage).
 // localStorage keeps small bits of text on this device, even after a refresh.
@@ -32,8 +34,11 @@ function App() {
   // It starts as null, meaning "the quiz hasn't been finished yet".
   const [quizResult, setQuizResult] = useState(null)
 
-  // Which screen the student is on: 'welcome', 'about', 'quiz', 'home' or 'profile'.
+  // Which screen the student is on: 'welcome', 'about', 'quiz', 'home', 'cause' or 'profile'.
   const [screen, setScreen] = useState('welcome')
+
+  // The id of the cause whose page is open, e.g. "cause_02".
+  const [openCauseId, setOpenCauseId] = useState(null)
 
   // The student's optional About you answers. An empty string means not answered.
   const [profile, setProfile] = useState({ goal: '', area: '', ageGroup: '' })
@@ -81,7 +86,13 @@ function App() {
     setScreen('welcome')
   }
 
-  // MatchFeed calls this when an action button is clicked.
+  // MatchFeed calls this when a cause card is tapped.
+  function handleOpenCause(causeId) {
+    setOpenCauseId(causeId)
+    setScreen('cause')
+  }
+
+  // CausePage calls this when an action is taken.
   // Each action feeds the cow once per cause, so clicking the same button
   // again doesn't add more grass. Grass is only ever added, never removed.
   function handleAction(causeId, actionType) {
@@ -114,8 +125,21 @@ function App() {
     content = (
       <>
         <CloverCowdini grass={grass}/>
-        <MatchFeed result ={quizResult} onPlayAgain={handlePlayAgain} onAction={handleAction} hasFed={hasFed}/>
+        <MatchFeed result ={quizResult} onOpenCause={handleOpenCause} onPlayAgain={handlePlayAgain}/>
       </>
+    )
+  }
+  else if (screen === 'cause') {
+    const openCause = causes.find((cause) => cause.id === openCauseId)
+    // key makes React start a fresh page (with no old messages) for each cause.
+    content = (
+      <CausePage
+        key={openCause.id}
+        cause={openCause}
+        onBack={() => setScreen('home')}
+        onAction={handleAction}
+        hasFed={hasFed}
+      />
     )
   }
   else if (screen === 'profile') {

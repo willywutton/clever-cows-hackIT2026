@@ -21,14 +21,8 @@
   line-height: 1.6;
 }
 
-/* flex-wrap lets the buttons move onto a new line when the screen is narrow. */
-.cause-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
 .action-button {
+  align-self: flex-start;
   padding: 10px 14px;
   background: #fff;
   color: var(--text);
@@ -38,37 +32,6 @@
 .action-button:hover {
   border-color: var(--hay);
   background: var(--hay-soft);
-}
-
-/* The thank-you message shown after picking an action. */
-.cause-message {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: var(--grass-soft);
-  border-left: 4px solid var(--grass);
-  border-radius: 8px;
-  padding: 10px 14px;
-}
-
-/* The gentle next-step suggestion under the thank-you message. */
-.cause-next {
-  color: var(--text-soft);
-  font-size: 15px;
-}
-
-.next-step-button {
-  margin-top: 4px;
-  padding: 6px 12px;
-  background: #fff;
-  color: var(--grass);
-  border: 2px solid var(--grass);
-  font-weight: 600;
-}
-
-.next-step-button:hover {
-  background: var(--grass);
-  color: #fff;
 }
 
 .match-feed > .button-primary {
