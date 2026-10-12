@@ -30,7 +30,7 @@ export const causes = [
         type: "signup",
         label: "Volunteer for a 1-hour walk session",
         weeklyLabel: "Become a weekly walker",
-        startsAt: "2026-11-07T09:00:00+08:00",
+        startsAt: "2026-11-07T10:00:00+08:00",
         durationMinutes: 60,
         peopleNeeded: 2,
         area: "Sungei Tengah",

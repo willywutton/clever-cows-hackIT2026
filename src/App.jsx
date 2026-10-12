@@ -15,6 +15,7 @@ import NavBar from './NavBar'
 import Profile from './Profile'
 import HomeNextUp from './HomeNextUp'
 import Reflection from './Reflection'
+import CalendarConnect from './CalendarConnect'
 import { causes } from './data/causes'
 import { GRASS } from './assets/cowStages'
 
@@ -44,6 +45,11 @@ function App() {
 
   // The student's diary entries from the reflection screen, oldest first.
   const [diary, setDiary] = useState([])
+
+  // The "Connect calendar (demo)" card: whether the sample timetable is connected,
+  // and whether Home only shows sessions that fit it.
+  const [calendarConnected, setCalendarConnected] = useState(false)
+  const [fitsMyWeek, setFitsMyWeek] = useState(false)
 
   // The student's privacy choices. Both are off unless the student turns them on.
   const [settings, setSettings] = useState({ showTitles: false, shareDiary: false })
@@ -136,6 +142,12 @@ function App() {
     setRecentFeeds((prev) => [...prev, { type: actionType, causeName, amount: GRASS[actionType] }])
   }
 
+  // Disconnecting the sample timetable also turns off the "Fits my week" filter.
+  function handleDisconnectCalendar() {
+    setCalendarConnected(false)
+    setFitsMyWeek(false)
+  }
+
   // CloverCowdini calls this once the happy reaction has been shown.
   function clearRecentFeeds() {
     setRecentFeeds([])
@@ -165,7 +177,21 @@ function App() {
       <>
         <HomeNextUp signedUp={signedUp} onSeeAll={() => setScreen('profile')}/>
         <CloverCowdini grass={grass} recentFeeds={recentFeeds} onReactionDone={clearRecentFeeds}/>
-        <MatchFeed result ={quizResult} onOpenCause={handleOpenCause} onPlayAgain={handlePlayAgain}/>
+        <CalendarConnect
+          connected={calendarConnected}
+          fitsMyWeek={fitsMyWeek}
+          onConnect={() => setCalendarConnected(true)}
+          onDisconnect={handleDisconnectCalendar}
+          onFitsChange={setFitsMyWeek}
+        />
+        <MatchFeed
+          result ={quizResult}
+          onOpenCause={handleOpenCause}
+          onPlayAgain={handlePlayAgain}
+          fitsMyWeek={fitsMyWeek}
+          onShowAll={() => setFitsMyWeek(false)}
+          signedUp={signedUp}
+        />
       </>
     )
   }
