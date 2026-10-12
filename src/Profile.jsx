@@ -23,7 +23,7 @@ const ABOUT_LABELS = [
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
 function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, history, diary, settings, onSettingsChange }) {
     const character = results[quizResult]
-    const titles = earnedTitles(history)
+    const titles = earnedTitles(history, profile.goalHistory)
 
     return (
         <div className="profile">

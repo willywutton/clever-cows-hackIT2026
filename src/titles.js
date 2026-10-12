@@ -3,50 +3,51 @@
 // match the history. Once earned, a title is kept; there are no levels or rankings.
 //
 // A history item looks like { type, causeId, at } and, for sign-ups, also { weekly, mode }.
+// A goalHistory item looks like { goalId, finishedAt }, one for each goal the student finished.
+import { goals } from './data/goals'
 
 export const TITLES = [
     { id: "first-step", name: "First Step", description: "Took your first action" },
     { id: "word-spreader", name: "Word Spreader", description: "Shared a cause" },
-    { id: "team-player", name: "Team Player", description: "Signed up with friends or a relay group" },
-    { id: "regular", name: "Regular", description: "Signed up weekly, or reflected on the same cause twice" },
-    { id: "storyteller", name: "Storyteller", description: "Wrote your first diary entry" },
+    { id: "explorer", name: "Explorer", description: "Finished the goal Try something new" },
+    { id: "regular", name: "Regular", description: "Finished the goal Help regularly" },
+    { id: "connector", name: "Connector", description: "Finished the goal Meet new people" },
+    { id: "champion", name: "Champion", description: "Finished the goal Go deeper in one cause" },
+    { id: "storyteller", name: "Storyteller", description: "Finished the goal Share my story" },
 ]
 
-// Which titles one history item earns, given the reflection counts so far.
-function titlesFor(item, reflectionsByCause) {
+// Which automatic titles one history item earns.
+function titlesFor(item) {
     const earned = ["first-step"]
     if (item.type === "share") {
         earned.push("word-spreader")
-    }
-    if (item.type === "signup" && item.mode !== "me") {
-        earned.push("team-player")
-    }
-    if (item.type === "signup" && item.weekly) {
-        earned.push("regular")
-    }
-    if (item.type === "reflection") {
-        earned.push("storyteller")
-        if (reflectionsByCause[item.causeId] >= 2) {
-            earned.push("regular")
-        }
     }
     return earned
 }
 
 // Returns the earned titles in the order they were earned, so the last one is the latest.
-export function earnedTitles(history) {
-    const earnedIds = []
-    const reflectionsByCause = {}
+// Automatic titles come from the history; goal titles come only from finished goals.
+export function earnedTitles(history, goalHistory = []) {
+    const events = []
 
     history.forEach((item) => {
-        if (item.type === "reflection") {
-            reflectionsByCause[item.causeId] = (reflectionsByCause[item.causeId] || 0) + 1
+        titlesFor(item).forEach((id) => events.push({ id, at: item.at }))
+    })
+    goalHistory.forEach((finished) => {
+        const goal = goals.find((g) => g.id === finished.goalId)
+        if (goal) {
+            events.push({ id: goal.titleId, at: finished.finishedAt })
         }
-        titlesFor(item, reflectionsByCause).forEach((id) => {
-            if (!earnedIds.includes(id)) {
-                earnedIds.push(id)
-            }
-        })
+    })
+
+    // ISO times sort correctly as text. The sort keeps equal times in their original order.
+    events.sort((a, b) => (a.at < b.at ? -1 : a.at > b.at ? 1 : 0))
+
+    const earnedIds = []
+    events.forEach((event) => {
+        if (!earnedIds.includes(event.id)) {
+            earnedIds.push(event.id)
+        }
     })
 
     return earnedIds.map((id) => TITLES.find((title) => title.id === id))

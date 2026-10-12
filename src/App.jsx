@@ -33,7 +33,7 @@ function App() {
   const [openCauseId, setOpenCauseId] = useState(null)
 
   // The student's nickname and optional About you answers. An empty string means not answered.
-  const [profile, setProfile] = useState({ nickname: '', goal: '', area: '', ageGroup: '', region: '' })
+  const [profile, setProfile] = useState({ nickname: '', goal: '', area: '', ageGroup: '', region: '', goalHistory: [] })
 
   // Every session the student has signed up for, one entry per cause.
   // See people.js for what an entry looks like.
