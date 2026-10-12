@@ -19,6 +19,11 @@ const QUESTIONS = [
         label: "Which age group are you in?",
         options: ["Under 16", "16 to 18", "19 to 25", "26 and over", "Prefer not to say"],
     },
+    {
+        id: "region",
+        label: "Which part of Singapore are you in?",
+        options: ["North", "North-East", "East", "West", "Central", "Prefer not to say"],
+    },
 ]
 
 // { profile } holds any earlier answers, so they show again on a return visit.
@@ -34,7 +39,7 @@ function AboutYou({ profile, onDone }) {
         <div className="about card">
             <h2>About you</h2>
             <p className="about-intro">
-                These help us suggest causes. Every question is optional.
+                These help us suggest causes and show sessions near you. Every question is optional.
             </p>
 
             {QUESTIONS.map((question) => (

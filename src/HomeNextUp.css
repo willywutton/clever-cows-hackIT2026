@@ -1,0 +1,27 @@
+/* Styles for the Next up line on Home. Shared colours are in index.css. */
+
+.home-next-up {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 12px;
+  margin-bottom: 20px;
+  padding: 10px 14px;
+  background: var(--grass-soft);
+  border-left: 4px solid var(--grass);
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.home-next-up button {
+  padding: 4px 12px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--grass);
+  font-weight: 600;
+}
+
+.home-next-up button:hover {
+  background: var(--grass-soft);
+}

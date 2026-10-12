@@ -7,10 +7,13 @@ import AboutYou from './AboutYou'
 import Quiz from './Quiz'
 import MatchFeed from './MatchFeed'
 import CausePage from './CausePage'
+import SignUp from './SignUp'
+import SignupDone from './SignupDone'
 import CloverCowdini from './CloverCowdini'
 import OrgDashboard from './OrgDashboard'
 import NavBar from './NavBar'
 import Profile from './Profile'
+import HomeNextUp from './HomeNextUp'
 import { causes } from './data/causes'
 
 // The name the grass is saved under in the browser's storage (localStorage).
@@ -34,14 +37,19 @@ function App() {
   // It starts as null, meaning "the quiz hasn't been finished yet".
   const [quizResult, setQuizResult] = useState(null)
 
-  // Which screen the student is on: 'welcome', 'about', 'quiz', 'home', 'cause' or 'profile'.
+  // Which screen the student is on: 'welcome', 'about', 'quiz', 'home', 'cause',
+  // 'signup', 'signup-done' or 'profile'.
   const [screen, setScreen] = useState('welcome')
 
   // The id of the cause whose page is open, e.g. "cause_02".
   const [openCauseId, setOpenCauseId] = useState(null)
 
   // The student's optional About you answers. An empty string means not answered.
-  const [profile, setProfile] = useState({ goal: '', area: '', ageGroup: '' })
+  const [profile, setProfile] = useState({ goal: '', area: '', ageGroup: '', region: '' })
+
+  // Every session the student has signed up for, one entry per cause.
+  // See people.js for what an entry looks like.
+  const [signedUp, setSignedUp] = useState([])
 
   // Which view is showing: 'student' (quiz and causes) or 'organisation' (mock dashboard).
   const [view, setView] = useState('student')
@@ -92,6 +100,22 @@ function App() {
     setScreen('cause')
   }
 
+  // SignUp calls this with the new entry. Signing up again for the same cause
+  // replaces the old entry, so each cause appears once.
+  function handleConfirmSignup(entry) {
+    const others = signedUp.filter((item) => item.causeId !== entry.causeId)
+    setSignedUp([...others, entry])
+    handleAction(entry.causeId, 'signup')
+    setScreen('signup-done')
+  }
+
+  // Marks a sign-up's calendar prompt as answered, so it is never asked again.
+  function handleCalendarAnswered(causeId) {
+    setSignedUp(signedUp.map((item) =>
+      item.causeId === causeId ? { ...item, calendarAnswered: true } : item
+    ))
+  }
+
   // CausePage calls this when an action is taken.
   // Each action feeds the cow once per cause, so clicking the same button
   // again doesn't add more grass. Grass is only ever added, never removed.
@@ -124,6 +148,7 @@ function App() {
     // <> and </> group two components together without adding an extra box around them.
     content = (
       <>
+        <HomeNextUp signedUp={signedUp} onSeeAll={() => setScreen('profile')}/>
         <CloverCowdini grass={grass}/>
         <MatchFeed result ={quizResult} onOpenCause={handleOpenCause} onPlayAgain={handlePlayAgain}/>
       </>
@@ -138,12 +163,38 @@ function App() {
         cause={openCause}
         onBack={() => setScreen('home')}
         onAction={handleAction}
-        hasFed={hasFed}
+        onSignUp={() => setScreen('signup')}
+        isSignedUp={signedUp.some((item) => item.causeId === openCause.id)}
+      />
+    )
+  }
+  else if (screen === 'signup') {
+    const openCause = causes.find((cause) => cause.id === openCauseId)
+    content = (
+      <SignUp
+        cause={openCause}
+        existing={signedUp.find((item) => item.causeId === openCause.id) || null}
+        userRegion={profile.region}
+        onConfirm={handleConfirmSignup}
+        onBack={() => setScreen('cause')}
+      />
+    )
+  }
+  else if (screen === 'signup-done') {
+    const openCause = causes.find((cause) => cause.id === openCauseId)
+    content = (
+      <SignupDone
+        cause={openCause}
+        entry={signedUp.find((item) => item.causeId === openCause.id)}
+        userRegion={profile.region}
+        onCalendarAnswered={() => handleCalendarAnswered(openCause.id)}
+        onHome={() => setScreen('home')}
+        onBackToCause={() => setScreen('cause')}
       />
     )
   }
   else if (screen === 'profile') {
-    content = <Profile quizResult={quizResult} profile={profile}/>
+    content = <Profile quizResult={quizResult} profile={profile} signedUp={signedUp}/>
   }
 
   // The menu only appears once there is a quiz result to build on.

@@ -65,69 +65,6 @@
   color: var(--text-soft);
 }
 
-/* The once / weekly sign-up choice. */
-.cause-signup {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.cause-signup-time {
-  font-weight: 600;
-}
-
-.cause-signup-choice {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  border: none;
-  margin: 0;
-  padding: 0;
-}
-
-.cause-signup-choice legend {
-  margin-bottom: 8px;
-  padding: 0;
-}
-
-.cause-signup-choice label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  background: #fff;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.cause-signup-choice label:has(input:checked) {
-  border-color: var(--barn);
-  background: var(--hay-soft);
-}
-
-.cause-signup-choice input {
-  accent-color: var(--barn);
-  margin: 0;
-}
-
-.cause-signup-buttons {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.cause-cancel {
-  padding: 12px 20px;
-  background: transparent;
-  color: var(--text-soft);
-  border: 2px solid var(--border);
-}
-
-.cause-cancel:hover {
-  background: #fff;
-}
-
 /* The thank-you message shown after an action. */
 .cause-message {
   display: flex;

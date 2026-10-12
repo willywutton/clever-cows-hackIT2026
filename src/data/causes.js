@@ -13,6 +13,9 @@
 //   weeklyLabel      the same session for students joining every week
 //   startsAt         the next session's start, in Singapore time (+08:00). Sample dates.
 //   durationMinutes  how long one session lasts
+//   peopleNeeded     how many volunteers one session needs
+//   area             the neighbourhood the session is in (general area only, no address)
+//   region           the part of Singapore: North, North-East, East, West or Central
 
 export const causes = [
   {
@@ -28,7 +31,10 @@ export const causes = [
         label: "Volunteer for a 1-hour walk session",
         weeklyLabel: "Become a weekly walker",
         startsAt: "2026-11-07T09:00:00+08:00",
-        durationMinutes: 60
+        durationMinutes: 60,
+        peopleNeeded: 2,
+        area: "Sungei Tengah",
+        region: "West"
       }
     ]
   },
@@ -45,7 +51,10 @@ export const causes = [
         label: "Visit for an afternoon",
         weeklyLabel: "Become a regular visitor",
         startsAt: "2026-11-08T14:00:00+08:00",
-        durationMinutes: 120
+        durationMinutes: 120,
+        peopleNeeded: 3,
+        area: "Toa Payoh",
+        region: "Central"
       }
     ]
   },
@@ -62,7 +71,10 @@ export const causes = [
         label: "Join a Saturday repair session",
         weeklyLabel: "Join the repair crew",
         startsAt: "2026-11-14T10:00:00+08:00",
-        durationMinutes: 180
+        durationMinutes: 180,
+        peopleNeeded: 4,
+        area: "Bedok",
+        region: "East"
       }
     ]
   },
@@ -79,7 +91,10 @@ export const causes = [
         label: "Help at a drop-in session",
         weeklyLabel: "Become a regular tutor",
         startsAt: "2026-11-04T18:30:00+08:00",
-        durationMinutes: 90
+        durationMinutes: 90,
+        peopleNeeded: 2,
+        area: "Ang Mo Kio",
+        region: "North-East"
       }
     ]
   },
@@ -96,7 +111,10 @@ export const causes = [
         label: "Join a cleanup morning",
         weeklyLabel: "Join the weekly cleanup crew",
         startsAt: "2026-11-15T08:00:00+08:00",
-        durationMinutes: 120
+        durationMinutes: 120,
+        peopleNeeded: 4,
+        area: "Punggol",
+        region: "North-East"
       }
     ]
   },
@@ -113,7 +131,10 @@ export const causes = [
         label: "Join a welcome meetup",
         weeklyLabel: "Become a regular buddy",
         startsAt: "2026-11-06T19:00:00+08:00",
-        durationMinutes: 90
+        durationMinutes: 90,
+        peopleNeeded: 3,
+        area: "Clementi",
+        region: "West"
       }
     ]
   },
@@ -130,7 +151,10 @@ export const causes = [
         label: "Help film or photograph an event",
         weeklyLabel: "Join the storytelling team",
         startsAt: "2026-11-21T15:00:00+08:00",
-        durationMinutes: 120
+        durationMinutes: 120,
+        peopleNeeded: 2,
+        area: "Tiong Bahru",
+        region: "Central"
       }
     ]
   },
@@ -147,7 +171,10 @@ export const causes = [
         label: "Try a one-off tutoring session",
         weeklyLabel: "Become a weekly tutor",
         startsAt: "2026-11-10T17:30:00+08:00",
-        durationMinutes: 60
+        durationMinutes: 60,
+        peopleNeeded: 2,
+        area: "Woodlands",
+        region: "North"
       }
     ]
   },
@@ -164,7 +191,10 @@ export const causes = [
         label: "Join a neighbourhood survey walk",
         weeklyLabel: "Join the survey team",
         startsAt: "2026-11-12T18:00:00+08:00",
-        durationMinutes: 90
+        durationMinutes: 90,
+        peopleNeeded: 3,
+        area: "Tampines",
+        region: "East"
       }
     ]
   }

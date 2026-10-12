@@ -1,60 +1,45 @@
 // CausePage.jsx shows one cause and its three actions: Share, Donate and Sign up.
-// Each action shows a thank-you message that names the cause.
+// Share and Donate show a thank-you message that names the cause.
+// Sign up opens its own screen (SignUp.jsx).
 import { useState } from 'react'
-import { formatSession } from './formatSession'
 import DemoPledge from './DemoPledge'
 import './CausePage.css'
 
 // { cause } is the cause to show, from causes.js.
 // { onBack } returns to Home. { onAction } feeds Clover Cowdini.
-// { hasFed } checks whether an action for this cause has already been taken.
-function CausePage({ cause, onBack, onAction, hasFed }) {
+// { onSignUp } opens the sign-up screen. { isSignedUp } is true if already signed up.
+function CausePage({ cause, onBack, onAction, onSignUp, isSignedUp }) {
     const share = cause.actions.find((action) => action.type === "share")
     const donate = cause.actions.find((action) => action.type === "donate")
     const signup = cause.actions.find((action) => action.type === "signup")
 
-    // 'actions' shows the three buttons, 'signup' the once / weekly choice,
-    // and 'pledge' the demo donation screen.
+    // 'actions' shows the three buttons and 'pledge' the demo donation screen.
     const [mode, setMode] = useState('actions')
-    const [weekly, setWeekly] = useState(false)
     // The last action taken on this page, used for its message, or null for none yet.
     const [lastAction, setLastAction] = useState(null)
 
     function handleShare() {
         onAction(cause.id, "share")
-        setLastAction({ type: "share" })
+        setLastAction("share")
     }
 
     function handlePledge() {
         onAction(cause.id, "donate")
-        setLastAction({ type: "donate" })
-        setMode('actions')
-    }
-
-    function handleConfirmSignup() {
-        onAction(cause.id, "signup")
-        setLastAction({ type: "signup", weekly })
+        setLastAction("donate")
         setMode('actions')
     }
 
     let message = ""
-    if (lastAction?.type === "share") {
+    if (lastAction === "share") {
         message = `Thanks for sharing ${cause.name}.`
     }
-    else if (lastAction?.type === "donate") {
+    else if (lastAction === "donate") {
         message = `Thanks for your demo pledge to ${cause.name}. No money was taken.`
-    }
-    else if (lastAction?.type === "signup") {
-        message = lastAction.weekly
-            ? `You're signed up with ${cause.name}: ${signup.weeklyLabel}, every week from ${formatSession(signup)}.`
-            : `You're signed up with ${cause.name}: ${signup.label}, ${formatSession(signup)}.`
     }
 
     // After sharing or donating, gently suggest meeting the team in person.
     // Donating is never suggested.
-    const suggestSignup = lastAction !== null
-        && lastAction.type !== "signup"
-        && !hasFed(cause.id, "signup")
+    const suggestSignup = lastAction !== null && !isSignedUp
 
     return (
         <div className="cause-page">
@@ -74,41 +59,10 @@ function CausePage({ cause, onBack, onAction, hasFed }) {
                             <strong>Donate <em>(optional)</em></strong>
                             <span>{donate.label}</span>
                         </button>
-                        <button className="cause-page-action" onClick={() => setMode('signup')}>
-                            <strong>Sign up</strong>
-                            <span>{signup.label}</span>
+                        <button className="cause-page-action" onClick={onSignUp}>
+                            <strong>{isSignedUp ? "Signed up: tap to change" : "Sign up"}</strong>
+                            <span>{signup.label}, in {signup.area}</span>
                         </button>
-                    </div>
-                )}
-
-                {mode === 'signup' && (
-                    <div className="cause-signup">
-                        <p className="cause-signup-time">Next session: {formatSession(signup)}</p>
-                        <fieldset className="cause-signup-choice">
-                            <legend>How often would you like to come?</legend>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="repeat"
-                                    checked={!weekly}
-                                    onChange={() => setWeekly(false)}
-                                />
-                                Just this once: {signup.label}
-                            </label>
-                            <label>
-                                <input
-                                    type="radio"
-                                    name="repeat"
-                                    checked={weekly}
-                                    onChange={() => setWeekly(true)}
-                                />
-                                Every week: {signup.weeklyLabel}
-                            </label>
-                        </fieldset>
-                        <div className="cause-signup-buttons">
-                            <button className="cause-cancel" onClick={() => setMode('actions')}>Cancel</button>
-                            <button className="button-primary" onClick={handleConfirmSignup}>Confirm</button>
-                        </div>
                     </div>
                 )}
 
@@ -127,7 +81,7 @@ function CausePage({ cause, onBack, onAction, hasFed }) {
                         {suggestSignup && (
                             <p className="cause-next">
                                 Want to meet the team in person?{" "}
-                                <button className="next-step-button" onClick={() => setMode('signup')}>
+                                <button className="next-step-button" onClick={onSignUp}>
                                     Sign up
                                 </button>
                             </p>

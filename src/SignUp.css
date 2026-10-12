@@ -1,0 +1,103 @@
+/* Styles for the sign-up screen. Shared colours and .card / .button-primary are in index.css. */
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.signup-session {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+}
+
+.signup-needed {
+  color: var(--text-soft);
+  font-size: 15px;
+}
+
+.signup-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.signup-choice legend {
+  font-weight: 600;
+  margin-bottom: 8px;
+  padding: 0;
+}
+
+.signup-choice label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.signup-choice label:has(input:checked) {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+}
+
+.signup-choice input {
+  accent-color: var(--barn);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.signup-choice small {
+  display: block;
+  color: var(--text-soft);
+  font-size: 14px;
+}
+
+/* Marks the friends list as sample data. */
+.signup-sample {
+  margin-left: 4px;
+  padding: 1px 8px;
+  background: var(--hay-soft);
+  border: 1px dashed var(--hay);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.signup-problem {
+  color: var(--text-soft);
+  font-size: 15px;
+}
+
+.signup-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.signup-back {
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+}
+
+.signup-back:hover {
+  background: #fff;
+}
+
+.signup .button-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
