@@ -20,7 +20,7 @@
   height: auto;
 }
 
-/* The small "Calf" / "Grown" / "Happy" label next to the name. */
+/* The small stage label (e.g. "Calf") next to the name. */
 .cow-stage {
   display: inline-block;
   margin-left: 6px;
@@ -39,4 +39,39 @@
 .cow-next {
   color: var(--text-soft);
   font-size: 15px;
+}
+
+/* The happy bounce after an action. */
+.cow-happy {
+  animation: cow-bounce 0.6s ease-out 2;
+}
+
+@keyframes cow-bounce {
+  0%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-14px) rotate(-4deg); }
+  70% { transform: translateY(0) rotate(3deg); }
+}
+
+/* The "Yum!" message fades in, stays, then fades out. */
+.cow-reaction {
+  padding: 6px 14px;
+  background: var(--card);
+  border: 2px solid var(--grass);
+  border-radius: 999px;
+  font-weight: 600;
+  animation: cow-reaction-fade 4s ease-in-out forwards;
+}
+
+@keyframes cow-reaction-fade {
+  0% { opacity: 0; }
+  10%, 80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* People who turn off animations in their device settings see the message without movement. */
+@media (prefers-reduced-motion: reduce) {
+  .cow-happy,
+  .cow-reaction {
+    animation: none;
+  }
 }

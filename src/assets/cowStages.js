@@ -1,4 +1,5 @@
-// The growth stages of Clover Cowdini, the group's shared cow.
+// The growth stages of Clover Cowdini, the group's shared cow,
+// and how much grass each kind of action feeds her.
 // A stage is shown once the group's grass count reaches its minGrass.
 //
 // The pictures are emoji placeholders. To use real artwork instead:
@@ -6,6 +7,14 @@
 //   2. import it at the top, e.g.  import calfImage from './cow-calf.png'
 //   3. add it to the stage, e.g.   image: calfImage
 // CloverCowdini.jsx shows the image when there is one, and the emoji when there isn't.
+
+// Grass per action. Each action counts once per cause.
+export const GRASS = {
+  share: 1,
+  donate: 1,
+  signup: 3,
+  reflection: 2,
+}
 
 export const cowStages = [
   {
@@ -15,15 +24,21 @@ export const cowStages = [
     message: "Clover Cowdini is a little calf. Every action helps the herd's cow grow.",
   },
   {
-    name: "Grown",
-    minGrass: 3,
+    name: "Growing",
+    minGrass: 5,
     emoji: "🐄",
-    message: "Clover Cowdini is growing strong, thanks to everyone pitching in!",
+    message: "Clover Cowdini is growing, thanks to everyone pitching in!",
+  },
+  {
+    name: "Grown",
+    minGrass: 12,
+    emoji: "🐄🌼",
+    message: "Clover Cowdini is big and strong. Look what your group did together!",
   },
   {
     name: "Happy",
-    minGrass: 6,
+    minGrass: 25,
     emoji: "🐄✨",
-    message: "Clover Cowdini is happy and well fed. Look what your group did together!",
+    message: "Clover Cowdini is happy and well fed. Your group made this happen!",
   },
 ]

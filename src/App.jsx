@@ -1,7 +1,7 @@
 // App.jsx is the top of the app. It remembers the quiz result and the
 // group's grass count, and decides which screen to show.
 // It also switches between the student view and the mock organisation view.
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Welcome from './Welcome'
 import AboutYou from './AboutYou'
 import Quiz from './Quiz'
@@ -16,21 +16,7 @@ import Profile from './Profile'
 import HomeNextUp from './HomeNextUp'
 import Reflection from './Reflection'
 import { causes } from './data/causes'
-
-// The name the grass is saved under in the browser's storage (localStorage).
-// localStorage keeps small bits of text on this device, even after a refresh.
-const FED_ACTIONS_KEY = 'clever-cows-fed-actions'
-
-// Read the saved list of actions that have fed the cow.
-// If nothing is saved yet, or the browser blocks storage, start with an empty list.
-function loadFedActions() {
-  try {
-    const saved = localStorage.getItem(FED_ACTIONS_KEY)
-    return saved ? JSON.parse(saved) : []
-  } catch {
-    return []
-  }
-}
+import { GRASS } from './assets/cowStages'
 
 function App() {
   // useState gives the component a value it can remember between screens.
@@ -65,23 +51,16 @@ function App() {
   // Which view is showing: 'student' (quiz and causes) or 'organisation' (mock dashboard).
   const [view, setView] = useState('student')
 
-  // Every action that has fed the cow, e.g. ["cause_02:share", "cause_02:time"].
-  // Passing the function loadFedActions (without brackets) means React only
-  // reads the saved list once, when the app first opens.
-  const [fedActions, setFedActions] = useState(loadFedActions)
+  // Every action that has fed the cow, e.g. ["cause_02:share", "cause_02:signup"].
+  // Kept in React state only, so a page refresh starts a fresh demo.
+  const [fedActions, setFedActions] = useState([])
 
-  // One grass per action in the list, so the grass count is just its length.
-  const grass = fedActions.length
+  // Add up the grass for each action in the list, using the amounts in cowStages.js.
+  // The part after ":" is the action type, e.g. "signup" is worth 3.
+  const grass = fedActions.reduce((total, id) => total + GRASS[id.split(':')[1]], 0)
 
-  // useEffect runs code after the screen updates. The [fedActions] at the end
-  // means "only run this when fedActions changes", so every new grass gets saved.
-  useEffect(() => {
-    try {
-      localStorage.setItem(FED_ACTIONS_KEY, JSON.stringify(fedActions))
-    } catch {
-      // Storage is blocked (e.g. some private windows). The cow still works until a refresh.
-    }
-  }, [fedActions])
+  // Actions that fed the cow since she last reacted on Home: { type, causeName, amount }.
+  const [recentFeeds, setRecentFeeds] = useState([])
 
   // AboutYou calls this with the answers when the student continues or skips.
   function handleAboutDone(answers) {
@@ -153,6 +132,13 @@ function App() {
       return
     }
     setFedActions([...fedActions, `${causeId}:${actionType}`])
+    const causeName = causes.find((cause) => cause.id === causeId).name
+    setRecentFeeds((prev) => [...prev, { type: actionType, causeName, amount: GRASS[actionType] }])
+  }
+
+  // CloverCowdini calls this once the happy reaction has been shown.
+  function clearRecentFeeds() {
+    setRecentFeeds([])
   }
 
   // True if this action for this cause has already fed the cow.
@@ -178,7 +164,7 @@ function App() {
     content = (
       <>
         <HomeNextUp signedUp={signedUp} onSeeAll={() => setScreen('profile')}/>
-        <CloverCowdini grass={grass}/>
+        <CloverCowdini grass={grass} recentFeeds={recentFeeds} onReactionDone={clearRecentFeeds}/>
         <MatchFeed result ={quizResult} onOpenCause={handleOpenCause} onPlayAgain={handlePlayAgain}/>
       </>
     )
