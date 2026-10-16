@@ -2,6 +2,7 @@
 // My collection, History, About me and Privacy.
 import { results } from './data/chapters'
 import { earnedTitles } from './titles'
+import { goalById } from './goalProgress'
 import ProfileHeader from './ProfileHeader'
 import NextUp from './NextUp'
 import MyCollection from './MyCollection'
@@ -25,6 +26,14 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
+    // The goal is stored as an id, e.g. "try-new", so show its name instead.
+    function aboutAnswer(id) {
+        if (id === "goal") {
+            return goalById(profile.goal)?.name || "Not sure yet"
+        }
+        return profile[id] || "Not answered"
+    }
+
     return (
         <div className="profile">
             <ProfileHeader
@@ -46,7 +55,7 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
                     {ABOUT_LABELS.map((item) => (
                         <div key={item.id}>
                             <dt>{item.label}</dt>
-                            <dd>{profile[item.id] || "Not answered"}</dd>
+                            <dd>{aboutAnswer(item.id)}</dd>
                         </div>
                     ))}
                 </dl>

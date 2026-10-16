@@ -16,6 +16,7 @@ import Profile from './Profile'
 import HomeNextUp from './HomeNextUp'
 import Reflection from './Reflection'
 import CalendarConnect from './CalendarConnect'
+import GoalCard from './GoalCard'
 import { causes } from './data/causes'
 import { GRASS } from './assets/cowStages'
 
@@ -67,6 +68,11 @@ function App() {
 
   // Actions that fed the cow since she last reacted on Home: { type, causeName, amount }.
   const [recentFeeds, setRecentFeeds] = useState([])
+
+  // GoalCard calls this when the student picks, changes or drops a goal ('' means no goal).
+  function handleGoalChange(goalId) {
+    setProfile({ ...profile, goal: goalId })
+  }
 
   // AboutYou calls this with the answers when the student continues or skips.
   function handleAboutDone(answers) {
@@ -176,6 +182,7 @@ function App() {
     content = (
       <>
         <HomeNextUp signedUp={signedUp} onSeeAll={() => setScreen('profile')}/>
+        <GoalCard goalId={profile.goal} history={history} onGoalChange={handleGoalChange}/>
         <CloverCowdini grass={grass} recentFeeds={recentFeeds} onReactionDone={clearRecentFeeds}/>
         <CalendarConnect
           connected={calendarConnected}

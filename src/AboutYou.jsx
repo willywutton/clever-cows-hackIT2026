@@ -1,13 +1,21 @@
-// AboutYou.jsx asks three optional questions before the quiz.
+// AboutYou.jsx asks four optional questions before the quiz, including which goal to work towards.
 // Every question can be left blank, and the whole screen can be skipped.
 import { useState } from 'react'
+import { goals } from './data/goals'
 import './AboutYou.css'
+
+// The goal question offers each goal, plus "Not sure yet", which leaves the goal empty.
+const GOAL_OPTIONS = [
+    ...goals.map((goal) => ({ value: goal.id, label: goal.name, hint: goal.description })),
+    { value: "", label: "Not sure yet" },
+]
 
 const QUESTIONS = [
     {
         id: "goal",
-        label: "What would you like to get out of helping?",
-        options: ["Meet new people", "Learn a new skill", "Help my neighbourhood", "Try something new", "Not sure yet"],
+        label: "Pick a goal to work towards (you can change it any time)",
+        options: GOAL_OPTIONS,
+        stacked: true,
     },
     {
         id: "area",
@@ -31,8 +39,13 @@ const QUESTIONS = [
 function AboutYou({ profile, onDone }) {
     const [answers, setAnswers] = useState(profile)
 
-    function handleChange(questionId, option) {
-        setAnswers({ ...answers, [questionId]: option })
+    function handleChange(questionId, value) {
+        setAnswers({ ...answers, [questionId]: value })
+    }
+
+    // Plain text options use the same text for their value and label.
+    function toOption(option) {
+        return typeof option === "string" ? { value: option, label: option } : option
     }
 
     return (
@@ -45,17 +58,20 @@ function AboutYou({ profile, onDone }) {
             {QUESTIONS.map((question) => (
                 <fieldset className="about-question" key={question.id}>
                     <legend>{question.label}</legend>
-                    <div className="about-options">
-                        {question.options.map((option) => (
-                            <label className="about-option" key={option}>
+                    <div className={question.stacked ? "about-options about-options-stacked" : "about-options"}>
+                        {question.options.map(toOption).map((option) => (
+                            <label className="about-option" key={option.value}>
                                 <input
                                     type="radio"
                                     name={question.id}
-                                    value={option}
-                                    checked={answers[question.id] === option}
-                                    onChange={() => handleChange(question.id, option)}
+                                    value={option.value}
+                                    checked={answers[question.id] === option.value}
+                                    onChange={() => handleChange(question.id, option.value)}
                                 />
-                                {option}
+                                <span>
+                                    {option.label}
+                                    {option.hint && <small>{option.hint}</small>}
+                                </span>
                             </label>
                         ))}
                     </div>

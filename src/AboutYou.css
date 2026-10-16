@@ -72,3 +72,18 @@
 .about-skip:hover {
   background: #fff;
 }
+
+/* The goal options are longer, so they stack in a column with a short description. */
+.about-options-stacked {
+  flex-direction: column;
+}
+
+.about-options-stacked .about-option {
+  border-radius: 10px;
+}
+
+.about-option small {
+  display: block;
+  font-size: 14px;
+  color: var(--text-soft);
+}
