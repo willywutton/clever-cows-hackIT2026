@@ -1,7 +1,55 @@
+/* Styles for the matched causes screen. Shared colours and .card / .button-primary are in index.css. */
+
+.match-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.match-title {
+  text-align: center;
+}
+
+.cause-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cause-description {
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
 .action-button {
-  border: 1px solid #888;
+  align-self: flex-start;
+  padding: 10px 14px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.action-button:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.match-feed > .button-primary {
+  align-self: center;
+}
+
+/* The "Fits your week" line shown when the switch is on. */
+.cause-fits {
+  align-self: flex-start;
+  padding: 4px 12px;
+  background: var(--grass-soft);
+  border-left: 4px solid var(--grass);
   border-radius: 8px;
-  padding: 8px 14px;
-  margin: 4px;
-  cursor: pointer;
+  font-size: 15px;
+}
+
+.match-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }

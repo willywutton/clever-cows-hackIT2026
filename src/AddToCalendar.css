@@ -1,0 +1,31 @@
+/* Styles for the calendar buttons. Shared colours are in index.css. */
+
+.add-to-calendar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* The link and the button are styled the same, so they look like a pair. */
+.add-to-calendar-button {
+  display: inline-block;
+  padding: 8px 14px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--grass);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.add-to-calendar-button:hover {
+  background: var(--grass-soft);
+}
+
+.add-to-calendar-button:focus-visible {
+  outline: 3px solid var(--hay);
+  outline-offset: 2px;
+}

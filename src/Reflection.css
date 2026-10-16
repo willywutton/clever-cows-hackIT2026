@@ -1,0 +1,128 @@
+/* Styles for the reflection page. The notebook look comes from JournalPage.css,
+   and spacing uses whole ruled lines (--journal-line) so writing stays on the lines. */
+
+.reflection h2 {
+  font-family: var(--hand);
+  font-size: 32px;
+  line-height: var(--journal-line);
+  color: var(--barn);
+}
+
+.reflection-demo {
+  align-self: flex-start;
+  padding: 0 10px;
+  line-height: 26px;
+  margin: 3px 0;
+  background: var(--hay-soft);
+  border: 2px dashed var(--hay);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.reflection-private {
+  color: var(--text-soft);
+  font-size: 15px;
+}
+
+.reflection .instant-photo {
+  align-self: center;
+  margin: 18px 0 22px;
+}
+
+/* The styled label acts as the photo button; the real input is hidden inside it. */
+.reflection-photo-button {
+  position: relative;
+  align-self: flex-start;
+  padding: 0 14px;
+  line-height: 32px;
+  margin-top: 4px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reflection-photo-button:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.reflection-photo-button input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.reflection-photo-button:focus-within {
+  outline: 3px solid var(--hay);
+  outline-offset: 2px;
+}
+
+.reflection-note {
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.reflection-field {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+}
+
+/* The writing area is see-through, so the page's ruled lines show behind the handwriting. */
+.reflection-field textarea {
+  font-family: var(--hand);
+  font-size: 23px;
+  font-weight: 400;
+  line-height: var(--journal-line);
+  color: var(--text);
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  width: 100%;
+  min-height: calc(var(--journal-line) * 4);
+  resize: vertical;
+}
+
+.reflection-field textarea::placeholder {
+  color: #b7a99a;
+}
+
+.reflection-field textarea:focus-visible {
+  outline: 2px dashed var(--hay);
+  outline-offset: 2px;
+}
+
+.reflection-count {
+  align-self: flex-end;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.reflection-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.reflection-cancel {
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+}
+
+.reflection-cancel:hover {
+  background: #fff;
+}
+
+.reflection .button-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

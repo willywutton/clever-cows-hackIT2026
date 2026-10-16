@@ -1,0 +1,55 @@
+/* Styles for the top of the Profile. Shared colours and .card are in index.css. */
+
+.profile-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.profile-header-emoji {
+  font-size: 44px;
+  line-height: 1;
+}
+
+.profile-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-header-nickname {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.profile-header-nickname input {
+  font: inherit;
+  font-size: 17px;
+  color: var(--text);
+  padding: 6px 10px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.profile-header-nickname input:focus-visible {
+  outline: 3px solid var(--hay);
+  outline-offset: 1px;
+}
+
+.profile-header-title {
+  align-self: flex-start;
+  padding: 2px 10px;
+  background: var(--hay-soft);
+  border: 1px solid var(--hay);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 15px;
+}

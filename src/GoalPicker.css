@@ -1,0 +1,61 @@
+/* Styles for the goal picker. Shared colours are in index.css. */
+
+.goal-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.goal-picker-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.goal-picker-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.goal-picker-option:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+/* aria-pressed="true" marks the current goal. */
+.goal-picker-option[aria-pressed="true"] {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+}
+
+.goal-picker-option span {
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.goal-picker-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.goal-picker-plain {
+  padding: 4px 0;
+  background: transparent;
+  color: var(--text-soft);
+  border: none;
+  text-decoration: underline;
+}

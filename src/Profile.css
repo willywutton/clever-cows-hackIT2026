@@ -1,0 +1,42 @@
+/* Styles for the Profile screen. Shared colours and .card are in index.css. */
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-about {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+}
+
+.profile-about div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-about div:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.profile-about dt {
+  color: var(--text-soft);
+}
+
+.profile-about dd {
+  margin: 0;
+  text-align: right;
+}

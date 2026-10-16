@@ -1,6 +1,21 @@
 // Mock cause dataset for Clever Cows
-// Each cause has an id, name, description, trait tag(s), and ladder actions
+// Each cause has an id, name, description, trait tag(s), and three actions
 // Traits match the quiz results: Heart, Strategy, Community, Craft
+//
+// How to read one cause:
+//   id        a unique code, used by React to tell causes apart
+//   identity  which quiz traits this cause matches (a cause can match more than one)
+//   actions   the three ways to help: share, donate and sign up.
+//             Every action is equally welcome; donating is never required.
+//
+// A sign-up action also has:
+//   label            what the session is, for students joining just this once
+//   weeklyLabel      the same session for students joining every week
+//   startsAt         the next session's start, in Singapore time (+08:00). Sample dates.
+//   durationMinutes  how long one session lasts
+//   peopleNeeded     how many volunteers one session needs
+//   area             the neighbourhood the session is in (general area only, no address)
+//   region           the part of Singapore: North, North-East, East, West or Central
 
 export const causes = [
   {
@@ -10,9 +25,17 @@ export const causes = [
     identity: ["Heart"],
     actions: [
       { type: "share", label: "Share our shelter's page" },
-      { type: "time", label: "Volunteer for a 1-hour walk session" },
       { type: "donate", label: "Donate $2 for food", optional: true },
-      { type: "recurring", label: "Become a weekly walker" }
+      {
+        type: "signup",
+        label: "Volunteer for a 1-hour walk session",
+        weeklyLabel: "Become a weekly walker",
+        startsAt: "2026-11-07T10:00:00+08:00",
+        durationMinutes: 60,
+        peopleNeeded: 2,
+        area: "Sungei Tengah",
+        region: "West"
+      }
     ]
   },
   {
@@ -22,9 +45,17 @@ export const causes = [
     identity: ["Heart", "Community"],
     actions: [
       { type: "share", label: "Share our programme" },
-      { type: "time", label: "Visit for an afternoon" },
       { type: "donate", label: "Donate $2 for activity supplies", optional: true },
-      { type: "recurring", label: "Become a regular visitor" }
+      {
+        type: "signup",
+        label: "Visit for an afternoon",
+        weeklyLabel: "Become a regular visitor",
+        startsAt: "2026-11-08T14:00:00+08:00",
+        durationMinutes: 120,
+        peopleNeeded: 3,
+        area: "Toa Payoh",
+        region: "Central"
+      }
     ]
   },
   {
@@ -34,9 +65,17 @@ export const causes = [
     identity: ["Craft"],
     actions: [
       { type: "share", label: "Share what we do" },
-      { type: "time", label: "Join a Saturday repair session" },
       { type: "donate", label: "Donate $2 for spare parts", optional: true },
-      { type: "recurring", label: "Join the repair crew" }
+      {
+        type: "signup",
+        label: "Join a Saturday repair session",
+        weeklyLabel: "Join the repair crew",
+        startsAt: "2026-11-14T10:00:00+08:00",
+        durationMinutes: 180,
+        peopleNeeded: 4,
+        area: "Bedok",
+        region: "East"
+      }
     ]
   },
   {
@@ -46,9 +85,17 @@ export const causes = [
     identity: ["Strategy", "Craft"],
     actions: [
       { type: "share", label: "Share our sessions" },
-      { type: "time", label: "Help at a drop-in session" },
       { type: "donate", label: "Donate $2 for printed guides", optional: true },
-      { type: "recurring", label: "Become a regular tutor" }
+      {
+        type: "signup",
+        label: "Help at a drop-in session",
+        weeklyLabel: "Become a regular tutor",
+        startsAt: "2026-11-04T18:30:00+08:00",
+        durationMinutes: 90,
+        peopleNeeded: 2,
+        area: "Ang Mo Kio",
+        region: "North-East"
+      }
     ]
   },
   {
@@ -58,9 +105,17 @@ export const causes = [
     identity: ["Craft"],
     actions: [
       { type: "share", label: "Share our next cleanup" },
-      { type: "time", label: "Join a cleanup morning" },
       { type: "donate", label: "Donate $2 for gloves and bags", optional: true },
-      { type: "recurring", label: "Join the monthly crew" }
+      {
+        type: "signup",
+        label: "Join a cleanup morning",
+        weeklyLabel: "Join the weekly cleanup crew",
+        startsAt: "2026-11-15T08:00:00+08:00",
+        durationMinutes: 120,
+        peopleNeeded: 4,
+        area: "Punggol",
+        region: "North-East"
+      }
     ]
   },
   {
@@ -70,9 +125,17 @@ export const causes = [
     identity: ["Community"],
     actions: [
       { type: "share", label: "Share our circle" },
-      { type: "time", label: "Join a welcome meetup" },
       { type: "donate", label: "Donate $2 for welcome packs", optional: true },
-      { type: "recurring", label: "Become a regular buddy" }
+      {
+        type: "signup",
+        label: "Join a welcome meetup",
+        weeklyLabel: "Become a regular buddy",
+        startsAt: "2026-11-06T19:00:00+08:00",
+        durationMinutes: 90,
+        peopleNeeded: 3,
+        area: "Clementi",
+        region: "West"
+      }
     ]
   },
   {
@@ -82,9 +145,17 @@ export const causes = [
     identity: ["Community", "Strategy"],
     actions: [
       { type: "share", label: "Share our latest story" },
-      { type: "time", label: "Help film or photograph an event" },
       { type: "donate", label: "Donate $2 for equipment", optional: true },
-      { type: "recurring", label: "Join the storytelling team" }
+      {
+        type: "signup",
+        label: "Help film or photograph an event",
+        weeklyLabel: "Join the storytelling team",
+        startsAt: "2026-11-21T15:00:00+08:00",
+        durationMinutes: 120,
+        peopleNeeded: 2,
+        area: "Tiong Bahru",
+        region: "Central"
+      }
     ]
   },
   {
@@ -94,9 +165,17 @@ export const causes = [
     identity: ["Strategy", "Heart"],
     actions: [
       { type: "share", label: "Share our programme" },
-      { type: "time", label: "Try a one-off tutoring session" },
       { type: "donate", label: "Donate $2 for stationery", optional: true },
-      { type: "recurring", label: "Become a weekly tutor" }
+      {
+        type: "signup",
+        label: "Try a one-off tutoring session",
+        weeklyLabel: "Become a weekly tutor",
+        startsAt: "2026-11-10T17:30:00+08:00",
+        durationMinutes: 60,
+        peopleNeeded: 2,
+        area: "Woodlands",
+        region: "North"
+      }
     ]
   },
   {
@@ -106,9 +185,17 @@ export const causes = [
     identity: ["Strategy"],
     actions: [
       { type: "share", label: "Share our accessibility map" },
-      { type: "time", label: "Join a neighbourhood survey walk" },
       { type: "donate", label: "Donate $2 for printed reports", optional: true },
-      { type: "recurring", label: "Join the survey team" }
+      {
+        type: "signup",
+        label: "Join a neighbourhood survey walk",
+        weeklyLabel: "Join the survey team",
+        startsAt: "2026-11-12T18:00:00+08:00",
+        durationMinutes: 90,
+        peopleNeeded: 3,
+        area: "Tampines",
+        region: "East"
+      }
     ]
   }
 ];

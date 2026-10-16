@@ -1,0 +1,50 @@
+/* Styles for the History section on Profile. Shared colours and .card are in index.css. */
+
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.history-counts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.history-counts li {
+  padding: 10px 12px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+}
+
+.history-counts strong {
+  font-size: 20px;
+}
+
+.history-titles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.history-visibility {
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.history-titles li {
+  padding: 2px 10px;
+  background: var(--hay-soft);
+  border: 1px solid var(--hay);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+}
