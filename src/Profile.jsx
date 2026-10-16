@@ -45,7 +45,7 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
 
             <NextUp signedUp={signedUp} userRegion={profile.region} onReflect={onReflect}/>
 
-            <MyCollection diary={diary} shared={settings.shareDiary}/>
+            <MyCollection diary={diary} shared={settings.shareDiary} signedUp={signedUp} onWrite={onReflect}/>
 
             <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
 

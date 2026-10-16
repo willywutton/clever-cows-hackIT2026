@@ -19,6 +19,7 @@
   --radius: 14px;
   --shadow: 0 2px 8px rgba(74, 52, 38, 0.08);
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --hand: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive; /* handwriting, used in the diary */
 
   font: 17px/1.5 var(--sans);
   color: var(--text);

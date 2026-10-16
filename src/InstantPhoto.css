@@ -1,0 +1,55 @@
+/* Styles for the instant-camera print. Shared colours are in index.css. */
+
+.instant-photo {
+  position: relative;
+  width: 180px;
+  margin: 8px 0;
+  padding: 10px 10px 0;
+  background: #fff;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.15),
+    0 6px 14px rgba(74, 52, 38, 0.18);
+  line-height: 1.2;
+}
+
+.instant-photo-left {
+  transform: rotate(-3deg);
+}
+
+.instant-photo-right {
+  transform: rotate(2.5deg);
+}
+
+.instant-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: #eee;
+}
+
+/* The wide white strip at the bottom, with a handwritten caption. */
+.instant-photo figcaption {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 4px 6px;
+  font-family: var(--hand);
+  font-size: 20px;
+  color: var(--text);
+  text-align: center;
+}
+
+/* A strip of washi tape holding the print onto the page. */
+.instant-photo::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 72px;
+  height: 22px;
+  transform: translateX(-50%) rotate(-4deg);
+  background: rgba(242, 201, 76, 0.6);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06);
+}

@@ -1,45 +1,102 @@
-/* Styles for the diary on Profile. Shared colours and .card are in index.css. */
+/* Styles for the diary on Profile. The notebook look comes from JournalPage.css.
+   Spacing uses whole ruled lines (--journal-line) so handwriting stays on the lines. */
 
-.collection {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.diary {
+  font-family: var(--hand);
+  font-size: 22px;
 }
 
-.collection-empty {
+.diary-title {
+  font-family: var(--hand);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: var(--journal-line);
+  color: var(--barn);
+}
+
+.diary-hint {
   color: var(--text-soft);
 }
 
-.collection-entry {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 12px;
-  background: #fff;
-  border: 2px solid var(--border);
-  border-radius: 10px;
+.diary-write {
+  align-self: flex-start;
+  margin-top: 4px;
+  padding: 0 14px;
+  height: 36px;
+  font-family: var(--hand);
+  font-size: 22px;
+  font-weight: 600;
+  background: var(--hay-soft);
+  color: var(--text);
+  border: 2px dashed var(--hay);
 }
 
-.collection-photo {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 8px;
+.diary-write:hover {
+  background: var(--hay);
 }
 
-.collection-text {
+.diary-choose {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  flex: 1;
-  min-width: 160px;
+  gap: 6px;
 }
 
-.collection-text p {
+.diary-cancel {
+  align-self: flex-start;
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-family: var(--hand);
+  font-size: 20px;
+  color: var(--text-soft);
+  text-decoration: underline;
+}
+
+/* Each entry starts with a small gap and a doodle, like a new day in a notebook. */
+.diary-entry {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--journal-line);
+}
+
+.diary-entry + .diary-entry::before {
+  content: "✿  ✿  ✿";
+  display: block;
+  margin-bottom: var(--journal-line);
+  text-align: center;
+  color: var(--hay);
+  line-height: var(--journal-line);
+}
+
+.diary-date {
+  align-self: flex-end;
+  color: var(--text-soft);
+}
+
+.diary-cause {
+  font-family: var(--hand);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: var(--journal-line);
+  margin: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--hay);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 2px;
+}
+
+.diary-entry .instant-photo {
+  align-self: center;
+  margin: 18px 0 22px;
+}
+
+.diary-text {
   white-space: pre-line;
+  overflow-wrap: anywhere;
 }
 
-.collection-meta {
-  font-size: 14px;
+.diary-privacy {
+  align-self: flex-end;
+  font-size: 18px;
   color: var(--text-soft);
 }

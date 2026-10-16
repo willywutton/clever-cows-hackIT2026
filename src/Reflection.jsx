@@ -1,6 +1,9 @@
 // Reflection.jsx lets the student add a photo and a few words after a session.
+// It looks like a journal page, and the chosen photo shows as an instant-camera print.
 // The photo stays on this device in the browser's memory; it is never uploaded.
 import { useState } from 'react'
+import JournalPage from './JournalPage'
+import InstantPhoto from './InstantPhoto'
 import './Reflection.css'
 
 const MAX_LENGTH = 280
@@ -31,7 +34,7 @@ function Reflection({ cause, shared, onSave, onCancel }) {
     const canSave = message.trim() !== "" || photoUrl !== null
 
     return (
-        <div className="reflection card">
+        <JournalPage className="reflection">
             <p className="reflection-demo">Demo</p>
             <h2>How did it go at {cause.name}?</h2>
             <p className="reflection-private">
@@ -40,12 +43,16 @@ function Reflection({ cause, shared, onSave, onCancel }) {
                     : <><span aria-hidden="true">🔒</span> Private: only you can see this.</>}
             </p>
 
-            <label className="reflection-field">
-                <span>Add a photo (optional)</span>
+            {photoUrl && (
+                <InstantPhoto src={photoUrl} alt="Your chosen photo" caption={cause.name}/>
+            )}
+
+            {/* The real file input sits inside the label, so the styled label works as the button. */}
+            <label className="reflection-photo-button">
+                <span aria-hidden="true">📷</span> {photoUrl ? "Choose a different photo" : "Add a photo (optional)"}
                 <input type="file" accept="image/*" onChange={handlePhotoChange}/>
             </label>
             <p className="reflection-note">Please don't include other people's faces.</p>
-            {photoUrl && <img className="reflection-preview" src={photoUrl} alt="Your chosen photo"/>}
 
             <label className="reflection-field">
                 <span>A few words</span>
@@ -69,7 +76,7 @@ function Reflection({ cause, shared, onSave, onCancel }) {
                     Save to my diary
                 </button>
             </div>
-        </div>
+        </JournalPage>
     )
 }
 

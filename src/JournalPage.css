@@ -1,0 +1,55 @@
+/* Styles for the notebook page. Shared colours are in index.css.
+   Text inside the page sits on the ruled lines because every line is --journal-line tall. */
+
+.journal {
+  --journal-line: 32px;
+  --journal-paper: #fffdf5;
+  --journal-rule: #dbe4ea;
+  --journal-margin: #e8a598;
+  --journal-ring: #8d939b;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--journal-line) 20px var(--journal-line) 64px;
+  line-height: var(--journal-line);
+  background-color: var(--journal-paper);
+  background-image:
+    linear-gradient(to right, transparent 50px, var(--journal-margin) 50px, var(--journal-margin) 52px, transparent 52px),
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--journal-line) - 1px), var(--journal-rule) calc(var(--journal-line) - 1px), var(--journal-rule) var(--journal-line));
+  /* Nudge the ruled lines up a little so handwriting sits on them, not above them. */
+  background-position: 0 0, 0 -6px;
+  border-radius: 4px 12px 12px 4px;
+  box-shadow:
+    0 1px 2px rgba(74, 52, 38, 0.12),
+    0 8px 20px rgba(74, 52, 38, 0.12),
+    6px 6px 0 -2px #f3ead6;
+}
+
+/* The spiral: punched holes on the page with metal rings looping over the edge. */
+.journal-spiral {
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: -12px;
+  width: 40px;
+  background:
+    radial-gradient(circle at 30px 50%, #e9dfcb 0 4px, transparent 5px) 0 0 / 40px 28px repeat-y,
+    radial-gradient(ellipse 15px 5px at 15px 50%, transparent 0 9px, var(--journal-ring) 10px 13px, transparent 14px) 0 0 / 40px 28px repeat-y;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .journal {
+    padding: var(--journal-line) 14px var(--journal-line) 50px;
+    background-image:
+      linear-gradient(to right, transparent 38px, var(--journal-margin) 38px, var(--journal-margin) 40px, transparent 40px),
+      repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--journal-line) - 1px), var(--journal-rule) calc(var(--journal-line) - 1px), var(--journal-rule) var(--journal-line));
+  }
+
+  .journal-spiral {
+    left: -14px;
+    transform: scale(0.85);
+    transform-origin: left center;
+  }
+}
