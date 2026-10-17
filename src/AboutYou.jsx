@@ -4,10 +4,11 @@ import { useState } from 'react'
 import { goals } from './data/goals'
 import './AboutYou.css'
 
-// The goal question offers each goal, plus "Not sure yet", which leaves the goal empty.
+// The goal question offers each goal, plus "Not sure yet", which saves as no goal ('').
+// It has its own value so that nothing is ticked before the student chooses.
 const GOAL_OPTIONS = [
     ...goals.map((goal) => ({ value: goal.id, label: goal.name, hint: goal.description })),
-    { value: "", label: "Not sure yet" },
+    { value: "not-sure", label: "Not sure yet" },
 ]
 
 const QUESTIONS = [
@@ -41,6 +42,11 @@ function AboutYou({ profile, onDone }) {
 
     function handleChange(questionId, value) {
         setAnswers({ ...answers, [questionId]: value })
+    }
+
+    // "Not sure yet" means no goal, which is stored as ''.
+    function handleContinue() {
+        onDone({ ...answers, goal: answers.goal === "not-sure" ? "" : answers.goal })
     }
 
     // Plain text options use the same text for their value and label.
@@ -80,7 +86,7 @@ function AboutYou({ profile, onDone }) {
 
             <div className="about-buttons">
                 <button className="about-skip" onClick={() => onDone(profile)}>Skip</button>
-                <button className="button-primary" onClick={() => onDone(answers)}>Continue</button>
+                <button className="button-primary" onClick={handleContinue}>Continue</button>
             </div>
         </div>
     )

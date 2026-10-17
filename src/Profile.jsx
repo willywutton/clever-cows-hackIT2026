@@ -29,7 +29,7 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
     // The goal is stored as an id, e.g. "try-new", so show its name instead.
     function aboutAnswer(id) {
         if (id === "goal") {
-            return goalById(profile.goal)?.name || "Not sure yet"
+            return goalById(profile.goal)?.name || "Not answered"
         }
         return profile[id] || "Not answered"
     }
