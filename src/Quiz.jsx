@@ -2,6 +2,7 @@
 // for each trait, and shows the player's result identity at the end.
 import { useState } from 'react'
 import { chapters, results } from './data/chapters'
+import StoryDots from './StoryDots'
 
 
 import './Quiz.css'
@@ -79,6 +80,7 @@ function Quiz({whenDone}){
     return (
     <div>
         <div className="quiz-card card">
+            <StoryDots total={chapters.length} current={currentChapter}/>
             <h2>{chapter.title}</h2>
 
             {/* "condition && (...)" means: only show this part when the condition is true. */}

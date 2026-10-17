@@ -1,0 +1,30 @@
+/* Styles for the story progress dots. Shared colours are in index.css. */
+
+.story-dots {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.story-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--hay);
+  transition: background 0.2s, transform 0.2s;
+}
+
+/* The scene the player is on now. */
+.story-dot-current {
+  background: #b5aca1;
+  transform: scale(1.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-dot {
+    transition: none;
+  }
+}
