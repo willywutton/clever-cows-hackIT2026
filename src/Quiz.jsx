@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { chapters, results } from './data/chapters'
 import StoryDots from './StoryDots'
+import TraitBreakdown from './TraitBreakdown'
 
 
 import './Quiz.css'
@@ -68,6 +69,7 @@ function Quiz({whenDone}){
                     <h2>You are: <span className="quiz-identity">{result.name}</span></h2>
                     <p>{result.description}</p>
                     <p className="quiz-matches">Best matched with: {result.matchesWith}</p>
+                    <TraitBreakdown scores={scores} total={chapters.length} topTrait={topTrait}/>
                     {/* The arrow "() =>" means: only call whenDone when clicked, not straight away. */}
                     <button className="button-primary" onClick={() => whenDone(topTrait)}>See my causes</button>
                 </div>
