@@ -8,12 +8,13 @@
 //   3. add it to the stage, e.g.   image: calfImage
 // CloverCowdini.jsx shows the image when there is one, and the emoji when there isn't.
 
-// Grass per action. Each action counts once per cause.
+// Grass per action. Each action counts once per cause, and each goal once when finished.
 export const GRASS = {
   share: 1,
   donate: 1,
   signup: 3,
   reflection: 2,
+  goal: 2,
 }
 
 export const cowStages = [

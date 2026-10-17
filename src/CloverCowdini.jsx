@@ -10,6 +10,7 @@ const FEED_REASONS = {
     donate: "your demo pledge to",
     signup: "signing up with",
     reflection: "your reflection on",
+    goal: "finishing your goal",
 }
 
 // How long the happy reaction stays before it is cleared, in milliseconds.
@@ -17,6 +18,7 @@ const REACTION_TIME = 4000
 
 // { grass } is how much grass the group has fed the cow, handed down from App.
 // { recentFeeds } lists the actions since the cow last reacted: { type, causeName, amount }.
+// For a finished goal, causeName holds the goal's name instead.
 // { onReactionDone } tells App the reaction has been shown, so it only plays once.
 function CloverCowdini({ grass, recentFeeds, onReactionDone }) {
     // Keep only the stages the group has reached, then take the last (biggest) one.

@@ -17,6 +17,8 @@ import HomeNextUp from './HomeNextUp'
 import Reflection from './Reflection'
 import CalendarConnect from './CalendarConnect'
 import GoalCard from './GoalCard'
+import GoalComplete from './GoalComplete'
+import { goalById, goalProgress } from './goalProgress'
 import { causes } from './data/causes'
 import { GRASS } from './assets/cowStages'
 
@@ -69,14 +71,46 @@ function App() {
   // Actions that fed the cow since she last reacted on Home: { type, causeName, amount }.
   const [recentFeeds, setRecentFeeds] = useState([])
 
+  // The id of a goal the student has just finished, shown on their next visit to Home, or null.
+  const [justFinishedGoal, setJustFinishedGoal] = useState(null)
+
+  // The ids of every goal the student has finished.
+  const finishedGoalIds = profile.goalHistory.map((finished) => finished.goalId)
+
   // GoalCard calls this when the student picks, changes or drops a goal ('' means no goal).
+  // A goal the history already meets is finished straight away.
   function handleGoalChange(goalId) {
     setProfile({ ...profile, goal: goalId })
+    finishGoalIfComplete(goalId, history)
+  }
+
+  // Checks whether a goal is met by the given history. If it is (and wasn't finished before),
+  // it is added to goalHistory, which earns its title, feeds the cow, and queues the thank-you.
+  // prev => {...} uses the latest profile, even if another update happens at the same time.
+  function finishGoalIfComplete(goalId, historyToCheck) {
+    const goal = goalById(goalId)
+    if (!goal || finishedGoalIds.includes(goalId) || !goalProgress(goal, historyToCheck).complete) {
+      return
+    }
+    setProfile((prev) => ({
+      ...prev,
+      goalHistory: [...prev.goalHistory, { goalId, finishedAt: new Date().toISOString() }],
+    }))
+    setFedActions((prev) => [...prev, `${goalId}:goal`])
+    setRecentFeeds((prev) => [...prev, { type: 'goal', causeName: goal.name, amount: GRASS.goal }])
+    setJustFinishedGoal(goalId)
+  }
+
+  // GoalComplete calls this with the next goal the student chose, or '' to take a break.
+  function handleNextGoal(goalId) {
+    setJustFinishedGoal(null)
+    handleGoalChange(goalId)
   }
 
   // AboutYou calls this with the answers when the student continues or skips.
   function handleAboutDone(answers) {
     setProfile(answers)
+    finishGoalIfComplete(answers.goal, history)
     setScreen('quiz')
   }
 
@@ -138,8 +172,10 @@ function App() {
   // so clicking the same button again doesn't add more grass.
   // Grass is only ever added, never removed.
   function handleAction(causeId, actionType, details = {}) {
+    const item = { type: actionType, causeId, at: new Date().toISOString(), ...details }
     // prev => [...] uses the latest list, even if two updates happen together.
-    setHistory((prev) => [...prev, { type: actionType, causeId, at: new Date().toISOString(), ...details }])
+    setHistory((prev) => [...prev, item])
+    finishGoalIfComplete(profile.goal, [...history, item])
     if (hasFed(causeId, actionType)) {
       return
     }
@@ -177,12 +213,25 @@ function App() {
     // Here we hand it our function so Quiz can report back when it's finished.
     content = <Quiz whenDone={handleQuizFinish}/>
   }
+  else if (screen === 'home' && justFinishedGoal) {
+    // A goal was just finished, so thank the student before showing Home.
+    content = (
+      <GoalComplete
+        key={justFinishedGoal}
+        goalId={justFinishedGoal}
+        history={history}
+        finishedIds={finishedGoalIds}
+        onChoose={handleNextGoal}
+        onTakeBreak={() => handleNextGoal('')}
+      />
+    )
+  }
   else if (screen === 'home') {
     // <> and </> group two components together without adding an extra box around them.
     content = (
       <>
         <HomeNextUp signedUp={signedUp} onSeeAll={() => setScreen('profile')}/>
-        <GoalCard goalId={profile.goal} history={history} onGoalChange={handleGoalChange}/>
+        <GoalCard goalId={profile.goal} history={history} finishedIds={finishedGoalIds} onGoalChange={handleGoalChange}/>
         <CloverCowdini grass={grass} recentFeeds={recentFeeds} onReactionDone={clearRecentFeeds}/>
         <CalendarConnect
           connected={calendarConnected}

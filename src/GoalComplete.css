@@ -1,0 +1,127 @@
+/* Styles for the goal complete screen. Shared colours and .card are in index.css. */
+
+.goal-complete {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.goal-complete-emoji {
+  align-self: center;
+  font-size: 56px;
+  line-height: 1;
+  animation: goal-complete-pop 0.6s ease-out both;
+}
+
+@keyframes goal-complete-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  70% { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+.goal-complete h2 {
+  text-align: center;
+}
+
+.goal-complete-thanks {
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.goal-complete-rewards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.goal-complete-title,
+.goal-complete-grass {
+  padding: 4px 14px;
+  border-radius: 999px;
+  font-size: 15px;
+}
+
+.goal-complete-title {
+  background: var(--hay-soft);
+  border: 1px solid var(--hay);
+}
+
+.goal-complete-grass {
+  background: var(--grass-soft);
+  border: 1px solid var(--grass);
+}
+
+.goal-complete-options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.goal-complete-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.goal-complete-option:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.goal-complete-option span {
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.goal-complete-option .goal-complete-progress {
+  color: var(--grass);
+  font-weight: 600;
+}
+
+.goal-complete-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.goal-complete-plain {
+  padding: 10px 18px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+}
+
+.goal-complete-plain:hover {
+  background: #fff;
+}
+
+.goal-complete-own {
+  padding: 10px 18px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--grass);
+  font-weight: 600;
+}
+
+.goal-complete-own:hover {
+  background: var(--grass-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .goal-complete-emoji {
+    animation: none;
+  }
+}
