@@ -18,7 +18,8 @@ const REACTION_TIME = 4000
 // { recentFeeds } lists the actions since the cow last reacted: { type, causeName, amount }.
 // For a finished goal, causeName holds the goal's name instead.
 // { onReactionDone } tells App the reaction has been shown, so it only plays once.
-function CloverCowdini({ grass, recentFeeds, onReactionDone }) {
+// { onVisit } opens the Cow tab, if given.
+function CloverCowdini({ grass, recentFeeds, onReactionDone, onVisit }) {
     // Keep only the stages the group has reached, then take the last (biggest) one.
     const reachedStages = cowStages.filter((stage) => grass >= stage.minGrass)
     const stage = reachedStages[reachedStages.length - 1]
@@ -74,6 +75,8 @@ function CloverCowdini({ grass, recentFeeds, onReactionDone }) {
                     {nextStage.minGrass - grass} more to grow into the {nextStage.name} stage
                 </p>
             )}
+
+            {onVisit && <button className="cow-visit" onClick={onVisit}>Visit Clover →</button>}
         </div>
     )
 }

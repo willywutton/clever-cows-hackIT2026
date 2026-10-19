@@ -1,6 +1,5 @@
-/* Styles for the top of the Profile. Shared colours and .card are in index.css. */
+/* Styles for the banner at the top of Profile. Shared colours and .card are in index.css. */
 
-/* A hay-coloured banner with the avatar, greeting and nickname field in a row. */
 .profile-header {
   display: flex;
   flex-wrap: wrap;
@@ -11,26 +10,12 @@
     var(--hay-soft);
 }
 
-.profile-header-avatar {
-  display: grid;
-  place-items: center;
-  width: 96px;
-  height: 96px;
-  flex-shrink: 0;
-  background: var(--cream);
-  border: 4px solid var(--card);
-  border-radius: 50%;
-  font-size: 58px;
-  box-shadow: 0 0 0 3px var(--hay);
-  transform: rotate(-6deg);
-}
-
 .profile-header-text {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   flex: 1;
-  min-width: 200px;
+  min-width: 220px;
 }
 
 .profile-header-hello {
@@ -40,79 +25,112 @@
   color: var(--barn);
 }
 
-.profile-header-title {
-  align-self: flex-start;
-  margin-top: 4px;
-  padding: 2px 12px;
-  background: var(--card);
-  border: 2px solid var(--hay);
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 16px;
-}
-
-.profile-header-name {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 300px;
-  max-width: 100%;
-  font-size: 15px;
-  font-weight: 600;
+.profile-header-about {
   color: var(--text-soft);
 }
 
-.profile-header-name-row {
+.profile-header-titles {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
-.profile-header-name input {
-  flex: 1;
-  min-width: 0;
+.profile-header-titles li {
+  padding: 2px 10px;
+  background: var(--card);
+  border: 2px solid var(--hay);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.profile-header-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.profile-header-stats {
+  display: flex;
+  gap: 10px;
+}
+
+.profile-header-stats p {
+  min-width: 96px;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.profile-header-stats strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 28px;
+  color: var(--barn);
+}
+
+.profile-header-edit {
+  padding: 6px 14px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-weight: 600;
+}
+
+.profile-header-form {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--hay);
+}
+
+.profile-header-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.profile-header-form input,
+.profile-header-form textarea {
   font: inherit;
-  font-size: 17px;
   font-weight: 400;
   color: var(--text);
   padding: 8px 12px;
   background: var(--card);
   border: 2px solid var(--border);
   border-radius: 10px;
-  box-sizing: border-box;
 }
 
-.profile-header-name input:focus-visible {
-  outline: 3px solid var(--hay);
-  outline-offset: 1px;
-}
-
-.profile-header-name button {
-  padding: 8px 14px;
-  background: var(--ink);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-weight: 700;
-}
-
-.profile-header-name button:disabled {
-  opacity: 0.4;
-  cursor: default;
-}
-
-.profile-header-name-note {
+.profile-header-hint {
   font-size: 15px;
-  font-weight: 400;
+  color: var(--barn-dark);
+}
+
+.profile-header-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.profile-header-form-buttons button[type="button"] {
+  padding: 10px 16px;
+  background: transparent;
+  border: 2px solid var(--border);
 }
 
 @media (max-width: 720px) {
-  .profile-header-avatar {
-    width: 72px;
-    height: 72px;
-    font-size: 42px;
-  }
-
-  .profile-header-name {
-    width: 100%;
+  .profile-header-side {
+    align-items: flex-start;
   }
 }

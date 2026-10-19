@@ -1,9 +1,9 @@
 // GoalComplete.jsx celebrates a finished goal: a thank-you, the title earned,
 // and a choice of what to do next. Choosing a next goal is always up to the student.
 import { useState } from 'react'
-import { TITLES } from './titles'
 import { goalById, progressText } from './goalProgress'
 import GoalPicker from './GoalPicker'
+import GoalReward from './GoalReward'
 import './GoalComplete.css'
 
 // { goalId } is the goal just finished. { history } is App's list of actions, for progress lines.
@@ -12,7 +12,6 @@ import './GoalComplete.css'
 function GoalComplete({ goalId, history, finishedIds, onChoose, onTakeBreak }) {
     const [choosingOwn, setChoosingOwn] = useState(false)
     const goal = goalById(goalId)
-    const title = TITLES.find((t) => t.id === goal.titleId)
     const suggestions = goal.suggestedNext
         .filter((id) => !finishedIds.includes(id))
         .map(goalById)
@@ -26,12 +25,13 @@ function GoalComplete({ goalId, history, finishedIds, onChoose, onTakeBreak }) {
             </p>
 
             <div className="goal-complete-rewards">
-                <p className="goal-complete-title">
-                    <span aria-hidden="true">🏅</span> New title: <strong>{title.name}</strong>
-                </p>
+                <GoalReward goal={goal} earned/>
                 <p className="goal-complete-grass">
                     <span aria-hidden="true">🌱</span> +2 grass for Clover Cowdini
                 </p>
+                {goal.reward.accessory && (
+                    <p className="goal-complete-note">Find the new accessory in the Cow tab and put it on.</p>
+                )}
             </div>
 
             {!choosingOwn && (

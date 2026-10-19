@@ -28,6 +28,8 @@ import CowPage from './CowPage'
 import FriendsPage from './FriendsPage'
 import FriendProfile from './FriendProfile'
 import SocialPage from './SocialPage'
+import FavouritesPage from './FavouritesPage'
+import SavedReminder from './SavedReminder'
 import HostEventPage from './HostEventPage'
 import CauseNews from './CauseNews'
 import PageTitle from './PageTitle'
@@ -83,6 +85,13 @@ function App() {
         side={
           <>
             <HomeNextUp signedUp={app.signedUp} onSeeAll={() => navigate('profile')}/>
+            <SavedReminder
+              events={app.events}
+              favourites={app.favourites}
+              signedUp={app.signedUp}
+              onSignUp={app.signUpFor}
+              onOpenFavourites={() => navigate('favourites')}
+            />
             <CauseNews
               updates={app.orgUpdates}
               causeIds={[
@@ -96,7 +105,12 @@ function App() {
               finishedIds={app.finishedGoalIds}
               onGoalChange={app.changeGoal}
             />
-            <CloverCowdini grass={app.grass} recentFeeds={app.recentFeeds} onReactionDone={app.clearRecentFeeds}/>
+            <CloverCowdini
+              grass={app.grass}
+              recentFeeds={app.recentFeeds}
+              onReactionDone={app.clearRecentFeeds}
+              onVisit={() => navigate('cow')}
+            />
             <CalendarConnect
               connected={app.calendarConnected}
               fitsMyWeek={app.fitsMyWeek}
@@ -182,7 +196,11 @@ function App() {
       <Profile
         quizResult={app.quizResult}
         profile={app.profile}
-        onNameChange={(name) => app.setProfile({ ...app.profile, name })}
+        onNameChange={(name) => app.setProfile((prev) => ({ ...prev, name }))}
+        onAboutChange={(about) => app.setProfile((prev) => ({ ...prev, about }))}
+        onGoalChange={app.changeGoal}
+        moolah={app.moolah}
+        accessories={app.cow.equipped}
         onReflect={app.wentToSession}
         signedUp={app.signedUp}
         history={app.history}
@@ -213,6 +231,9 @@ function App() {
   else if (screen === 'social') {
     content = <SocialPage app={app}/>
   }
+  else if (screen === 'favourites') {
+    content = <FavouritesPage app={app}/>
+  }
   else if (screen === 'cow') {
     content = <CowPage app={app}/>
   }
@@ -235,7 +256,7 @@ function App() {
     content = <HostEventPage events={app.events} onHost={app.hostEvent}/>
   }
   else {
-    content = <PageTitle title="Coming soon" subtitle="This page is being built."/>
+    content = <PageTitle title="Page not found" subtitle="Use the menu to go back to Home."/>
   }
 
   // The menu and student bar appear once there is a character to build on.

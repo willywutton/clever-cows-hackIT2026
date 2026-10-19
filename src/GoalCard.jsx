@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { goalById, goalProgress, progressText } from './goalProgress'
 import GoalPicker from './GoalPicker'
 import GoalBar from './GoalBar'
+import GoalReward from './GoalReward'
 import './GoalCard.css'
 
 // { goalId } is the active goal id ('' for none). { history } is App's list of actions.
@@ -34,6 +35,7 @@ function GoalCard({ goalId, history, finishedIds, onGoalChange }) {
                     <h3><span aria-hidden="true">🎯</span> {goal.name}</h3>
                     <p className="goal-card-text">{goal.description}</p>
                     <GoalBar progress={goalProgress(goal, history)} label={progressText(goal, history)}/>
+                    <GoalReward goal={goal}/>
                     <button className="goal-card-button" onClick={() => setPicking(true)}>Change goal</button>
                 </>
             )}

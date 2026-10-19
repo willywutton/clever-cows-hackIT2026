@@ -1,0 +1,23 @@
+/* Styles for a goal's reward chips. Shared colours are in index.css. */
+
+.goal-reward {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.goal-reward-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.goal-reward-chip {
+  padding: 2px 10px;
+  background: var(--hay-soft);
+  border: 1px solid var(--hay);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+}

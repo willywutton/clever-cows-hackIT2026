@@ -1,11 +1,12 @@
-// Profile.jsx shows the student's profile: the header across the top, then two columns.
-// Left: Next up and About me. Right: Portfolio, History, Privacy and demo tools.
+// Profile.jsx shows the student's profile: the banner across the top, then two columns.
+// Left: Next up, Goals and My answers. Right: Portfolio, History, Privacy and demo tools.
 // On phones the columns stack, left first.
 import { results } from './data/chapters'
 import { earnedTitles } from './titles'
 import { goalById } from './goalProgress'
 import ProfileHeader from './ProfileHeader'
 import NextUp from './NextUp'
+import ProfileGoals from './ProfileGoals'
 import PortfolioSection from './PortfolioSection'
 import HistorySection from './HistorySection'
 import PrivacySettings from './PrivacySettings'
@@ -21,12 +22,14 @@ const ABOUT_LABELS = [
 
 // { quizResult } is the student's top trait, e.g. "Heart".
 // { profile } holds their name and optional About you answers.
-// { onNameChange } updates the name. { onReflect } opens the reflection screen.
+// { onNameChange } and { onAboutChange } update the name and About me line.
+// { onReflect } records "I went to this session". { onGoalChange } picks a goal.
+// { moolah } and { accessories } (what Clover wears) are shown in the banner.
 // { signedUp }, { history } and { diary } come from App.
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
 // { onRetakeStory } and { onResetDemo } are the demo tools at the bottom.
 // { portfolio }, { hoursWorked } and { onOpenPortfolio } are for the Portfolio section.
-function Profile({ quizResult, profile, onNameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
+function Profile({ quizResult, profile, onNameChange, onAboutChange, onGoalChange, moolah, accessories, onReflect, signedUp, history, diary, settings, onSettingsChange, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
@@ -43,16 +46,28 @@ function Profile({ quizResult, profile, onNameChange, onReflect, signedUp, histo
             <ProfileHeader
                 name={profile.name}
                 onNameChange={onNameChange}
+                about={profile.about || ""}
+                onAboutChange={onAboutChange}
                 character={character}
-                latestTitle={titles[titles.length - 1]}
+                titles={titles}
+                hours={hoursWorked}
+                moolah={moolah}
+                accessories={accessories}
             />
 
             <div className="profile-columns">
                 <div className="profile-column">
                     <NextUp signedUp={signedUp} userRegion={profile.region} onReflect={onReflect}/>
 
+                    <ProfileGoals
+                        goalId={profile.goal}
+                        history={history}
+                        goalHistory={profile.goalHistory}
+                        onGoalChange={onGoalChange}
+                    />
+
                     <section className="card profile-section">
-                        <h3>About me</h3>
+                        <h3>My answers</h3>
                         <dl className="profile-about">
                             {ABOUT_LABELS.map((item) => (
                                 <div key={item.id}>

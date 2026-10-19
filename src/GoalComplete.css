@@ -36,16 +36,17 @@
   gap: 8px;
 }
 
-.goal-complete-title,
+.goal-complete-note {
+  flex-basis: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
 .goal-complete-grass {
   padding: 4px 14px;
   border-radius: 999px;
   font-size: 16px;
-}
-
-.goal-complete-title {
-  background: var(--hay-soft);
-  border: 1px solid var(--hay);
 }
 
 .goal-complete-grass {

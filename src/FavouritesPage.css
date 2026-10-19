@@ -1,0 +1,64 @@
+/* Styles for the Favourites tab. Shared colours and .card are in index.css. */
+
+.favourites {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.favourites-empty {
+  color: var(--text-soft);
+}
+
+.favourites-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.favourites-causes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.favourites-cause {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  border-top: 10px solid var(--cause-color);
+}
+
+.favourites-emoji {
+  font-size: 34px;
+}
+
+.favourites-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.favourites-buttons button {
+  padding: 6px 12px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-weight: 600;
+}
+
+.favourites-event {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.favourites-signup {
+  align-self: flex-start;
+  padding: 8px 16px;
+  background: var(--barn);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 3px 0 var(--barn-dark);
+}

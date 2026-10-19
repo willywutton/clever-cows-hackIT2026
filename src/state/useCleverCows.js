@@ -119,7 +119,8 @@ export function useCleverCows() {
     }
 
     // If the goal is met by the history (and wasn't finished before), record it,
-    // which earns its title, feeds the cow and queues the thank-you screen.
+    // which earns its title, its Moolah and any accessory, feeds the cow,
+    // and queues the thank-you screen.
     function finishGoalIfComplete(goalId, historyToCheck) {
         const goal = goalById(goalId)
         if (!goal || finishedGoalIds.includes(goalId) || !goalProgress(goal, historyToCheck).complete) {
@@ -130,6 +131,10 @@ export function useCleverCows() {
             goalHistory: [...prev.goalHistory, { goalId, finishedAt: new Date().toISOString() }],
         }))
         giveGrass(`${goalId}:goal`, 'goal', goal.name)
+        earnMoolah(goal.reward.moolah, `Goal: ${goal.name}`)
+        if (goal.reward.accessory) {
+            giftItem(goal.reward.accessory)
+        }
         setJustFinishedGoal(goalId)
     }
 
@@ -255,6 +260,13 @@ export function useCleverCows() {
         setOpenCauseId(causeId)
         setOpenedBySurprise(fromSurprise)
         navigate('cause')
+    }
+
+    // Goes straight to the sign-up screen for a cause, e.g. from a saved event.
+    function signUpFor(causeId) {
+        setOpenCauseId(causeId)
+        setOpenedBySurprise(false)
+        navigate('signup')
     }
 
     // Opens a random cause that isn't one of the student's usual matches.
@@ -466,7 +478,7 @@ export function useCleverCows() {
         // actions
         navigate, setView, setProfile, setSettings, setCalendarConnected, setFitsMyWeek,
         changeGoal, chooseNextGoal, recordAction, finishWelcome, finishAboutYou, finishStory,
-        retakeStory, openCause, surpriseMe, confirmSignup, answerCalendarPrompt,
+        retakeStory, openCause, signUpFor, surpriseMe, confirmSignup, answerCalendarPrompt,
         startReflection, wentToSession, saveReflection, setEntryPublic, togglePortfolio,
         addFriend, removeFriend,
         recordVisit, markSampleAttended, hostEvent, addOrgEvent, approveEvent, postUpdate,
