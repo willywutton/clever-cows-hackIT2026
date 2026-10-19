@@ -21,12 +21,12 @@
 
   --radius: 18px;
   --shadow: 4px 5px 0 var(--paper-line);
-  /* Atkinson Hyperlegible is designed to be easy to read; Fraunces gives headings character. */
-  --sans: 'Atkinson Hyperlegible', system-ui, 'Segoe UI', Roboto, sans-serif;
+  /* Lexend is designed to be easy to read; Fraunces gives headings character. */
+  --sans: 'Lexend', system-ui, 'Segoe UI', Roboto, sans-serif;
   --display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --hand: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive; /* handwriting, used in the diary */
 
-  font: 19px/1.6 var(--sans);
+  font: 18.5px/1.65 var(--sans);
   color: var(--text);
   background: var(--cream);
   -webkit-font-smoothing: antialiased;
@@ -156,4 +156,11 @@ button:focus-visible {
   h2 {
     font-size: 25px;
   }
+}
+
+/* A hand-drawn wavy underline for a few key headings. */
+.squiggle {
+  display: inline-block;
+  padding-bottom: 10px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10' viewBox='0 0 40 10'%3E%3Cpath d='M0 5 Q10 0 20 5 T40 5' fill='none' stroke='%23f2c94c' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E") left bottom / 40px 10px repeat-x;
 }

@@ -6,6 +6,31 @@
   gap: 20px;
 }
 
+.profile-columns {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) 1.35fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.profile-column {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+@media (max-width: 960px) {
+  .profile-columns {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .profile-column {
+    gap: 20px;
+  }
+}
+
 .profile-section {
   display: flex;
   flex-direction: column;

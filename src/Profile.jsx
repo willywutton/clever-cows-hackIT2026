@@ -1,5 +1,6 @@
-// Profile.jsx shows the student's profile, in this order: header, Next up,
-// Friends, My collection, My event proposals, History, About me and Privacy.
+// Profile.jsx shows the student's profile: the header across the top, then two columns.
+// Left: Next up, Friends and About me. Right: the diary, event proposals, History and Privacy.
+// On phones the columns stack, left first.
 import { results } from './data/chapters'
 import { earnedTitles } from './titles'
 import { goalById } from './goalProgress'
@@ -47,29 +48,35 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
                 latestTitle={titles[titles.length - 1]}
             />
 
-            <NextUp signedUp={signedUp} userRegion={profile.region} onReflect={onReflect}/>
+            <div className="profile-columns">
+                <div className="profile-column">
+                    <NextUp signedUp={signedUp} userRegion={profile.region} onReflect={onReflect}/>
 
-            <FriendsSection friendIds={friendIds} onAdd={onAddFriend} onRemove={onRemoveFriend}/>
+                    <FriendsSection friendIds={friendIds} onAdd={onAddFriend} onRemove={onRemoveFriend}/>
 
-            <MyCollection diary={diary} shared={settings.shareDiary} signedUp={signedUp} onWrite={onReflect}/>
+                    <section className="card profile-section">
+                        <h3>About me</h3>
+                        <dl className="profile-about">
+                            {ABOUT_LABELS.map((item) => (
+                                <div key={item.id}>
+                                    <dt>{item.label}</dt>
+                                    <dd>{aboutAnswer(item.id)}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </section>
+                </div>
 
-            <MyProposals proposals={proposals}/>
+                <div className="profile-column">
+                    <MyCollection diary={diary} shared={settings.shareDiary} signedUp={signedUp} onWrite={onReflect}/>
 
-            <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
+                    <MyProposals proposals={proposals}/>
 
-            <section className="card profile-section">
-                <h3>About me</h3>
-                <dl className="profile-about">
-                    {ABOUT_LABELS.map((item) => (
-                        <div key={item.id}>
-                            <dt>{item.label}</dt>
-                            <dd>{aboutAnswer(item.id)}</dd>
-                        </div>
-                    ))}
-                </dl>
-            </section>
+                    <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
 
-            <PrivacySettings settings={settings} onChange={onSettingsChange}/>
+                    <PrivacySettings settings={settings} onChange={onSettingsChange}/>
+                </div>
+            </div>
         </div>
     )
 }

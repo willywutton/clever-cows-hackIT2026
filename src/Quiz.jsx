@@ -83,10 +83,15 @@ function Quiz({whenDone}){
         return (
             <div>
                 <div className="quiz-card card">
-                    <h2>You are: <span className="quiz-identity">{result.name}</span></h2>
-                    <p>{result.description}</p>
-                    <p className="quiz-matches">Best matched with: {result.matchesWith}</p>
-                    <TraitBreakdown scores={scores} total={chapters.length} topTrait={topTrait}/>
+                    <div className="quiz-result-layout">
+                        <div className="quiz-result-text">
+                            <p className="quiz-kicker">Your helper type</p>
+                            <h2>You are: <span className="quiz-identity">{result.name}</span></h2>
+                            <p>{result.description}</p>
+                            <p className="quiz-matches">Best matched with: {result.matchesWith}</p>
+                        </div>
+                        <TraitBreakdown scores={scores} total={chapters.length} topTrait={topTrait}/>
+                    </div>
                     <div className="quiz-buttons">
                         <button className="quiz-previous" onClick={handlePrevious}>← Change my last answer</button>
                         {/* The arrow "() =>" means: only call whenDone when clicked, not straight away. */}
@@ -108,8 +113,10 @@ function Quiz({whenDone}){
             {/* "condition && (...)" means: only show this part when the condition is true. */}
             {!showingResult && (
                 <>
+                <div className="quiz-layout">
                 <p className="quiz-story">{chapter.story}</p>
                 <div className="quiz-choices">
+                    <p className="quiz-kicker">What do you do?</p>
                     {/* .map turns each choice in the list into a button.
                         key gives each button a unique name so React can tell them apart. */}
                     {chapter.choices.map((choice) => (
@@ -117,6 +124,7 @@ function Quiz({whenDone}){
                         {choice.text}
                         </button>
                     ))}
+                </div>
                 </div>
                 {picks.length > 0 && (
                     <div className="quiz-buttons">

@@ -182,6 +182,70 @@
   color: var(--text-soft);
 }
 
+/* Wide screens: the farm scene fills the left half, the welcome text the right. */
+@media (min-width: 960px) {
+  .welcome {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+  }
+
+  .welcome-scene {
+    height: auto;
+    min-height: 520px;
+  }
+
+  .welcome-cow {
+    font-size: 120px;
+    bottom: 40px;
+  }
+
+  .welcome-cow-image {
+    width: 200px;
+  }
+
+  .welcome-hill-back {
+    height: 300px;
+    bottom: -130px;
+  }
+
+  .welcome-hill-front {
+    height: 320px;
+    bottom: -170px;
+  }
+
+  .welcome-fence {
+    bottom: 34px;
+    height: 46px;
+    background:
+      linear-gradient(var(--fence), var(--fence)) 0 12px / 100% 5px no-repeat,
+      linear-gradient(var(--fence), var(--fence)) 0 28px / 100% 5px no-repeat,
+      repeating-linear-gradient(to right, var(--fence) 0 8px, transparent 8px 60px);
+  }
+
+  .welcome-body {
+    justify-content: center;
+    padding: 48px;
+  }
+
+  .welcome-body h2 {
+    font-size: 40px;
+    text-align: left;
+  }
+
+  .welcome-intro {
+    text-align: left;
+    font-size: 20px;
+  }
+
+  .welcome-start {
+    align-self: flex-start;
+  }
+
+  .welcome-note {
+    text-align: left;
+  }
+}
+
 @media (max-width: 480px) {
   .welcome {
     padding: 0;

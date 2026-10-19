@@ -10,14 +10,18 @@
   font-size: 15px;
 }
 
+/* Plain text flow, so the emoji stays at the start of the line when the text wraps. */
 .session-details li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
+  display: block;
+}
+
+.session-details li > span:first-child {
+  margin-right: 6px;
 }
 
 .session-near {
+  display: inline-block;
+  margin-left: 6px;
   padding: 1px 8px;
   background: var(--grass-soft);
   border: 1px solid var(--grass);
