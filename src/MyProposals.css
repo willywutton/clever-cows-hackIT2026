@@ -38,16 +38,16 @@
   background: var(--hay-soft);
   border: 1px solid var(--hay);
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
 }
 
 .proposals-meta {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-soft);
 }
 
 .proposals-message {
-  font-size: 15px;
+  font-size: 16px;
   font-style: italic;
 }

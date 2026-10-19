@@ -49,12 +49,12 @@
 .goal-picker-finished {
   font-style: normal;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--grass);
 }
 
 .goal-picker-option span {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
 }
 

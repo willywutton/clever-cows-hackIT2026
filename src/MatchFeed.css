@@ -64,7 +64,7 @@
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 999px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 /* The card's main link sits at the bottom, so cards in a row line up. */
@@ -118,7 +118,7 @@
   background: var(--grass-soft);
   border-left: 4px solid var(--grass);
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .match-empty {

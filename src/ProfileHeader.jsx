@@ -1,4 +1,5 @@
-// ProfileHeader.jsx shows the student's nickname, character and latest title.
+// ProfileHeader.jsx greets the student and shows their character and latest title,
+// with a small field for their nickname.
 import './ProfileHeader.css'
 
 // { nickname } and { onNicknameChange } let the student set a nickname.
@@ -6,18 +7,10 @@ import './ProfileHeader.css'
 function ProfileHeader({ nickname, onNicknameChange, character, latestTitle }) {
     return (
         <div className="profile-header card">
-            <span className="profile-header-emoji" aria-hidden="true">🐮</span>
+            <span className="profile-header-avatar" aria-hidden="true">🐮</span>
+
             <div className="profile-header-text">
-                <label className="profile-header-nickname">
-                    <span>Nickname</span>
-                    <input
-                        type="text"
-                        value={nickname}
-                        maxLength={20}
-                        placeholder="First name and initial, e.g. Alex T."
-                        onChange={(event) => onNicknameChange(event.target.value)}
-                    />
-                </label>
+                <p className="profile-header-hello">Hi, {nickname.trim() || "there"}!</p>
                 <h2>{character.name}</h2>
                 {latestTitle && (
                     <p className="profile-header-title">
@@ -25,6 +18,18 @@ function ProfileHeader({ nickname, onNicknameChange, character, latestTitle }) {
                     </p>
                 )}
             </div>
+
+            <label className="profile-header-nickname">
+                <span>Your nickname</span>
+                <input
+                    type="text"
+                    value={nickname}
+                    maxLength={20}
+                    placeholder="e.g. Alex T."
+                    onChange={(event) => onNicknameChange(event.target.value)}
+                />
+                <small>First name and initial only</small>
+            </label>
         </div>
     )
 }

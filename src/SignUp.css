@@ -18,7 +18,7 @@
 
 .signup-needed {
   color: var(--text-soft);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .signup-choice {
@@ -61,7 +61,7 @@
 .signup-choice small {
   display: block;
   color: var(--text-soft);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* Marks the friends list as sample data. */
@@ -71,7 +71,7 @@
   background: var(--hay-soft);
   border: 1px dashed var(--hay);
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
 }
 
@@ -91,7 +91,7 @@
 
 .signup-problem {
   color: var(--text-soft);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .signup-buttons {

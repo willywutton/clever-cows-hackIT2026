@@ -12,7 +12,7 @@
 
 .org-label {
   color: var(--text-soft);
-  font-size: 14px;
+  font-size: 15px;
 }
 
 /* Three totals side by side. They wrap onto new lines on a narrow phone. */
@@ -71,14 +71,14 @@
 
 .org-action {
   color: var(--text-soft);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .org-attendance {
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .org-attend-button {

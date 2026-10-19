@@ -36,7 +36,7 @@
 }
 
 .history-visibility {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
 }
 
@@ -45,6 +45,6 @@
   background: var(--hay-soft);
   border: 1px solid var(--hay);
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
 }

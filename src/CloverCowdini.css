@@ -1,13 +1,34 @@
 /* Styles for the Clover Cowdini card. Shared colours and .card are in index.css. */
 
+/* Clover Cowdini's card looks like a wooden farm sign: a plank frame with nails in the corners. */
 .cow {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   text-align: center;
-  background: var(--hay-soft);
   margin-bottom: 20px;
+  background: var(--hay-soft);
+  border: 8px solid #a9744f;
+  border-radius: 14px;
+  box-shadow:
+    inset 0 0 0 2px #c99a6c,
+    4px 5px 0 #7c5236;
+  transform: rotate(-0.6deg);
+}
+
+/* Four nail heads, one in each corner of the frame. */
+.cow::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, #6b4a33 0 3px, transparent 4px) left top / 14px 14px no-repeat,
+    radial-gradient(circle, #6b4a33 0 3px, transparent 4px) right top / 14px 14px no-repeat,
+    radial-gradient(circle, #6b4a33 0 3px, transparent 4px) left bottom / 14px 14px no-repeat,
+    radial-gradient(circle, #6b4a33 0 3px, transparent 4px) right bottom / 14px 14px no-repeat;
 }
 
 .cow-emoji {
@@ -28,7 +49,7 @@
   border-radius: 999px;
   background: var(--grass-soft);
   color: var(--grass);
-  font-size: 14px;
+  font-size: 15px;
   vertical-align: middle;
 }
 
@@ -38,7 +59,7 @@
 
 .cow-next {
   color: var(--text-soft);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 /* The happy bounce after an action. */

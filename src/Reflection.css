@@ -16,13 +16,13 @@
   background: var(--hay-soft);
   border: 2px dashed var(--hay);
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
 }
 
 .reflection-private {
   color: var(--text-soft);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .reflection .instant-photo {
@@ -62,7 +62,7 @@
 }
 
 .reflection-note {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
 }
 
@@ -99,7 +99,7 @@
 
 .reflection-count {
   align-self: flex-end;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-soft);
 }
 

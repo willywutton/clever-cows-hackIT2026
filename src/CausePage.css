@@ -57,7 +57,7 @@
 
 .cause-page-action span {
   color: var(--text-soft);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .cause-page-action em {
@@ -79,7 +79,7 @@
 /* The gentle sign-up suggestion under the thank-you message. */
 .cause-next {
   color: var(--text-soft);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .next-step-button {

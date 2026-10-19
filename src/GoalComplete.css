@@ -40,7 +40,7 @@
 .goal-complete-grass {
   padding: 4px 14px;
   border-radius: 999px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .goal-complete-title {
@@ -81,7 +81,7 @@
 }
 
 .goal-complete-option span {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
 }
 
