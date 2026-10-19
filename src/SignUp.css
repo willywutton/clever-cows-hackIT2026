@@ -75,6 +75,20 @@
   font-weight: 600;
 }
 
+.signup-add-friend {
+  align-self: flex-start;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--text);
+  border: 2px dashed var(--border);
+  font-weight: 600;
+}
+
+.signup-add-friend:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
 .signup-problem {
   color: var(--text-soft);
   font-size: 15px;

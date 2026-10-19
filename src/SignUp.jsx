@@ -3,9 +3,9 @@
 // A relay group shares the commitment: only as many people as the session
 // needs go each time, and the group takes turns.
 import { useState } from 'react'
-import { friends } from './data/friends'
 import { YOU, nameOf } from './people'
 import SessionDetails from './SessionDetails'
+import AddFriend from './AddFriend'
 import './SignUp.css'
 
 const MODES = [
@@ -16,8 +16,9 @@ const MODES = [
 
 // { cause } is the cause being signed up for. { existing } is an earlier sign-up
 // for this cause, or null. { userRegion } is used for the "Near you" tag.
+// { myFriendIds } is the student's friends list, and { onAddFriend } adds someone to it.
 // { onConfirm } receives the new sign-up entry. { onBack } returns to the cause page.
-function SignUp({ cause, existing, userRegion, onConfirm, onBack }) {
+function SignUp({ cause, existing, userRegion, myFriendIds, onAddFriend, onConfirm, onBack }) {
     const signup = cause.actions.find((action) => action.type === "signup")
     const needed = signup.peopleNeeded
 
@@ -26,7 +27,19 @@ function SignUp({ cause, existing, userRegion, onConfirm, onBack }) {
     const [friendIds, setFriendIds] = useState(existing ? existing.friendIds : [])
     const [goingIds, setGoingIds] = useState(existing ? existing.goingIds : [YOU])
 
+    const [addingFriend, setAddingFriend] = useState(false)
+
     const group = [YOU, ...friendIds]
+
+    // Everyone who can be picked: the student's friends, plus anyone already in this
+    // sign-up who has since been removed as a friend.
+    const pickable = [...myFriendIds, ...friendIds.filter((id) => !myFriendIds.includes(id))]
+
+    // A friend added here is ticked straight away, since they were added to come along.
+    function handleAddFriend(id) {
+        onAddFriend(id)
+        setFriendIds([...friendIds, id])
+    }
 
     // Adds the friend if they are not ticked, removes them if they are.
     // A friend who leaves the relay group is also taken off this session.
@@ -112,12 +125,18 @@ function SignUp({ cause, existing, userRegion, onConfirm, onBack }) {
                         {mode === "relay" ? "Who's in your relay group?" : "Which friends are coming?"}{" "}
                         <span className="signup-sample">Sample friends</span>
                     </legend>
-                    {friends.map((friend) => (
-                        <label key={friend.id}>
-                            <input type="checkbox" checked={friendIds.includes(friend.id)} onChange={() => toggleFriend(friend.id)}/>
-                            {friend.name}
+                    {pickable.map((id) => (
+                        <label key={id}>
+                            <input type="checkbox" checked={friendIds.includes(id)} onChange={() => toggleFriend(id)}/>
+                            {nameOf(id)}
                         </label>
                     ))}
+                    {!addingFriend && (
+                        <button type="button" className="signup-add-friend" onClick={() => setAddingFriend(true)}>
+                            + Add a friend
+                        </button>
+                    )}
+                    {addingFriend && <AddFriend friendIds={myFriendIds} onAdd={handleAddFriend}/>}
                 </fieldset>
             )}
 

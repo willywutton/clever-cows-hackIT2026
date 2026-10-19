@@ -4,7 +4,7 @@
 //   mode       'me', 'friends' or 'relay'
 //   friendIds  the friends who joined (for 'friends'), or the rest of the relay group
 //   goingIds   for 'relay' only: who is going this time, which may or may not include "you"
-import { friends } from './data/friends'
+import { sampleStudents } from './data/friends'
 
 export const YOU = "you"
 
@@ -12,7 +12,7 @@ export function nameOf(id) {
     if (id === YOU) {
         return "You"
     }
-    return friends.find((friend) => friend.id === id).name
+    return sampleStudents.find((student) => student.id === id).name
 }
 
 // ["Mei L.", "You", "Arjun P."] becomes "You, Mei L. and Arjun P." ("You" always comes first).

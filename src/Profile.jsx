@@ -1,10 +1,11 @@
 // Profile.jsx shows the student's profile, in this order: header, Next up,
-// My collection, History, About me and Privacy.
+// Friends, My collection, History, About me and Privacy.
 import { results } from './data/chapters'
 import { earnedTitles } from './titles'
 import { goalById } from './goalProgress'
 import ProfileHeader from './ProfileHeader'
 import NextUp from './NextUp'
+import FriendsSection from './FriendsSection'
 import MyCollection from './MyCollection'
 import HistorySection from './HistorySection'
 import PrivacySettings from './PrivacySettings'
@@ -22,7 +23,8 @@ const ABOUT_LABELS = [
 // { onNicknameChange } updates the nickname. { onReflect } opens the reflection screen.
 // { signedUp }, { history } and { diary } come from App.
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
-function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, history, diary, settings, onSettingsChange }) {
+// { friendIds } is the friends list, changed with { onAddFriend } and { onRemoveFriend }.
+function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, friendIds, onAddFriend, onRemoveFriend }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
@@ -44,6 +46,8 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
             />
 
             <NextUp signedUp={signedUp} userRegion={profile.region} onReflect={onReflect}/>
+
+            <FriendsSection friendIds={friendIds} onAdd={onAddFriend} onRemove={onRemoveFriend}/>
 
             <MyCollection diary={diary} shared={settings.shareDiary} signedUp={signedUp} onWrite={onReflect}/>
 

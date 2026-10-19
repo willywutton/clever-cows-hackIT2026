@@ -20,6 +20,7 @@ import GoalCard from './GoalCard'
 import GoalComplete from './GoalComplete'
 import { goalById, goalProgress } from './goalProgress'
 import { causes } from './data/causes'
+import { startingFriendIds } from './data/friends'
 import { GRASS } from './assets/cowStages'
 
 function App() {
@@ -41,6 +42,9 @@ function App() {
   // Every session the student has signed up for, one entry per cause.
   // See people.js for what an entry looks like.
   const [signedUp, setSignedUp] = useState([])
+
+  // The ids of the student's friends (sample students from friends.js).
+  const [friendIds, setFriendIds] = useState(startingFriendIds)
 
   // Every action the student takes, in order, e.g. { type: 'share', causeId: 'cause_02', at: '...' }.
   // Used for the History counts and to work out titles (see titles.js).
@@ -184,6 +188,16 @@ function App() {
     setRecentFeeds((prev) => [...prev, { type: actionType, causeName, amount: GRASS[actionType] }])
   }
 
+  // Adds a friend by id (from a friend code), or removes one. Removing a friend
+  // leaves any sign-ups they're already part of unchanged.
+  function handleAddFriend(id) {
+    setFriendIds((prev) => (prev.includes(id) ? prev : [...prev, id]))
+  }
+
+  function handleRemoveFriend(id) {
+    setFriendIds(friendIds.filter((friendId) => friendId !== id))
+  }
+
   // Disconnecting the sample timetable also turns off the "Fits my week" filter.
   function handleDisconnectCalendar() {
     setCalendarConnected(false)
@@ -272,6 +286,8 @@ function App() {
         cause={openCause}
         existing={signedUp.find((item) => item.causeId === openCause.id) || null}
         userRegion={profile.region}
+        myFriendIds={friendIds}
+        onAddFriend={handleAddFriend}
         onConfirm={handleConfirmSignup}
         onBack={() => setScreen('cause')}
       />
@@ -313,6 +329,9 @@ function App() {
         diary={diary}
         settings={settings}
         onSettingsChange={setSettings}
+        friendIds={friendIds}
+        onAddFriend={handleAddFriend}
+        onRemoveFriend={handleRemoveFriend}
       />
     )
   }
