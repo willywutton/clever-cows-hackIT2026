@@ -11,6 +11,7 @@ import { sampleEvents, startingFavourites } from '../data/events'
 import { REFLECTION_MOOLAH, sessionHours, visitMoolah } from '../data/economy'
 import { GRASS } from '../assets/cowStages'
 import { goalById, goalProgress } from '../goalProgress'
+import { BASIC_GRASS_BOOST, STARTING_STATS, STAT_MAX } from '../data/store'
 
 const EMPTY_PROFILE = { name: '', about: '', goal: '', area: '', ageGroup: '', region: '', goalHistory: [] }
 
@@ -90,6 +91,13 @@ export function useCleverCows() {
     const [moolahLedger, setMoolahLedger] = usePersistentState('moolah', [])
     const moolah = moolahLedger.reduce((total, entry) => total + entry.amount, 0)
 
+    // Clover Cowdini's care: her stats (which only ever go up), the items she owns,
+    // the accessories she's wearing, and how much free basic grass has been fed.
+    const [cow, setCow] = usePersistentState('cow', {
+        stats: STARTING_STATS, owned: [], equipped: [], grassFed: 0,
+    })
+    const basicGrassLeft = Math.max(0, grass - cow.grassFed)
+
     // Grass gained since the cow last reacted on Home: { type, causeName, amount }.
     const [recentFeeds, setRecentFeeds] = useState([])
 
@@ -145,6 +153,56 @@ export function useCleverCows() {
         }
         setMoolahLedger((prev) => [...prev, { amount: -amount, reason, at: new Date().toISOString() }])
         return true
+    }
+
+    // ---- Caring for Clover Cowdini ----
+
+    // Raises one stat, never above the maximum. Stats never go down.
+    function raiseStat(stats, stat, amount) {
+        return { ...stats, [stat]: Math.min(STAT_MAX, stats[stat] + amount) }
+    }
+
+    // Feeds one handful of the free basic grass earned by helping.
+    function feedBasicGrass() {
+        if (basicGrassLeft <= 0) {
+            return
+        }
+        setCow((prev) => ({
+            ...prev, grassFed: prev.grassFed + 1, stats: raiseStat(prev.stats, 'hunger', BASIC_GRASS_BOOST),
+        }))
+    }
+
+    // Buys a store item with Moolah. Grass and care items are used straight away;
+    // furniture, fun things and accessories stay in her room (accessories are put on).
+    // Returns false if there isn't enough Moolah.
+    function buyItem(item) {
+        if (!item.consumable && cow.owned.includes(item.id)) {
+            return false
+        }
+        if (!spendMoolah(item.price, `Bought ${item.name}`)) {
+            return false
+        }
+        setCow((prev) => ({
+            ...prev,
+            stats: raiseStat(prev.stats, item.stat, item.boost),
+            owned: item.consumable ? prev.owned : [...prev.owned, item.id],
+            equipped: item.category === 'accessory' ? [...prev.equipped, item.id] : prev.equipped,
+        }))
+        return true
+    }
+
+    // Gives an item for free, e.g. an accessory earned by finishing a goal.
+    function giftItem(itemId) {
+        setCow((prev) => (prev.owned.includes(itemId) ? prev : { ...prev, owned: [...prev.owned, itemId] }))
+    }
+
+    function toggleAccessory(itemId) {
+        setCow((prev) => ({
+            ...prev,
+            equipped: prev.equipped.includes(itemId)
+                ? prev.equipped.filter((id) => id !== itemId)
+                : [...prev.equipped, itemId],
+        }))
     }
 
     // ---- Actions and grass ----
@@ -342,7 +400,7 @@ export function useCleverCows() {
         // values
         quizResult, screen, openCauseId, openedBySurprise, profile, signedUp,
         events, favourites, sentInvites, orgUpdates, sampleAttendance, attendance, hoursWorked,
-        portfolio, lastVisit,
+        portfolio, lastVisit, cow, basicGrassLeft,
         friendIds, history, diary, calendarConnected, fitsMyWeek, settings, view,
         grass, recentFeeds, justFinishedGoal, finishedGoalIds, moolah, moolahLedger,
         // actions
@@ -353,6 +411,7 @@ export function useCleverCows() {
         addFriend, removeFriend,
         recordVisit, markSampleAttended, hostEvent, addOrgEvent, approveEvent, postUpdate,
         isFavourite, toggleFavourite, inviteFriends,
+        feedBasicGrass, buyItem, giftItem, toggleAccessory,
         disconnectCalendar, resetDemo, earnMoolah, spendMoolah,
         clearRecentFeeds: () => setRecentFeeds([]),
     }

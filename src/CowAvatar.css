@@ -1,0 +1,62 @@
+/* Styles for a cow profile picture. Sizes are set with --avatar, and every
+   accessory is placed as a fraction of it, so all sizes look the same. */
+
+.cow-avatar {
+  --avatar: 72px;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: var(--avatar);
+  height: var(--avatar);
+  background: var(--hay-soft);
+  border: 3px solid var(--card);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--hay);
+  line-height: 1;
+}
+
+.cow-avatar-small {
+  --avatar: 44px;
+}
+
+.cow-avatar-large {
+  --avatar: 140px;
+}
+
+.cow-avatar-face {
+  font-size: calc(var(--avatar) * 0.62);
+}
+
+img.cow-avatar-face {
+  width: 70%;
+}
+
+.cow-avatar-head,
+.cow-avatar-glasses,
+.cow-avatar-neck {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.cow-avatar-head {
+  top: calc(var(--avatar) * -0.18);
+  font-size: calc(var(--avatar) * 0.42);
+}
+
+.cow-avatar-glasses {
+  top: calc(var(--avatar) * 0.3);
+  font-size: calc(var(--avatar) * 0.3);
+}
+
+.cow-avatar-neck {
+  bottom: calc(var(--avatar) * -0.06);
+  font-size: calc(var(--avatar) * 0.3);
+}
+
+img.cow-avatar-head,
+img.cow-avatar-glasses,
+img.cow-avatar-neck {
+  width: 45%;
+}

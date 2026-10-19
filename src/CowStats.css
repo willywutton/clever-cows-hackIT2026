@@ -1,0 +1,41 @@
+/* Styles for Clover Cowdini's stat bars. Shared colours are in index.css. */
+
+.cow-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cow-stat-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 17px;
+}
+
+.cow-stat-bar {
+  height: 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.cow-stat-bar div {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease-out;
+}
+
+.cow-stat-comfort div { background: #c99a6c; }
+.cow-stat-hunger div { background: var(--grass); }
+.cow-stat-cleanliness div { background: #6fb3c9; }
+.cow-stat-happiness div { background: var(--hay); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cow-stat-bar div {
+    transition: none;
+  }
+}

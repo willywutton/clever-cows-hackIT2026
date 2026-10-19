@@ -1,0 +1,71 @@
+/* Styles for the Cow tab. Shared colours and .card are in index.css. */
+
+.cow-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.cow-page-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.cow-page-main {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cow-page-message {
+  padding: 10px 14px;
+  background: var(--grass-soft);
+  border-left: 4px solid var(--grass);
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.cow-page-grass {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.cow-page-grass > div {
+  flex: 1;
+  min-width: 200px;
+}
+
+.cow-page-grass p {
+  font-size: 16px;
+  color: var(--text-soft);
+}
+
+.cow-page-grass-art {
+  font-size: 44px;
+}
+
+.cow-page-grass .button-primary:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cow-page-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cow-page-stats-note {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+@media (max-width: 960px) {
+  .cow-page-columns {
+    grid-template-columns: 1fr;
+  }
+}

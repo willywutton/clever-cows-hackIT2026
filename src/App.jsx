@@ -25,6 +25,7 @@ import GoalComplete from './GoalComplete'
 import FriendsSection from './FriendsSection'
 import DiaryPage from './DiaryPage'
 import PortfolioPrint from './PortfolioPrint'
+import CowPage from './CowPage'
 import HostEventPage from './HostEventPage'
 import CauseNews from './CauseNews'
 import PageTitle from './PageTitle'
@@ -206,12 +207,7 @@ function App() {
     )
   }
   else if (screen === 'cow') {
-    content = (
-      <>
-        <PageTitle title="Clover Cowdini"/>
-        <CloverCowdini grass={app.grass} recentFeeds={app.recentFeeds} onReactionDone={app.clearRecentFeeds}/>
-      </>
-    )
+    content = <CowPage app={app}/>
   }
   else if (screen === 'diary') {
     content = <DiaryPage app={app}/>
