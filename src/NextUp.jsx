@@ -6,7 +6,7 @@ import SessionDetails from './SessionDetails'
 import AddToCalendar from './AddToCalendar'
 import './NextUp.css'
 
-// { signedUp } is App's list of sign-ups. { userRegion } is for the "Near you" tag.
+// { signedUp } is App's list of sign-ups. { userRegion } is for the travel tag.
 // { onReflect } opens the reflection screen for a cause.
 function NextUp({ signedUp, userRegion, onReflect }) {
     const sessions = upcomingSessions(signedUp)

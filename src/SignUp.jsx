@@ -15,7 +15,7 @@ const MODES = [
 ]
 
 // { cause } is the cause being signed up for. { existing } is an earlier sign-up
-// for this cause, or null. { userRegion } is used for the "Near you" tag.
+// for this cause, or null. { userRegion } is used for the travel tag.
 // { myFriendIds } is the student's friends list, and { onAddFriend } adds someone to it.
 // { onConfirm } receives the new sign-up entry. { onBack } returns to the cause page.
 function SignUp({ cause, existing, userRegion, myFriendIds, onAddFriend, onConfirm, onBack }) {

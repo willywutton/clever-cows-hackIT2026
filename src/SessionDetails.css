@@ -19,13 +19,27 @@
   margin-right: 6px;
 }
 
-.session-near {
+/* The travel tag: green when very near, hay when not far, soft brown for a longer trip. */
+.session-travel {
   display: inline-block;
   margin-left: 6px;
   padding: 1px 8px;
-  background: var(--grass-soft);
-  border: 1px solid var(--grass);
   border-radius: 999px;
   font-size: 14px;
   font-weight: 600;
+}
+
+.session-travel-very-near {
+  background: var(--grass-soft);
+  border: 1px solid var(--grass);
+}
+
+.session-travel-not-far {
+  background: var(--hay-soft);
+  border: 1px solid var(--hay);
+}
+
+.session-travel-longer {
+  background: #f1e6da;
+  border: 1px solid var(--border);
 }

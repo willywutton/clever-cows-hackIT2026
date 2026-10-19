@@ -6,6 +6,7 @@ import { causes } from './data/causes'
 import { clashesWith, describeSlot, findFreeSlot } from './freeTime'
 import { traitLabels } from './data/traits'
 import { causeLook } from './causeColors'
+import { travelLabel } from './travel'
 import SurpriseMe from './SurpriseMe'
 import HostEvent from './HostEvent'
 
@@ -27,7 +28,8 @@ function signupOf(cause) {
 // { fitsMyWeek } is true when the "Fits my week" switch is on, and { onShowAll } turns it off.
 // { signedUp } is App's list of sign-ups, used to hide clashing sessions.
 // { onSendProposal } keeps an event proposal from the Host your own event card.
-function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, signedUp, onSendProposal}){
+// { userRegion } is the student's part of Singapore, for the travel label ('' if not given).
+function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, signedUp, onSendProposal, userRegion}){
     // .filter keeps only the causes whose identity list includes the player's trait.
     const matchingCauses = causes.filter((cause)=>
         cause.identity.includes(result)
@@ -77,7 +79,12 @@ function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, si
                     <h3>{cause.name}</h3>
                 </div>
                 <ul className="cause-facts">
-                    <li><span aria-hidden="true">📍</span> {signupOf(cause).area}</li>
+                    <li>
+                        <span aria-hidden="true">📍</span> {signupOf(cause).area}
+                        {travelLabel(userRegion, signupOf(cause).region) && (
+                            <> · {travelLabel(userRegion, signupOf(cause).region).text}</>
+                        )}
+                    </li>
                     <li><span aria-hidden="true">📅</span> {shortDate(signupOf(cause).startsAt)}</li>
                     <li><span aria-hidden="true">👥</span> Needs {signupOf(cause).peopleNeeded}</li>
                 </ul>

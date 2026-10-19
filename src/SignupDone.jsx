@@ -5,7 +5,7 @@ import SessionDetails from './SessionDetails'
 import AddToCalendar from './AddToCalendar'
 import './SignupDone.css'
 
-// { cause } and { entry } describe the sign-up. { userRegion } is for the "Near you" tag.
+// { cause } and { entry } describe the sign-up. { userRegion } is for the travel tag.
 // { onCalendarAnswered } records that the calendar prompt was answered, so it is never asked twice.
 // { onHome } and { onBackToCause } are the two ways out of this screen.
 function SignupDone({ cause, entry, userRegion, onCalendarAnswered, onHome, onBackToCause }) {

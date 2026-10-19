@@ -276,6 +276,7 @@ function App() {
             onShowAll={() => setFitsMyWeek(false)}
             signedUp={signedUp}
             onSendProposal={handleSendProposal}
+            userRegion={profile.region}
           />
         }
       />
