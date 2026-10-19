@@ -11,6 +11,13 @@
   line-height: 1;
 }
 
+.signup-done-sent {
+  padding: 10px 14px;
+  background: #fff;
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+}
+
 .signup-done-turn {
   background: var(--grass-soft);
   border-left: 4px solid var(--grass);

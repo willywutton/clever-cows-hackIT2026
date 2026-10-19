@@ -1,26 +1,29 @@
-// Mock sign-up data for the organisation view.
-// These students are made up. Only a first name and initial are shown,
-// so no real or personal details are stored.
+// Sample sign-ups for the Organisation view. These students are made up and are
+// marked as samples on screen. Only a first name and initial are shown.
 //
-// How to read one sign-up:
+// How to read one sample sign-up:
 //   id              a unique code, used by React to tell rows apart
 //   name            first name and last initial
-//   actionType      which action they picked: "share", "donate" or "signup"
-//                   (the matching button label is looked up from causes.js)
-//   weekly          for sign-ups only: true if they join every week, false for just once
-//   timesAttended   how many times the organisation has confirmed they turned up.
-//                   Only used for sign-ups.
+//   weekly          true if they come every week, false for just once
+//   timesAttended   how many times they had already been confirmed as attending
 
-// The cause this mock organisation runs (Golden Years Club in causes.js).
-export const orgCauseId = "cause_02"
-
-export const signups = [
-  { id: "signup_01", name: "Aisha K.", actionType: "signup", weekly: false, timesAttended: 2 },
-  { id: "signup_02", name: "Ben T.", actionType: "signup", weekly: true, timesAttended: 5 },
-  { id: "signup_03", name: "Chloe L.", actionType: "share", timesAttended: 0 },
-  { id: "signup_04", name: "Daniel W.", actionType: "signup", weekly: false, timesAttended: 0 },
-  { id: "signup_05", name: "Farah N.", actionType: "signup", weekly: true, timesAttended: 3 },
-  { id: "signup_06", name: "Gabriel O.", actionType: "donate", timesAttended: 0 },
-  { id: "signup_07", name: "Hui Min S.", actionType: "signup", weekly: false, timesAttended: 1 },
-  { id: "signup_08", name: "Ivan R.", actionType: "share", timesAttended: 0 },
+const SAMPLE_PEOPLE = [
+  { name: "Aisha K.", weekly: false, timesAttended: 2 },
+  { name: "Ben T.", weekly: true, timesAttended: 5 },
+  { name: "Chloe L.", weekly: false, timesAttended: 0 },
+  { name: "Daniel W.", weekly: false, timesAttended: 1 },
+  { name: "Farah N.", weekly: true, timesAttended: 3 },
+  { name: "Hui Min S.", weekly: false, timesAttended: 1 },
+  { name: "Ivan R.", weekly: true, timesAttended: 4 },
 ]
+
+// A few sample sign-ups for a cause. Each cause gets a different mix of people,
+// so switching causes in the Organisation view shows a different list.
+export function sampleSignupsFor(causeId) {
+  const offset = Number(causeId.replace(/\D/g, "")) % SAMPLE_PEOPLE.length
+  const count = 4 + (offset % 2)
+  return Array.from({ length: count }, (_, index) => {
+    const person = SAMPLE_PEOPLE[(offset + index) % SAMPLE_PEOPLE.length]
+    return { id: `${causeId}_sample_${index}`, ...person }
+  })
+}

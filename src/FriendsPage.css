@@ -1,0 +1,29 @@
+/* Styles for the Friends tab. Shared colours are in index.css. */
+
+.friends-page {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.friends-add-button {
+  padding: 10px 18px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 3px 0 #1f130c;
+}
+
+.friends-columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(260px, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .friends-columns {
+    grid-template-columns: 1fr;
+  }
+}

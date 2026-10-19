@@ -1,0 +1,129 @@
+/* Styles for the barn drawn around the Welcome card. The red plank wall itself is
+   .barn-wall in Welcome.css. Everything is drawn with CSS, no image files. */
+
+.barn-front {
+  --trim: #fbf3e2;
+  --barn-inside: #7d2c1e;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+/* A white X brace, used on the shutters and windows: two diagonal white bars. */
+.barn-shutter,
+.barn-window > span {
+  background:
+    linear-gradient(to top right, transparent calc(50% - 3px), var(--trim) calc(50% - 3px), var(--trim) calc(50% + 3px), transparent calc(50% + 3px)),
+    linear-gradient(to bottom right, transparent calc(50% - 3px), var(--trim) calc(50% - 3px), var(--trim) calc(50% + 3px), transparent calc(50% + 3px)),
+    #c2412e;
+  border: 6px solid var(--trim);
+  box-sizing: border-box;
+}
+
+/* The hay loft: a dark opening with hay, between two shutters swung open. */
+.barn-loft {
+  display: flex;
+  align-items: stretch;
+  height: 120px;
+}
+
+.barn-shutter {
+  width: 64px;
+}
+
+.barn-loft-opening {
+  position: relative;
+  width: 150px;
+  background: #2b1710;
+  border: 8px solid var(--trim);
+  border-left: none;
+  border-right: none;
+  overflow: hidden;
+}
+
+/* Spiky hay spilling over the bottom of the loft opening. */
+.barn-hay {
+  position: absolute;
+  left: -4px;
+  right: -4px;
+  bottom: -2px;
+  height: 64px;
+  background: linear-gradient(to bottom, #f6d258, #e2a92d);
+  clip-path: polygon(
+    0% 100%, 0% 55%, 8% 30%, 14% 52%, 22% 10%, 30% 45%, 38% 0%, 46% 40%,
+    54% 5%, 62% 42%, 70% 12%, 78% 48%, 86% 20%, 93% 50%, 100% 35%, 100% 100%
+  );
+}
+
+/* The card in the middle, with a window on each side. The row stretches across the
+   whole screen (100vw), and the space either side of the card is split into equal
+   columns, so each window sits in the middle of the wall beside the card. */
+.barn-row {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 940px) 1fr;
+  align-items: center;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}
+
+.barn-door {
+  min-width: 0;
+}
+
+/* A side window: a white frame with two X-braced panes side by side.
+   It shrinks a little if the space beside the card is narrow. */
+.barn-window {
+  display: flex;
+  justify-self: center;
+  width: min(210px, calc(100% - 24px));
+  aspect-ratio: 15 / 16;
+  border: 8px solid var(--trim);
+  background: var(--trim);
+  gap: 8px;
+}
+
+.barn-window > span {
+  flex: 1;
+  border: none;
+}
+
+/* Below laptop width there's no room beside the card, so the side windows go
+   and the card uses the page width as normal. */
+@media (max-width: 1100px) {
+  .barn-row {
+    display: block;
+    width: auto;
+    margin: 0;
+  }
+
+  .barn-window {
+    display: none;
+  }
+}
+
+/* Phones: a smaller loft window. */
+@media (max-width: 720px) {
+  .barn-front {
+    gap: 18px;
+  }
+
+  .barn-loft {
+    height: 80px;
+  }
+
+  .barn-shutter {
+    width: 42px;
+  }
+
+  .barn-loft-opening {
+    width: 100px;
+  }
+
+  .barn-hay {
+    height: 42px;
+  }
+}

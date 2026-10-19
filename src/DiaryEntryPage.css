@@ -1,0 +1,92 @@
+/* Styles for one diary page. The notebook look comes from JournalPage.css, and
+   spacing uses whole ruled lines (--journal-line) so handwriting stays on the lines. */
+
+.diary-entry-page {
+  font-family: var(--hand);
+  font-size: 23px;
+}
+
+.diary-entry-date {
+  align-self: flex-end;
+  color: var(--text-soft);
+}
+
+.diary-entry-cause {
+  margin: 0;
+  font-family: var(--hand);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: var(--journal-line);
+  text-decoration: underline;
+  text-decoration-color: var(--hay);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 2px;
+}
+
+.diary-entry-page .instant-photo {
+  align-self: center;
+  margin: 18px 0 22px;
+}
+
+.diary-entry-text {
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.diary-entry-stickers {
+  display: flex;
+  gap: 10px;
+  margin: 4px 0;
+  line-height: 1;
+}
+
+/* The buttons are in the normal font, so they read as controls rather than handwriting. */
+.diary-entry-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: var(--sans);
+  line-height: 1.4;
+}
+
+.diary-entry-actions button {
+  padding: 6px 12px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.diary-entry-actions button:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.diary-entry-actions button[aria-pressed="true"] {
+  border-color: var(--grass);
+  background: var(--grass-soft);
+}
+
+.diary-entry-copied,
+.diary-entry-copytext {
+  margin-top: 8px;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.diary-entry-copytext {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.diary-entry-copytext textarea {
+  font: inherit;
+  padding: 8px;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+}

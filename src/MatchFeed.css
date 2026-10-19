@@ -6,14 +6,87 @@
   gap: 20px;
 }
 
-.match-title {
-  text-align: center;
+.match-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
+.match-subtitle {
+  color: var(--text-soft);
+}
+
+/* Cause cards sit side by side when there's room, and stack on narrow screens. */
+.match-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Each card has a coloured band at the top in its cause's colour (see causeColors.js). */
 .cause-card {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  border-top: 12px solid var(--cause-color, var(--hay));
+}
+
+.cause-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cause-card-emoji {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: var(--cause-color, var(--hay-soft));
+  border-radius: 14px;
+  font-size: 26px;
+  transform: rotate(-4deg);
+}
+
+/* Where, when and how many, as small tags. */
+.cause-facts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cause-facts li {
+  padding: 2px 10px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 16px;
+}
+
+/* The card's main link sits at the bottom, so cards in a row line up. */
+.cause-card-open {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 10px 18px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 3px 0 #1f130c;
+}
+
+.cause-card-open:hover {
+  background: #4d3223;
+}
+
+.cause-card-open:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #1f130c;
 }
 
 .cause-description {
@@ -45,7 +118,7 @@
   background: var(--grass-soft);
   border-left: 4px solid var(--grass);
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .match-empty {

@@ -1,14 +1,13 @@
-/* Styles for the top of the Profile. Shared colours and .card are in index.css. */
+/* Styles for the banner at the top of Profile. Shared colours and .card are in index.css. */
 
 .profile-header {
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
-}
-
-.profile-header-emoji {
-  font-size: 44px;
-  line-height: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 28px;
+  background:
+    radial-gradient(circle at 92% 20%, rgba(242, 201, 76, 0.35) 0 70px, transparent 71px),
+    var(--hay-soft);
 }
 
 .profile-header-text {
@@ -16,40 +15,122 @@
   flex-direction: column;
   gap: 6px;
   flex: 1;
-  min-width: 0;
+  min-width: 220px;
 }
 
-.profile-header-nickname {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 14px;
+.profile-header-hello {
+  font-family: var(--hand);
+  font-size: 28px;
+  line-height: 1;
+  color: var(--barn);
+}
+
+.profile-header-about {
   color: var(--text-soft);
 }
 
-.profile-header-nickname input {
-  font: inherit;
-  font-size: 17px;
-  color: var(--text);
-  padding: 6px 10px;
-  background: #fff;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  width: 100%;
-  box-sizing: border-box;
+.profile-header-titles {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.profile-header-nickname input:focus-visible {
-  outline: 3px solid var(--hay);
-  outline-offset: 1px;
-}
-
-.profile-header-title {
-  align-self: flex-start;
+.profile-header-titles li {
   padding: 2px 10px;
-  background: var(--hay-soft);
-  border: 1px solid var(--hay);
+  background: var(--card);
+  border: 2px solid var(--hay);
   border-radius: 999px;
-  font-weight: 600;
   font-size: 15px;
+  font-weight: 600;
+}
+
+.profile-header-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.profile-header-stats {
+  display: flex;
+  gap: 10px;
+}
+
+.profile-header-stats p {
+  min-width: 96px;
+  padding: 8px 12px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.profile-header-stats strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 28px;
+  color: var(--barn);
+}
+
+.profile-header-edit {
+  padding: 6px 14px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-weight: 600;
+}
+
+.profile-header-form {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--hay);
+}
+
+.profile-header-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.profile-header-form input,
+.profile-header-form textarea {
+  font: inherit;
+  font-weight: 400;
+  color: var(--text);
+  padding: 8px 12px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+}
+
+.profile-header-hint {
+  font-size: 15px;
+  color: var(--barn-dark);
+}
+
+.profile-header-form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.profile-header-form-buttons button[type="button"] {
+  padding: 10px 16px;
+  background: transparent;
+  border: 2px solid var(--border);
+}
+
+@media (max-width: 720px) {
+  .profile-header-side {
+    align-items: flex-start;
+  }
 }

@@ -11,6 +11,8 @@
 //   titleId        the title earned on finishing it (see titles.js)
 //   unit           the word shown after the progress numbers, e.g. "1 of 3 causes"
 //   suggestedNext  goal ids to offer once this one is finished, best first
+//   reward         what finishing earns, shown before starting: { moolah, accessory }
+//                  (accessory is an optional store item id for Clover Cowdini)
 
 // The set of different causes with at least one matching history item.
 function distinctCauses(history, matches) {
@@ -46,6 +48,7 @@ export const goals = [
         titleId: "explorer",
         unit: "causes",
         suggestedNext: ["regular", "people", "deeper"],
+        reward: { moolah: 20, accessory: "sunglasses" },
     },
     {
         id: "regular",
@@ -56,6 +59,7 @@ export const goals = [
         titleId: "regular",
         unit: "sessions",
         suggestedNext: ["people", "deeper", "story"],
+        reward: { moolah: 30, accessory: "cowbell" },
     },
     {
         id: "people",
@@ -66,6 +70,7 @@ export const goals = [
         titleId: "connector",
         unit: "group sign-ups",
         suggestedNext: ["deeper", "story", "regular"],
+        reward: { moolah: 25, accessory: "flower-crown" },
     },
     {
         id: "deeper",
@@ -76,6 +81,7 @@ export const goals = [
         titleId: "champion",
         unit: "actions on one cause",
         suggestedNext: ["story", "try-new", "regular"],
+        reward: { moolah: 25, accessory: "straw-hat" },
     },
     {
         id: "story",
@@ -86,5 +92,6 @@ export const goals = [
         titleId: "storyteller",
         unit: "reflections",
         suggestedNext: ["try-new", "people", "regular"],
+        reward: { moolah: 20 },
     },
 ]

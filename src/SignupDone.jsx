@@ -5,7 +5,7 @@ import SessionDetails from './SessionDetails'
 import AddToCalendar from './AddToCalendar'
 import './SignupDone.css'
 
-// { cause } and { entry } describe the sign-up. { userRegion } is for the "Near you" tag.
+// { cause } and { entry } describe the sign-up. { userRegion } is for the travel tag.
 // { onCalendarAnswered } records that the calendar prompt was answered, so it is never asked twice.
 // { onHome } and { onBackToCause } are the two ways out of this screen.
 function SignupDone({ cause, entry, userRegion, onCalendarAnswered, onHome, onBackToCause }) {
@@ -18,6 +18,12 @@ function SignupDone({ cause, entry, userRegion, onCalendarAnswered, onHome, onBa
             <h2>You're signed up: {cause.name}: {label}</h2>
             <SessionDetails action={signup} weekly={entry.weekly} userRegion={userRegion}/>
             <p>{describeWho(entry)}</p>
+
+            {entry.mode !== "me" && entry.friendIds.length > 0 && (
+                <p className="signup-done-sent">
+                    <span aria-hidden="true">✉</span> Confirmation sent to {joinNames(entry.friendIds.map(nameOf))} (demo, no real email sent).
+                </p>
+            )}
 
             {entry.weekly && entry.mode === "relay" && (
                 <p className="signup-done-turn">

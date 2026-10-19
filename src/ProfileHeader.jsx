@@ -1,30 +1,85 @@
-// ProfileHeader.jsx shows the student's nickname, character and latest title.
+// ProfileHeader.jsx is the banner at the top of Profile: Clover Cowdini's picture,
+// the student's name, character and titles, their hours and Moolah, and an editable
+// "About me" line. The name can be changed too (first name only).
+import { useState } from 'react'
+import CowAvatar from './CowAvatar'
 import './ProfileHeader.css'
 
-// { nickname } and { onNicknameChange } let the student set a nickname.
-// { character } is their quiz result. { latestTitle } is a title from titles.js, or undefined.
-function ProfileHeader({ nickname, onNicknameChange, character, latestTitle }) {
+// A first name: letters, plus hyphens or apostrophes, with no spaces.
+const FIRST_NAME = /^[A-Za-z][A-Za-z'-]*$/
+const ABOUT_LENGTH = 140
+
+// { name }, { about } and their handlers let the student edit their name and About me.
+// { character } is their quiz result. { titles } are every title earned, latest last.
+// { hours }, { moolah } and { accessories } (what Clover is wearing) are shown in the banner.
+function ProfileHeader({ name, onNameChange, about, onAboutChange, character, titles, hours, moolah, accessories }) {
+    const [editing, setEditing] = useState(false)
+    const [draftName, setDraftName] = useState(name)
+    const [draftAbout, setDraftAbout] = useState(about)
+    const nameValid = FIRST_NAME.test(draftName.trim())
+
+    // A form's onSubmit runs on the Save button and on pressing Enter.
+    // preventDefault stops the browser from reloading the page, which forms do by default.
+    function handleSubmit(event) {
+        event.preventDefault()
+        if (!nameValid) {
+            return
+        }
+        onNameChange(draftName.trim())
+        onAboutChange(draftAbout.trim())
+        setEditing(false)
+    }
+
     return (
         <div className="profile-header card">
-            <span className="profile-header-emoji" aria-hidden="true">🐮</span>
+            <CowAvatar accessories={accessories} size="large" label="Your cow, Clover Cowdini"/>
+
             <div className="profile-header-text">
-                <label className="profile-header-nickname">
-                    <span>Nickname</span>
-                    <input
-                        type="text"
-                        value={nickname}
-                        maxLength={20}
-                        placeholder="First name and initial, e.g. Alex T."
-                        onChange={(event) => onNicknameChange(event.target.value)}
-                    />
-                </label>
+                <p className="profile-header-hello">Hi, {name || "there"}!</p>
                 <h2>{character.name}</h2>
-                {latestTitle && (
-                    <p className="profile-header-title">
-                        <span aria-hidden="true">🏅</span> {latestTitle.name}
-                    </p>
+                {!editing && (
+                    <p className="profile-header-about">{about || "Add a line about yourself, like what you enjoy helping with."}</p>
+                )}
+                {titles.length > 0 && (
+                    <ul className="profile-header-titles" aria-label="Titles earned">
+                        {titles.map((title) => <li key={title.id} title={title.description}>🏅 {title.name}</li>)}
+                    </ul>
                 )}
             </div>
+
+            <div className="profile-header-side">
+                <div className="profile-header-stats">
+                    <p><strong>{hours}</strong> {hours === 1 ? "hour" : "hours"} worked</p>
+                    <p><strong>{moolah}</strong> Moolah</p>
+                </div>
+                {!editing && (
+                    <button className="profile-header-edit" onClick={() => setEditing(true)}>✏️ Edit profile</button>
+                )}
+            </div>
+
+            {editing && (
+                <form className="profile-header-form" onSubmit={handleSubmit}>
+                    <label>
+                        <span>First name</span>
+                        <input type="text" value={draftName} maxLength={20} onChange={(event) => setDraftName(event.target.value)}/>
+                    </label>
+                    {!nameValid && <p className="profile-header-hint">Just your first name, please: letters only, no spaces.</p>}
+                    <label>
+                        <span>About me</span>
+                        <textarea
+                            value={draftAbout}
+                            rows={2}
+                            maxLength={ABOUT_LENGTH}
+                            placeholder="e.g. Happiest outdoors, and I love animals."
+                            onChange={(event) => setDraftAbout(event.target.value)}
+                        />
+                    </label>
+                    <div className="profile-header-form-buttons">
+                        <button type="button" onClick={() => setEditing(false)}>Cancel</button>
+                        <button type="submit" className="button-primary" disabled={!nameValid}>Save</button>
+                    </div>
+                </form>
+            )}
         </div>
     )
 }

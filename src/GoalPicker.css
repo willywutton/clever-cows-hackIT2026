@@ -40,8 +40,21 @@
   background: var(--hay-soft);
 }
 
+.goal-picker-option:disabled {
+  cursor: default;
+  background: var(--grass-soft);
+  border-color: var(--grass-soft);
+}
+
+.goal-picker-finished {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--grass);
+}
+
 .goal-picker-option span {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
 }
 

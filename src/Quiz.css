@@ -19,6 +19,52 @@
   gap: 12px;
 }
 
+/* A small heading above the choices and on the result screen. */
+.quiz-kicker {
+  font-family: var(--display);
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--barn);
+}
+
+/* Wide screens: the story on the left, the choices on the right;
+   on the result, the description beside the strengths. */
+@media (min-width: 960px) {
+  .quiz-layout,
+  .quiz-result-layout {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .quiz-story {
+    font-size: 20px;
+  }
+}
+
+.quiz-result-text {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+@media (max-width: 959px) {
+  .quiz-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .quiz-result-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
 /* The four answer buttons. */
 .quiz-choice {
   width: 100%;
@@ -36,6 +82,31 @@
 
 .quiz-card .button-primary {
   align-self: center;
+}
+
+/* Previous on the left, the main button on the right. */
+.quiz-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.quiz-buttons .button-primary {
+  margin-left: auto;
+}
+
+.quiz-previous {
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+}
+
+.quiz-previous:hover {
+  background: #fff;
+  color: var(--text);
 }
 
 /* Result screen: the identity name stands out in barn red. */

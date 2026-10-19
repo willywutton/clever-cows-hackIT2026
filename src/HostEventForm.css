@@ -1,0 +1,103 @@
+/* Styles for the Host your own event form. Shared colours and .card are in index.css. */
+
+.host-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.host-form-demo {
+  align-self: flex-start;
+  padding: 2px 10px;
+  background: var(--hay-soft);
+  border: 2px dashed var(--hay);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.host-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 200px;
+  font-weight: 600;
+}
+
+.host-field input,
+.host-field select,
+.host-field textarea {
+  font: inherit;
+  font-weight: 400;
+  color: var(--text);
+  padding: 9px 12px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.host-field textarea {
+  resize: vertical;
+}
+
+.host-field input:focus-visible,
+.host-field select:focus-visible,
+.host-field textarea:focus-visible {
+  outline: 3px solid var(--hay);
+  outline-offset: 1px;
+}
+
+.host-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* The styled label acts as the picture button; the real file input is hidden inside it. */
+.host-photo {
+  position: relative;
+  align-self: flex-start;
+  padding: 9px 16px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.host-photo:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.host-photo input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.host-photo:focus-within {
+  outline: 3px solid var(--hay);
+  outline-offset: 2px;
+}
+
+.host-preview {
+  max-width: 100%;
+  max-height: 220px;
+  align-self: flex-start;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+}
+
+.host-submit {
+  align-self: flex-start;
+}
+
+.host-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

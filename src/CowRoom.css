@@ -1,0 +1,79 @@
+/* Styles for Clover Cowdini's room. Shared colours are in index.css. */
+
+/* Wooden plank wall on top, straw floor on the bottom third. */
+.cow-room {
+  position: relative;
+  min-height: 300px;
+  padding: 24px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  background:
+    linear-gradient(to bottom, transparent 64%, #e9cf7a 64%, #dcbd5e 100%),
+    repeating-linear-gradient(to right, #c98f62 0 58px, #b77c50 58px 61px),
+    #c98f62;
+  border: 6px solid #8d5a3a;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Bought items sit along the wall above the floor. */
+.cow-room-items {
+  position: absolute;
+  top: 22px;
+  left: 16px;
+  right: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cow-room-items li {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 250, 240, 0.85);
+  border-radius: 14px;
+  font-size: 38px;
+}
+
+.cow-room-items img {
+  width: 80%;
+}
+
+.cow-room-cow {
+  margin-bottom: 6px;
+}
+
+.cow-room-happy {
+  animation: cow-room-hop 0.7s ease-out 2;
+}
+
+@keyframes cow-room-hop {
+  0%, 100% { transform: translateY(0); }
+  45% { transform: translateY(-16px); }
+}
+
+.cow-room-empty {
+  position: absolute;
+  top: 28px;
+  left: 20px;
+  right: 20px;
+  text-align: center;
+  color: #fff;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cow-room-happy {
+    animation: none;
+  }
+}

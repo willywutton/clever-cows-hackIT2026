@@ -1,0 +1,47 @@
+/* Styles for the Organisation view's layout. Shared colours and .card are in index.css. */
+
+.org {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.org-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.org-label {
+  padding: 4px 12px;
+  background: var(--hay-soft);
+  border: 2px dashed var(--hay);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.org-cause {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.org-cause select {
+  font: inherit;
+  font-size: 20px;
+  color: var(--ink);
+  padding: 8px 12px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+}
+
+.org-events {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

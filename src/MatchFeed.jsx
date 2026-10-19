@@ -4,8 +4,16 @@
 import './MatchFeed.css'
 import { causes } from './data/causes'
 import { clashesWith, describeSlot, findFreeSlot } from './freeTime'
-import SurpriseMe from './SurpriseMe'
-import HostEvent from './HostEvent'
+import { traitLabels } from './data/traits'
+import { causeLook } from './causeColors'
+import { travelLabel } from './travel'
+
+// A short day and date in Singapore time, e.g. "Sat 7 Nov".
+function shortDate(startsAt) {
+    return new Date(startsAt).toLocaleDateString('en-SG', {
+        weekday: 'short', day: 'numeric', month: 'short', timeZone: 'Asia/Singapore',
+    })
+}
 
 // The sign-up action of a cause.
 function signupOf(cause) {
@@ -14,10 +22,10 @@ function signupOf(cause) {
 
 // { result } is the player's top trait, handed down from App (e.g. "Heart").
 // { onOpenCause } is App's function for opening a cause's page.
-// { onPlayAgain } is App's function for going back to the start.
 // { fitsMyWeek } is true when the "Fits my week" switch is on, and { onShowAll } turns it off.
 // { signedUp } is App's list of sign-ups, used to hide clashing sessions.
-function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, signedUp}){
+// { userRegion } is the student's part of Singapore, for the travel label ('' if not given).
+function MatchFeed ({result, onOpenCause, fitsMyWeek, onShowAll, signedUp, userRegion}){
     // .filter keeps only the causes whose identity list includes the player's trait.
     const matchingCauses = causes.filter((cause)=>
         cause.identity.includes(result)
@@ -44,7 +52,10 @@ function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, si
 
     return (
         <div className="match-feed">
-           <h2 className="match-title">Your causes ({result})</h2>
+           <div className="match-header">
+               <h2 className="squiggle">Causes for you</h2>
+               <p className="match-subtitle">Matched to your strength: {traitLabels[result].label}</p>
+           </div>
 
            {visibleCards.length === 0 && (
             <div className="match-empty card">
@@ -54,10 +65,25 @@ function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, si
            )}
 
            {/* .map turns each matching cause into a card.
-               key gives each card a unique name so React can tell them apart. */}
+               key gives each card a unique name so React can tell them apart.
+               --cause-color is a CSS variable, so each card's colour comes from causeColors.js. */}
+           <div className="match-cards">
            {visibleCards.map(({ cause, isSignedUp, freeSlot }) =>(
-            <div className="cause-card card" key= {cause.id}>
-                <h3>{cause.name}</h3>
+            <div className="cause-card card" key= {cause.id} style={{ '--cause-color': causeLook(cause.id).color }}>
+                <div className="cause-card-top">
+                    <span className="cause-card-emoji" aria-hidden="true">{causeLook(cause.id).emoji}</span>
+                    <h3>{cause.name}</h3>
+                </div>
+                <ul className="cause-facts">
+                    <li>
+                        <span aria-hidden="true">📍</span> {signupOf(cause).area}
+                        {travelLabel(userRegion, signupOf(cause).region) && (
+                            <> · {travelLabel(userRegion, signupOf(cause).region).text}</>
+                        )}
+                    </li>
+                    <li><span aria-hidden="true">📅</span> {shortDate(signupOf(cause).startsAt)}</li>
+                    <li><span aria-hidden="true">👥</span> Needs {signupOf(cause).peopleNeeded}</li>
+                </ul>
                 <p className="cause-description">{cause.description}</p>
                 {fitsMyWeek && isSignedUp && (
                     <p className="cause-fits">✓ You're signed up</p>
@@ -65,17 +91,13 @@ function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, si
                 {fitsMyWeek && !isSignedUp && freeSlot && (
                     <p className="cause-fits">✓ Fits your week: free {describeSlot(freeSlot)}</p>
                 )}
-                <button className="action-button" onClick={() => onOpenCause(cause.id)}>
-                    See how to help
+                <button className="cause-card-open" onClick={() => onOpenCause(cause.id)}>
+                    See how to help <span aria-hidden="true">→</span>
                 </button>
             </div>
          ))}
+           </div>
 
-           <SurpriseMe result={result} fitsMyWeek={fitsMyWeek} onOpenCause={onOpenCause}/>
-
-           <HostEvent/>
-
-           <button className="button-primary" onClick={onPlayAgain}>Play again</button>
         </div>
     )
 }

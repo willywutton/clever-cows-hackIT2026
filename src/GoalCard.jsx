@@ -4,11 +4,12 @@ import { useState } from 'react'
 import { goalById, goalProgress, progressText } from './goalProgress'
 import GoalPicker from './GoalPicker'
 import GoalBar from './GoalBar'
+import GoalReward from './GoalReward'
 import './GoalCard.css'
 
 // { goalId } is the active goal id ('' for none). { history } is App's list of actions.
-// { onGoalChange } receives the newly chosen goal id ('' for no goal).
-function GoalCard({ goalId, history, onGoalChange }) {
+// { finishedIds } lists goals already finished. { onGoalChange } receives the new goal id ('' for no goal).
+function GoalCard({ goalId, history, finishedIds, onGoalChange }) {
     const [picking, setPicking] = useState(false)
     const goal = goalById(goalId)
 
@@ -34,6 +35,7 @@ function GoalCard({ goalId, history, onGoalChange }) {
                     <h3><span aria-hidden="true">🎯</span> {goal.name}</h3>
                     <p className="goal-card-text">{goal.description}</p>
                     <GoalBar progress={goalProgress(goal, history)} label={progressText(goal, history)}/>
+                    <GoalReward goal={goal}/>
                     <button className="goal-card-button" onClick={() => setPicking(true)}>Change goal</button>
                 </>
             )}
@@ -41,7 +43,7 @@ function GoalCard({ goalId, history, onGoalChange }) {
             {picking && (
                 <>
                     <h3>Choose a goal</h3>
-                    <GoalPicker activeGoalId={goalId} onChoose={handleChoose} onCancel={() => setPicking(false)}/>
+                    <GoalPicker activeGoalId={goalId} finishedIds={finishedIds} onChoose={handleChoose} onCancel={() => setPicking(false)}/>
                 </>
             )}
         </section>

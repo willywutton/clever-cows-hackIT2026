@@ -2,6 +2,8 @@
 // for each trait, and shows the player's result identity at the end.
 import { useState } from 'react'
 import { chapters, results } from './data/chapters'
+import StoryDots from './StoryDots'
+import TraitBreakdown from './TraitBreakdown'
 
 
 import './Quiz.css'
@@ -41,6 +43,23 @@ function Quiz({whenDone}){
         setCurrentChapter(currentChapter + 1)
     }
 
+    // Runs when "Previous" is clicked. Going back always undoes the most recent answer
+    // (its point and its place in the tie-break list), so the result only ever
+    // counts the answers the player currently has.
+    function handlePrevious(){
+        const lastTrait = picks[picks.length - 1]
+        setScores({ ...scores, [lastTrait]: scores[lastTrait] - 1 })
+        setPicks(picks.slice(0, -1))
+        if (showingResult) {
+            // On "what happened": go back to this scene's choices.
+            setShowingResult(false)
+        }
+        else {
+            // On a scene's choices (or the result screen): go back to the previous scene's choices.
+            setCurrentChapter(currentChapter - 1)
+        }
+    }
+
     // Once we've gone past the last scene, the quiz is over: show the result screen.
     if (currentChapter >= chapters.length){
         // Find the trait with the highest score.
@@ -64,11 +83,20 @@ function Quiz({whenDone}){
         return (
             <div>
                 <div className="quiz-card card">
-                    <h2>You are: <span className="quiz-identity">{result.name}</span></h2>
-                    <p>{result.description}</p>
-                    <p className="quiz-matches">Best matched with: {result.matchesWith}</p>
-                    {/* The arrow "() =>" means: only call whenDone when clicked, not straight away. */}
-                    <button className="button-primary" onClick={() => whenDone(topTrait)}>See my causes</button>
+                    <div className="quiz-result-layout">
+                        <div className="quiz-result-text">
+                            <p className="quiz-kicker">Your helper type</p>
+                            <h2>You are: <span className="quiz-identity">{result.name}</span></h2>
+                            <p>{result.description}</p>
+                            <p className="quiz-matches">Best matched with: {result.matchesWith}</p>
+                        </div>
+                        <TraitBreakdown scores={scores} total={chapters.length} topTrait={topTrait}/>
+                    </div>
+                    <div className="quiz-buttons">
+                        <button className="quiz-previous" onClick={handlePrevious}>← Change my last answer</button>
+                        {/* The arrow "() =>" means: only call whenDone when clicked, not straight away. */}
+                        <button className="button-primary" onClick={() => whenDone(topTrait)}>See my causes</button>
+                    </div>
                 </div>
             </div>
         )
@@ -79,13 +107,16 @@ function Quiz({whenDone}){
     return (
     <div>
         <div className="quiz-card card">
+            <StoryDots total={chapters.length} current={currentChapter}/>
             <h2>{chapter.title}</h2>
 
             {/* "condition && (...)" means: only show this part when the condition is true. */}
             {!showingResult && (
                 <>
+                <div className="quiz-layout">
                 <p className="quiz-story">{chapter.story}</p>
                 <div className="quiz-choices">
+                    <p className="quiz-kicker">What do you do?</p>
                     {/* .map turns each choice in the list into a button.
                         key gives each button a unique name so React can tell them apart. */}
                     {chapter.choices.map((choice) => (
@@ -94,13 +125,22 @@ function Quiz({whenDone}){
                         </button>
                     ))}
                 </div>
+                </div>
+                {picks.length > 0 && (
+                    <div className="quiz-buttons">
+                        <button className="quiz-previous" onClick={handlePrevious}>← Previous</button>
+                    </div>
+                )}
                 </>
             )}
 
             {showingResult && (
                 <>
                 <p className="quiz-story">{lastResultText}</p>
-                <button className="button-primary" onClick={handleContinue}>Continue</button>
+                <div className="quiz-buttons">
+                    <button className="quiz-previous" onClick={handlePrevious}>← Previous</button>
+                    <button className="button-primary" onClick={handleContinue}>Continue</button>
+                </div>
                 </>
             )}
         </div>

@@ -1,0 +1,59 @@
+/* Styles for the print-friendly portfolio: plain white paper, readable text, no app chrome.
+   The rules that hide the header and menu when printing are in index.css. */
+
+.portfolio-print-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 760px;
+  padding: 36px;
+  background: #fff;
+  border: 1px solid var(--border);
+  color: #222;
+}
+
+.portfolio-print-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.portfolio-print-buttons button:first-child {
+  padding: 8px 14px;
+  background: transparent;
+  border: 2px solid var(--border);
+}
+
+.portfolio-print-page header {
+  padding-bottom: 12px;
+  border-bottom: 2px solid #222;
+}
+
+.portfolio-print-page h2,
+.portfolio-print-page h3 {
+  color: #222;
+}
+
+.portfolio-print-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  break-inside: avoid;
+}
+
+.portfolio-print-date {
+  color: #555;
+  font-size: 16px;
+}
+
+.portfolio-print-entry img {
+  max-width: 280px;
+  border-radius: 6px;
+}
+
+.portfolio-print-page footer {
+  padding-top: 12px;
+  border-top: 1px solid #ccc;
+  color: #555;
+  font-size: 14px;
+}

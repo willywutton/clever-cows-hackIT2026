@@ -29,7 +29,7 @@
   background: transparent;
   color: var(--text);
   border: 2px dashed var(--border);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .next-up-went:hover {
@@ -43,5 +43,5 @@
 
 .next-up-who {
   color: var(--text-soft);
-  font-size: 15px;
+  font-size: 16px;
 }

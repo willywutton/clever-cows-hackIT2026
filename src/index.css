@@ -16,46 +16,66 @@
   --grass: #5a8f3d;        /* positive messages */
   --grass-soft: #e3f0d6;   /* positive message background */
 
-  --radius: 14px;
-  --shadow: 0 2px 8px rgba(74, 52, 38, 0.08);
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --ink: #3a2418;          /* headings, a deeper brown */
+  --paper-line: #efe0c2;   /* the solid "printed" shadow under cards */
+
+  --radius: 18px;
+  --shadow: 4px 5px 0 var(--paper-line);
+  /* Lexend is designed to be easy to read; Fraunces gives headings character. */
+  --sans: 'Lexend', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --hand: 'Caveat', 'Segoe Print', 'Bradley Hand', cursive; /* handwriting, used in the diary */
 
-  font: 17px/1.5 var(--sans);
+  font: 18.5px/1.65 var(--sans);
   color: var(--text);
   background: var(--cream);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* A faint paper grain over the cream background, drawn with an SVG noise filter. */
 body {
   margin: 0;
-  background: var(--cream);
+  background-color: var(--cream);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.32 0 0 0 0 0.2 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* #root is the box React draws the whole app into (see index.html). */
 #root {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 24px 16px 48px;
   min-height: 100svh;
   box-sizing: border-box;
 }
 
+/* The main content area: wide enough to use a laptop screen, with room at the sides. */
+.page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 32px 64px;
+  box-sizing: border-box;
+}
+
+/* Screens that are mostly reading or a form stay a comfortable width. */
+.page-narrow {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
 h2,
 h3 {
-  color: var(--text);
+  font-family: var(--display);
+  color: var(--ink);
   font-weight: 700;
-  line-height: 1.25;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   margin: 0;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 32px;
 }
 
 h3 {
-  font-size: 19px;
+  font-size: 23px;
 }
 
 p {
@@ -76,61 +96,93 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* Main "do this next" buttons, e.g. Continue, See my causes, Play again. */
+/* Main "do this next" buttons, e.g. Continue, See my causes, Play again.
+   The solid shadow underneath makes them look pressable, like a stamped button. */
 .button-primary {
   background: var(--barn);
   color: #fff;
   border: none;
-  padding: 12px 24px;
-  font-weight: 600;
+  border-radius: 12px;
+  padding: 13px 26px;
+  font-weight: 700;
+  font-size: 19px;
+  box-shadow: 0 4px 0 var(--barn-dark);
+  transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
 }
 
 .button-primary:hover {
-  background: var(--barn-dark);
+  background: #c24e37;
 }
 
-/* The Student / Organisation switch at the top of the page. */
-.view-toggle {
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-  margin-bottom: 20px;
+.button-primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--barn-dark);
 }
 
-.view-toggle button {
-  padding: 8px 18px;
-  background: #fff;
-  color: var(--text-soft);
-  border: 2px solid var(--border);
-}
-
-/* aria-pressed="true" is the selected button. */
-.view-toggle button[aria-pressed="true"] {
-  background: var(--barn);
-  border-color: var(--barn);
-  color: #fff;
-}
-
-/* A white rounded box used for the quiz and each cause. */
+/* A paper-coloured box with a solid printed shadow, used for most sections. */
 .card {
   background: var(--card);
-  border: 1px solid var(--border);
+  border: 2px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 24px;
+  padding: 28px;
 }
 
-/* Smaller screens (phones): slightly smaller text and padding. */
-@media (max-width: 480px) {
-  :root {
-    font-size: 16px;
+/* Tablets and phones: a little less space around everything. */
+@media (max-width: 720px) {
+  .page {
+    padding: 20px 16px 48px;
   }
 
   .card {
-    padding: 18px;
+    padding: 20px;
   }
 
   h2 {
+    font-size: 27px;
+  }
+
+  h3 {
     font-size: 21px;
+  }
+}
+
+/* Small phones: text stays large enough to read comfortably. */
+@media (max-width: 420px) {
+  :root {
+    font-size: 18px;
+  }
+
+  h2 {
+    font-size: 25px;
+  }
+}
+
+/* A hand-drawn wavy underline for a few key headings. */
+.squiggle {
+  display: inline-block;
+  padding-bottom: 10px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10' viewBox='0 0 40 10'%3E%3Cpath d='M0 5 Q10 0 20 5 T40 5' fill='none' stroke='%23f2c94c' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E") left bottom / 40px 10px repeat-x;
+}
+
+/* When printing (e.g. the portfolio), hide the app's header, menu and buttons,
+   and print on plain white. */
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .site-header,
+  .sidebar,
+  .no-print {
+    display: none !important;
+  }
+
+  .app-shell {
+    display: block;
+  }
+
+  .page {
+    padding: 0;
   }
 }

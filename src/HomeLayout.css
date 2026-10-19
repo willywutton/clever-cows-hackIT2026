@@ -1,0 +1,33 @@
+/* Styles for the two-column Home layout. */
+
+.home-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+/* The left column stays in view while the causes scroll past. */
+.home-side {
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* The side cards use the column's gap instead of their own bottom margins. */
+.home-layout .home-side > * {
+  margin: 0;
+}
+
+@media (max-width: 960px) {
+  .home-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .home-side {
+    position: static;
+  }
+}

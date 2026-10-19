@@ -8,21 +8,21 @@
   color: var(--barn);
 }
 
-.reflection-demo {
+.reflection-visit {
   align-self: flex-start;
-  padding: 0 10px;
-  line-height: 26px;
-  margin: 3px 0;
-  background: var(--hay-soft);
-  border: 2px dashed var(--hay);
+  padding: 0 12px;
+  line-height: 30px;
+  margin: 1px 0;
+  background: var(--grass-soft);
+  border: 2px solid var(--grass);
   border-radius: 999px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
 }
 
 .reflection-private {
   color: var(--text-soft);
-  font-size: 15px;
+  font-size: 16px;
 }
 
 .reflection .instant-photo {
@@ -62,7 +62,7 @@
 }
 
 .reflection-note {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--text-soft);
 }
 
@@ -99,8 +99,65 @@
 
 .reflection-count {
   align-self: flex-end;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-soft);
+}
+
+/* Sticker choices and the public / private choice. */
+.reflection-stickers,
+.reflection-visibility {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  border: none;
+  line-height: 1.4;
+}
+
+.reflection-stickers legend,
+.reflection-visibility legend {
+  padding: 0;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.reflection-stickers button {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.reflection-stickers button[aria-pressed="true"] {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+  transform: rotate(-6deg);
+}
+
+.reflection-visibility label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.reflection-visibility label:has(input:checked) {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+}
+
+.reflection-visibility input {
+  accent-color: var(--barn);
+  margin: 0;
 }
 
 .reflection-buttons {

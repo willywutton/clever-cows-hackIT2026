@@ -1,0 +1,54 @@
+/* Styles for the repeat bonus on the sign-up screen. Shared colours are in index.css. */
+
+.repeat-bonus {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--hay-soft);
+  border: 2px solid var(--hay);
+  border-radius: 14px;
+}
+
+.repeat-bonus-title {
+  font-weight: 700;
+}
+
+.repeat-bonus-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.repeat-bonus-steps li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.repeat-bonus-steps strong {
+  font-family: var(--display);
+  font-size: 24px;
+  color: var(--barn);
+}
+
+.repeat-bonus-steps .repeat-bonus-next {
+  border-color: var(--barn);
+}
+
+.repeat-bonus-steps em {
+  font-style: normal;
+  font-size: 13px;
+  font-weight: 700;
+  color: #3f6b2a;
+}

@@ -1,0 +1,30 @@
+/* Styles for the Social tab. Shared colours are in index.css. */
+
+.social-tabs {
+  display: flex;
+  padding: 4px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.social-tabs button {
+  padding: 6px 16px;
+  background: transparent;
+  color: var(--text-soft);
+  border: none;
+  border-radius: 9px;
+  font-weight: 600;
+}
+
+.social-tabs button[aria-pressed="true"] {
+  background: var(--hay);
+  color: var(--ink);
+}
+
+.social-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 680px;
+}

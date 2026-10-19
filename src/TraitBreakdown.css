@@ -1,0 +1,77 @@
+/* Styles for the trait percentage bars on the quiz result. Shared colours are in index.css. */
+
+.traits {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.traits-title {
+  font-size: 17px;
+}
+
+.traits-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.traits-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.traits-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+  font-size: 16px;
+}
+
+.traits-label small {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-soft);
+}
+
+.traits-bar {
+  height: 12px;
+  background: var(--hay-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.traits-bar-fill {
+  height: 100%;
+  background: var(--hay);
+  border-radius: 999px;
+  animation: traits-grow 0.8s ease-out both;
+  transform-origin: left center;
+}
+
+/* The winning trait stands out in barn red. */
+.traits-row-top .traits-bar-fill {
+  background: var(--barn);
+}
+
+.traits-row-top .traits-label span {
+  font-weight: 700;
+}
+
+@keyframes traits-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .traits-bar-fill {
+    animation: none;
+  }
+}

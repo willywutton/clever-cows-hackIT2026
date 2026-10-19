@@ -1,0 +1,97 @@
+/* Styles for the organisation's sign-ups list. Shared colours and .card are in index.css. */
+
+.org-signups {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.org-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.org-totals p {
+  flex: 1 1 120px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-soft);
+}
+
+.org-totals strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 28px;
+  color: var(--barn);
+}
+
+.org-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.org-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.org-row-student {
+  border-color: var(--grass);
+  background: var(--grass-soft);
+}
+
+.org-row-who {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.org-sample {
+  padding: 0 8px;
+  background: var(--hay-soft);
+  border: 1px dashed var(--hay);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.org-row-detail {
+  flex-basis: 100%;
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.org-row-attend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.org-row-attend button {
+  padding: 6px 12px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+}
+
+.org-note {
+  font-size: 15px;
+  color: var(--text-soft);
+}

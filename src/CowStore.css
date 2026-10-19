@@ -1,0 +1,116 @@
+/* Styles for Clover Cowdini's store. Shared colours and .card are in index.css. */
+
+.cow-store {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cow-store-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.cow-store-balance {
+  padding: 4px 12px;
+  background: var(--hay-soft);
+  border: 2px solid var(--hay);
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.cow-store-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cow-store-tabs button {
+  padding: 6px 12px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cow-store-tabs button[aria-pressed="true"] {
+  background: var(--hay);
+  border-color: var(--hay);
+}
+
+.cow-store-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.cow-store-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 10px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  text-align: center;
+}
+
+.cow-store-art {
+  font-size: 40px;
+  line-height: 1.1;
+}
+
+.cow-store-art img {
+  width: 48px;
+}
+
+.cow-store-effect {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.cow-store-buy,
+.cow-store-wear {
+  margin-top: 4px;
+  padding: 6px 12px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.cow-store-buy:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.cow-store-wear {
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--grass);
+}
+
+.cow-store-wear[aria-pressed="true"] {
+  background: var(--grass-soft);
+}
+
+.cow-store-owned {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #3f6b2a;
+}
+
+.cow-store-note {
+  font-size: 15px;
+  color: var(--text-soft);
+}

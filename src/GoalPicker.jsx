@@ -3,23 +3,31 @@ import { goals } from './data/goals'
 import './GoalPicker.css'
 
 // { activeGoalId } is the current goal id ('' for none).
+// { finishedIds } lists goals already finished; they are shown but can't be picked again.
 // { onChoose } receives the chosen goal id ('' for no goal). { onCancel } closes without changing.
-function GoalPicker({ activeGoalId, onChoose, onCancel }) {
+function GoalPicker({ activeGoalId, finishedIds = [], onChoose, onCancel }) {
     return (
         <div className="goal-picker">
             <ul className="goal-picker-list">
-                {goals.map((goal) => (
-                    <li key={goal.id}>
-                        <button
-                            className="goal-picker-option"
-                            aria-pressed={goal.id === activeGoalId}
-                            onClick={() => onChoose(goal.id)}
-                        >
-                            <strong>{goal.name}</strong>
-                            <span>{goal.description}</span>
-                        </button>
-                    </li>
-                ))}
+                {goals.map((goal) => {
+                    const finished = finishedIds.includes(goal.id)
+                    return (
+                        <li key={goal.id}>
+                            <button
+                                className="goal-picker-option"
+                                aria-pressed={goal.id === activeGoalId}
+                                disabled={finished}
+                                onClick={() => onChoose(goal.id)}
+                            >
+                                <strong>
+                                    {goal.name}
+                                    {finished && <em className="goal-picker-finished"> ✓ Finished</em>}
+                                </strong>
+                                <span>{goal.description}</span>
+                            </button>
+                        </li>
+                    )
+                })}
             </ul>
             <div className="goal-picker-buttons">
                 {activeGoalId !== "" && (

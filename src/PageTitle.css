@@ -1,0 +1,21 @@
+/* Styles for page headings. Shared colours and .squiggle are in index.css. */
+
+.page-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-bottom: 24px;
+}
+
+.page-title-subtitle {
+  margin-top: 6px;
+  color: var(--text-soft);
+}
+
+.page-title-extra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

@@ -1,0 +1,22 @@
+/* Styles for a single sticker. */
+
+.sticker {
+  display: inline-block;
+  line-height: 1;
+}
+
+.sticker-small {
+  font-size: 24px;
+  width: 1em;
+  height: 1em;
+}
+
+.sticker-large {
+  font-size: 40px;
+  width: 1em;
+  height: 1em;
+}
+
+img.sticker {
+  object-fit: contain;
+}

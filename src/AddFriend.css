@@ -1,0 +1,91 @@
+/* Styles for adding a friend by code. Shared colours are in index.css. */
+
+.add-friend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+/* ".add-friend" in front makes these rules win over the sign-up screen's own label style. */
+.add-friend .add-friend-field {
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  cursor: auto;
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 160px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.add-friend-field input {
+  font: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  padding: 8px 10px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+}
+
+.add-friend-field input::placeholder {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.add-friend-field input:focus-visible {
+  outline: 3px solid var(--hay);
+  outline-offset: 1px;
+}
+
+.add-friend-button {
+  padding: 9px 18px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--grass);
+  font-weight: 600;
+}
+
+.add-friend-button:hover:not(:disabled) {
+  background: var(--grass-soft);
+}
+
+.add-friend-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.add-friend-result {
+  flex-basis: 100%;
+  font-size: 16px;
+  color: var(--text-soft);
+}
+
+.add-friend-ok {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.add-friend-demo {
+  flex-basis: 100%;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+/* Marks the codes as demo data. */
+.add-friend-demo-label {
+  padding: 1px 8px;
+  background: var(--hay-soft);
+  border: 1px dashed var(--hay);
+  border-radius: 999px;
+  font-weight: 700;
+}

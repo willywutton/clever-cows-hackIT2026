@@ -1,94 +1,139 @@
-// CausePage.jsx shows one cause and its three actions: Share, Donate and Sign up.
-// Share and Donate show a thank-you message that names the cause.
-// Sign up opens its own screen (SignUp.jsx).
+// CausePage.jsx shows one cause in full: a picture, the description, its sessions
+// and events, news from the organisation, and what the student can do:
+// Sign up, Save, Share and Invite friends. Donating is an optional demo link.
 import { useState } from 'react'
+import { causeLook } from './causeColors'
+import SessionDetails from './SessionDetails'
+import EventCard from './EventCard'
+import InviteFriends from './InviteFriends'
 import DemoPledge from './DemoPledge'
 import './CausePage.css'
 
-// { cause } is the cause to show, from causes.js.
-// { onBack } returns to Home. { onAction } feeds Clover Cowdini.
-// { onSignUp } opens the sign-up screen. { isSignedUp } is true if already signed up.
-function CausePage({ cause, onBack, onAction, onSignUp, isSignedUp }) {
-    const share = cause.actions.find((action) => action.type === "share")
-    const donate = cause.actions.find((action) => action.type === "donate")
+// { cause } is the cause to show. { surprise } is true when opened from Surprise me.
+// { events } are this cause's events. { updates } are the organisation's posts for it.
+// { isSignedUp } is true if the student already signed up. { userRegion } is for the travel tag.
+// { isFavourite } and { onToggleFavourite } handle saving. { friendIds } and { onInvite } are for invites.
+// { onSignUp } opens the sign-up screen. { onAction } records Share and the demo pledge.
+// { onBack } returns to Home.
+function CausePage({
+    cause, surprise, events, updates, isSignedUp, userRegion,
+    isFavourite, onToggleFavourite, friendIds, onInvite, onSignUp, onAction, onBack,
+}) {
     const signup = cause.actions.find((action) => action.type === "signup")
+    const donate = cause.actions.find((action) => action.type === "donate")
+    const look = causeLook(cause.id)
 
-    // 'actions' shows the three buttons and 'pledge' the demo donation screen.
-    const [mode, setMode] = useState('actions')
-    // The last action taken on this page, used for its message, or null for none yet.
-    const [lastAction, setLastAction] = useState(null)
+    // What is open under the buttons: nothing, the invite picker or the demo pledge.
+    const [panel, setPanel] = useState(null)
+    const [message, setMessage] = useState("")
 
     function handleShare() {
         onAction(cause.id, "share")
-        setLastAction("share")
+        setPanel(null)
+        setMessage(`Thanks for sharing ${cause.name}. (Demo: nothing is posted anywhere.)`)
     }
 
     function handlePledge() {
         onAction(cause.id, "donate")
-        setLastAction("donate")
-        setMode('actions')
+        setPanel(null)
+        setMessage(`Thanks for your demo pledge to ${cause.name}. No money was taken.`)
     }
 
-    let message = ""
-    if (lastAction === "share") {
-        message = `Thanks for sharing ${cause.name}.`
-    }
-    else if (lastAction === "donate") {
-        message = `Thanks for your demo pledge to ${cause.name}. No money was taken.`
-    }
-
-    // After sharing or donating, gently suggest meeting the team in person.
-    // Donating is never suggested.
-    const suggestSignup = lastAction !== null && !isSignedUp
+    const saved = isFavourite("cause", cause.id)
+    const visibleEvents = events.filter((event) => event.status === "approved" || event.source === "student")
 
     return (
         <div className="cause-page">
             <button className="cause-back" onClick={onBack}>← Back to Home</button>
 
             <div className="card cause-page-card">
+                {surprise && (
+                    <p className="cause-surprise">
+                        <span aria-hidden="true">🎲</span> Surprise pick: not one of your usual matches, but you might enjoy it.
+                    </p>
+                )}
+
+                {/* The cause's picture: an image if the cause has one, otherwise its colour and emoji. */}
+                <div className="cause-picture" style={{ '--cause-color': look.color }}>
+                    {cause.image
+                        ? <img src={cause.image} alt={cause.name}/>
+                        : <span aria-hidden="true">{look.emoji}</span>}
+                </div>
+
                 <h2>{cause.name}</h2>
                 <p className="cause-page-description">{cause.description}</p>
 
-                {mode === 'actions' && (
-                    <div className="cause-page-actions">
-                        <button className="cause-page-action" onClick={handleShare}>
-                            <strong>Share</strong>
-                            <span>{share.label}</span>
-                        </button>
-                        <button className="cause-page-action" onClick={() => setMode('pledge')}>
-                            <strong>Donate <em>(optional)</em></strong>
-                            <span>{donate.label}</span>
-                        </button>
-                        <button className="cause-page-action" onClick={onSignUp}>
-                            <strong>{isSignedUp ? "Signed up: tap to change" : "Sign up"}</strong>
-                            <span>{signup.label}, in {signup.area}</span>
-                        </button>
-                    </div>
-                )}
+                <div className="cause-buttons">
+                    <button className="button-primary" onClick={onSignUp}>
+                        {isSignedUp ? "Change my sign-up" : "Sign up"}
+                    </button>
+                    <button
+                        className="cause-button"
+                        aria-pressed={saved}
+                        onClick={() => onToggleFavourite("cause", cause.id)}
+                    >
+                        {saved ? "★ Saved" : "☆ Save"}
+                    </button>
+                    <button className="cause-button" onClick={handleShare}>↗ Share</button>
+                    <button className="cause-button" onClick={() => setPanel(panel === "invite" ? null : "invite")}>
+                        ✉ Invite friends
+                    </button>
+                </div>
 
-                {mode === 'pledge' && (
-                    <DemoPledge
-                        cause={cause}
-                        action={donate}
-                        onPledge={handlePledge}
-                        onBack={() => setMode('actions')}
+                {message && <p className="cause-message" role="status">{message}</p>}
+
+                {panel === "invite" && (
+                    <InviteFriends
+                        friendIds={friendIds}
+                        onSend={(ids) => onInvite(cause.id, ids)}
+                        onClose={() => setPanel(null)}
                     />
                 )}
 
-                {mode === 'actions' && message && (
-                    <div className="cause-message" role="status">
-                        <p>{message}</p>
-                        {suggestSignup && (
-                            <p className="cause-next">
-                                Want to meet the team in person?{" "}
-                                <button className="next-step-button" onClick={onSignUp}>
-                                    Sign up
-                                </button>
-                            </p>
-                        )}
-                    </div>
+                {panel === "pledge" && (
+                    <DemoPledge cause={cause} action={donate} onPledge={handlePledge} onBack={() => setPanel(null)}/>
+                )}
+
+                {panel !== "pledge" && (
+                    <button className="cause-donate-link" onClick={() => setPanel("pledge")}>
+                        Want to donate instead? It's optional (demo pledge).
+                    </button>
                 )}
             </div>
+
+            {updates.length > 0 && (
+                <section className="card cause-updates">
+                    <h3>News from {cause.name}</h3>
+                    {[...updates].reverse().map((update) => (
+                        <p key={update.id} className="cause-update">
+                            <span className="cause-update-date">
+                                {new Date(update.at).toLocaleDateString('en-SG', { day: 'numeric', month: 'short' })}
+                            </span>
+                            {update.text}
+                        </p>
+                    ))}
+                </section>
+            )}
+
+            <section className="card cause-sessions">
+                <h3>Sessions</h3>
+                <div className="cause-session">
+                    <strong>{signup.label}</strong>
+                    <p className="cause-session-weekly">Or every week: {signup.weeklyLabel}</p>
+                    <SessionDetails action={signup} weekly={false} userRegion={userRegion}/>
+                    <p className="cause-session-needs">Each session needs {signup.peopleNeeded} volunteers.</p>
+                </div>
+
+                {visibleEvents.length > 0 && <h4 className="cause-events-title">Coming up</h4>}
+                {visibleEvents.map((event) => (
+                    <EventCard
+                        key={event.id}
+                        event={event}
+                        saved={isFavourite("event", event.id)}
+                        onToggleSave={() => onToggleFavourite("event", event.id)}
+                    />
+                ))}
+            </section>
         </div>
     )
 }

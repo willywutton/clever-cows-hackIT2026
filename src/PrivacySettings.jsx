@@ -1,14 +1,15 @@
-// PrivacySettings.jsx holds the student's two sharing choices. Both start off.
-// In this demo there are no real friends' accounts, so the choices only change
-// the labels shown on the Profile.
+// PrivacySettings.jsx holds the student's sharing choices. All start off.
+// In this demo the friends are sample people, so these choices change what the
+// sample Social feed and leaderboard would show of the student.
 import './PrivacySettings.css'
 
 const OPTIONS = [
     { id: "showTitles", label: "Show my titles to friends" },
-    { id: "shareDiary", label: "Share my diary with friends" },
+    { id: "publicDiary", label: "Make new diary entries public" },
+    { id: "showOnLeaderboard", label: "Show me on my friends' leaderboard" },
 ]
 
-// { settings } is { showTitles, shareDiary }. { onChange } receives the updated settings.
+// { settings } is { showTitles, publicDiary, showOnLeaderboard }. { onChange } receives the updated settings.
 function PrivacySettings({ settings, onChange }) {
     return (
         <section className="card privacy">
@@ -19,12 +20,12 @@ function PrivacySettings({ settings, onChange }) {
                     <input
                         type="checkbox"
                         role="switch"
-                        checked={settings[option.id]}
+                        checked={Boolean(settings[option.id])}
                         onChange={(event) => onChange({ ...settings, [option.id]: event.target.checked })}
                     />
                 </label>
             ))}
-            <p className="privacy-note">Both are off unless you turn them on.</p>
+            <p className="privacy-note">All are off unless you turn them on.</p>
         </section>
     )
 }

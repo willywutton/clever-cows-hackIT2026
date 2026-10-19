@@ -1,5 +1,35 @@
 /* Styles for the welcome screen. Shared colours and .card / .button-primary are in index.css. */
 
+/* Around the Welcome card, the page becomes a red barn wall: vertical planks with
+   dark gaps between them, and a strip of hay along the bottom. */
+.barn-wall {
+  --plank: #a63d2a;
+  --plank-gap: #7d2c1e;
+
+  min-height: calc(100svh - 70px);
+  /* The barn row is full screen width; this stops it causing a sideways scrollbar. */
+  overflow-x: clip;
+  background:
+    linear-gradient(to top, #e8c25a 0 26px, #d9ad3f 26px 30px, transparent 30px),
+    repeating-linear-gradient(to right, var(--plank) 0 66px, var(--plank-gap) 66px 70px),
+    var(--plank);
+}
+
+/* The header's scalloped edge stays visible against the darker wall. */
+.barn-wall .page {
+  padding-top: 40px;
+  padding-bottom: 60px;
+}
+
+/* The card is the barn door opening: thick white trim, like the frame on a real barn. */
+.barn-wall .welcome {
+  border: 12px solid #fbf3e2;
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 4px #7d2c1e,
+    10px 12px 0 rgba(0, 0, 0, 0.25);
+}
+
 /* The scene runs edge to edge, so the card's own padding moves to .welcome-body. */
 .welcome {
   padding: 0;
@@ -16,6 +46,32 @@
   overflow: hidden;
   height: 190px;
   background: linear-gradient(to bottom, var(--cream) 0%, var(--hay-soft) 100%);
+}
+
+/* Two soft clouds in the sky, each made of a few overlapping circles. */
+.welcome-scene::before,
+.welcome-scene::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 26px;
+  background: #fff;
+  border-radius: 999px;
+  opacity: 0.9;
+  box-shadow:
+    22px -12px 0 4px #fff,
+    46px -2px 0 0 #fff;
+}
+
+.welcome-scene::before {
+  top: 34%;
+  left: 12%;
+}
+
+.welcome-scene::after {
+  top: 18%;
+  left: 52%;
+  transform: scale(0.75);
 }
 
 .welcome-sun {
@@ -107,68 +163,6 @@
   text-align: center;
 }
 
-.welcome-how {
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-soft);
-  margin-top: 4px;
-}
-
-/* A numbered list with a dotted line joining the numbers, so the steps read
-   as a sequence rather than as buttons. */
-.welcome-steps {
-  list-style: none;
-  counter-reset: step;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.welcome-steps li {
-  counter-increment: step;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 34px;
-  padding-left: 48px;
-  line-height: 1.4;
-}
-
-.welcome-steps li::before {
-  content: counter(step);
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--hay);
-  color: var(--text);
-  border-radius: 50%;
-  font-weight: 700;
-}
-
-/* The dotted line from one number down to the next. */
-.welcome-steps li:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: 16px;
-  top: calc(50% + 19px);
-  height: calc(100% - 20px);
-  border-left: 2px dotted var(--hay);
-}
-
-.welcome-step-emoji {
-  font-size: 22px;
-}
-
 .welcome-start {
   align-self: center;
   margin-top: 6px;
@@ -176,10 +170,76 @@
   font-size: 18px;
 }
 
-.welcome-note {
-  text-align: center;
-  font-size: 15px;
-  color: var(--text-soft);
+/* Wide screens: the farm scene fills the left half, the welcome text the right. */
+@media (min-width: 960px) {
+  .welcome {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+  }
+
+  .welcome-scene {
+    height: auto;
+    min-height: 440px;
+  }
+
+  .welcome-cow {
+    font-size: 170px;
+    bottom: 44px;
+  }
+
+  .welcome-cow-image {
+    width: 260px;
+  }
+
+  .welcome-sun {
+    width: 90px;
+    height: 90px;
+    top: 40px;
+    right: 56px;
+  }
+
+  .welcome-hill-back {
+    height: 300px;
+    bottom: -130px;
+  }
+
+  .welcome-hill-front {
+    height: 320px;
+    bottom: -170px;
+  }
+
+  .welcome-fence {
+    bottom: 34px;
+    height: 46px;
+    background:
+      linear-gradient(var(--fence), var(--fence)) 0 12px / 100% 5px no-repeat,
+      linear-gradient(var(--fence), var(--fence)) 0 28px / 100% 5px no-repeat,
+      repeating-linear-gradient(to right, var(--fence) 0 8px, transparent 8px 60px);
+  }
+
+  .welcome-body {
+    justify-content: center;
+    gap: 18px;
+    padding: 40px 44px;
+  }
+
+  .welcome-body h2 {
+    font-size: 46px;
+    line-height: 1.05;
+    text-align: left;
+  }
+
+  .welcome-intro {
+    text-align: left;
+    font-size: 21px;
+  }
+
+  .welcome-start {
+    align-self: flex-start;
+    padding: 18px 48px;
+    font-size: 22px;
+  }
+
 }
 
 @media (max-width: 480px) {
@@ -206,6 +266,7 @@
   .welcome-start {
     align-self: stretch;
   }
+
 }
 
 /* People who turn off animations in their device settings see the cow without the hop. */
@@ -213,4 +274,5 @@
   .welcome-cow {
     animation: none;
   }
+
 }

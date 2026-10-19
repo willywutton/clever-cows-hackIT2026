@@ -1,13 +1,16 @@
-// Profile.jsx shows the student's profile, in this order: header, Next up,
-// My collection, History, About me and Privacy.
+// Profile.jsx shows the student's profile: the banner across the top, then two columns.
+// Left: Next up, Goals and My answers. Right: Portfolio, History, Privacy and demo tools.
+// On phones the columns stack, left first.
 import { results } from './data/chapters'
 import { earnedTitles } from './titles'
 import { goalById } from './goalProgress'
 import ProfileHeader from './ProfileHeader'
 import NextUp from './NextUp'
-import MyCollection from './MyCollection'
+import ProfileGoals from './ProfileGoals'
+import PortfolioSection from './PortfolioSection'
 import HistorySection from './HistorySection'
 import PrivacySettings from './PrivacySettings'
+import DemoTools from './DemoTools'
 import './Profile.css'
 
 const ABOUT_LABELS = [
@@ -18,18 +21,22 @@ const ABOUT_LABELS = [
 ]
 
 // { quizResult } is the student's top trait, e.g. "Heart".
-// { profile } holds their nickname and optional About you answers.
-// { onNicknameChange } updates the nickname. { onReflect } opens the reflection screen.
+// { profile } holds their name and optional About you answers.
+// { onNameChange } and { onAboutChange } update the name and About me line.
+// { onReflect } records "I went to this session". { onGoalChange } picks a goal.
+// { moolah } and { accessories } (what Clover wears) are shown in the banner.
 // { signedUp }, { history } and { diary } come from App.
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
-function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, history, diary, settings, onSettingsChange }) {
+// { onRetakeStory } and { onResetDemo } are the demo tools at the bottom.
+// { portfolio }, { hoursWorked } and { onOpenPortfolio } are for the Portfolio section.
+function Profile({ quizResult, profile, onNameChange, onAboutChange, onGoalChange, moolah, accessories, onReflect, signedUp, history, diary, settings, onSettingsChange, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
     // The goal is stored as an id, e.g. "try-new", so show its name instead.
     function aboutAnswer(id) {
         if (id === "goal") {
-            return goalById(profile.goal)?.name || "Not sure yet"
+            return goalById(profile.goal)?.name || "Not answered"
         }
         return profile[id] || "Not answered"
     }
@@ -37,31 +44,51 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
     return (
         <div className="profile">
             <ProfileHeader
-                nickname={profile.nickname}
-                onNicknameChange={onNicknameChange}
+                name={profile.name}
+                onNameChange={onNameChange}
+                about={profile.about || ""}
+                onAboutChange={onAboutChange}
                 character={character}
-                latestTitle={titles[titles.length - 1]}
+                titles={titles}
+                hours={hoursWorked}
+                moolah={moolah}
+                accessories={accessories}
             />
 
-            <NextUp signedUp={signedUp} userRegion={profile.region} onReflect={onReflect}/>
+            <div className="profile-columns">
+                <div className="profile-column">
+                    <NextUp signedUp={signedUp} userRegion={profile.region} onReflect={onReflect}/>
 
-            <MyCollection diary={diary} shared={settings.shareDiary} signedUp={signedUp} onWrite={onReflect}/>
+                    <ProfileGoals
+                        goalId={profile.goal}
+                        history={history}
+                        goalHistory={profile.goalHistory}
+                        onGoalChange={onGoalChange}
+                    />
 
-            <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
+                    <section className="card profile-section">
+                        <h3>My answers</h3>
+                        <dl className="profile-about">
+                            {ABOUT_LABELS.map((item) => (
+                                <div key={item.id}>
+                                    <dt>{item.label}</dt>
+                                    <dd>{aboutAnswer(item.id)}</dd>
+                                </div>
+                            ))}
+                        </dl>
+                    </section>
+                </div>
 
-            <section className="card profile-section">
-                <h3>About me</h3>
-                <dl className="profile-about">
-                    {ABOUT_LABELS.map((item) => (
-                        <div key={item.id}>
-                            <dt>{item.label}</dt>
-                            <dd>{aboutAnswer(item.id)}</dd>
-                        </div>
-                    ))}
-                </dl>
-            </section>
+                <div className="profile-column">
+                    <PortfolioSection diary={diary} portfolio={portfolio} hoursWorked={hoursWorked} onOpenPrint={onOpenPortfolio}/>
 
-            <PrivacySettings settings={settings} onChange={onSettingsChange}/>
+                    <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
+
+                    <PrivacySettings settings={settings} onChange={onSettingsChange}/>
+
+                    <DemoTools onRetakeStory={onRetakeStory} onResetDemo={onResetDemo}/>
+                </div>
+            </div>
         </div>
     )
 }
