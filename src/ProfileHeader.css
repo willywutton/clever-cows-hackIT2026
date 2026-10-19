@@ -55,14 +55,21 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  width: 260px;
+  width: 300px;
   max-width: 100%;
   font-size: 15px;
   font-weight: 600;
   color: var(--text-soft);
 }
 
+.profile-header-nickname-row {
+  display: flex;
+  gap: 6px;
+}
+
 .profile-header-nickname input {
+  flex: 1;
+  min-width: 0;
   font: inherit;
   font-size: 17px;
   font-weight: 400;
@@ -71,7 +78,6 @@
   background: var(--card);
   border: 2px solid var(--border);
   border-radius: 10px;
-  width: 100%;
   box-sizing: border-box;
 }
 
@@ -80,8 +86,22 @@
   outline-offset: 1px;
 }
 
-.profile-header-nickname small {
-  font-size: 14px;
+.profile-header-nickname button {
+  padding: 8px 14px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.profile-header-nickname button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.profile-header-nickname-note {
+  font-size: 15px;
   font-weight: 400;
 }
 
