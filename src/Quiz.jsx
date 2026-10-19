@@ -43,6 +43,23 @@ function Quiz({whenDone}){
         setCurrentChapter(currentChapter + 1)
     }
 
+    // Runs when "Previous" is clicked. Going back always undoes the most recent answer
+    // (its point and its place in the tie-break list), so the result only ever
+    // counts the answers the player currently has.
+    function handlePrevious(){
+        const lastTrait = picks[picks.length - 1]
+        setScores({ ...scores, [lastTrait]: scores[lastTrait] - 1 })
+        setPicks(picks.slice(0, -1))
+        if (showingResult) {
+            // On "what happened": go back to this scene's choices.
+            setShowingResult(false)
+        }
+        else {
+            // On a scene's choices (or the result screen): go back to the previous scene's choices.
+            setCurrentChapter(currentChapter - 1)
+        }
+    }
+
     // Once we've gone past the last scene, the quiz is over: show the result screen.
     if (currentChapter >= chapters.length){
         // Find the trait with the highest score.
@@ -70,8 +87,11 @@ function Quiz({whenDone}){
                     <p>{result.description}</p>
                     <p className="quiz-matches">Best matched with: {result.matchesWith}</p>
                     <TraitBreakdown scores={scores} total={chapters.length} topTrait={topTrait}/>
-                    {/* The arrow "() =>" means: only call whenDone when clicked, not straight away. */}
-                    <button className="button-primary" onClick={() => whenDone(topTrait)}>See my causes</button>
+                    <div className="quiz-buttons">
+                        <button className="quiz-previous" onClick={handlePrevious}>← Change my last answer</button>
+                        {/* The arrow "() =>" means: only call whenDone when clicked, not straight away. */}
+                        <button className="button-primary" onClick={() => whenDone(topTrait)}>See my causes</button>
+                    </div>
                 </div>
             </div>
         )
@@ -98,13 +118,21 @@ function Quiz({whenDone}){
                         </button>
                     ))}
                 </div>
+                {picks.length > 0 && (
+                    <div className="quiz-buttons">
+                        <button className="quiz-previous" onClick={handlePrevious}>← Previous</button>
+                    </div>
+                )}
                 </>
             )}
 
             {showingResult && (
                 <>
                 <p className="quiz-story">{lastResultText}</p>
-                <button className="button-primary" onClick={handleContinue}>Continue</button>
+                <div className="quiz-buttons">
+                    <button className="quiz-previous" onClick={handlePrevious}>← Previous</button>
+                    <button className="button-primary" onClick={handleContinue}>Continue</button>
+                </div>
                 </>
             )}
         </div>

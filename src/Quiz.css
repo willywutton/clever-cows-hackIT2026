@@ -38,6 +38,31 @@
   align-self: center;
 }
 
+/* Previous on the left, the main button on the right. */
+.quiz-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.quiz-buttons .button-primary {
+  margin-left: auto;
+}
+
+.quiz-previous {
+  padding: 10px 16px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid var(--border);
+}
+
+.quiz-previous:hover {
+  background: #fff;
+  color: var(--text);
+}
+
 /* Result screen: the identity name stands out in barn red. */
 .quiz-identity {
   color: var(--barn);
