@@ -1,5 +1,35 @@
 /* Styles for the welcome screen. Shared colours and .card / .button-primary are in index.css. */
 
+/* Around the Welcome card, the page becomes a red barn wall: vertical planks with
+   dark gaps between them, and a strip of hay along the bottom. */
+.barn-wall {
+  --plank: #a63d2a;
+  --plank-gap: #7d2c1e;
+
+  min-height: calc(100svh - 70px);
+  /* The barn row is full screen width; this stops it causing a sideways scrollbar. */
+  overflow-x: clip;
+  background:
+    linear-gradient(to top, #e8c25a 0 26px, #d9ad3f 26px 30px, transparent 30px),
+    repeating-linear-gradient(to right, var(--plank) 0 66px, var(--plank-gap) 66px 70px),
+    var(--plank);
+}
+
+/* The header's scalloped edge stays visible against the darker wall. */
+.barn-wall .page {
+  padding-top: 40px;
+  padding-bottom: 60px;
+}
+
+/* The card is the barn door opening: thick white trim, like the frame on a real barn. */
+.barn-wall .welcome {
+  border: 12px solid #fbf3e2;
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 4px #7d2c1e,
+    10px 12px 0 rgba(0, 0, 0, 0.25);
+}
+
 /* The scene runs edge to edge, so the card's own padding moves to .welcome-body. */
 .welcome {
   padding: 0;
@@ -16,6 +46,32 @@
   overflow: hidden;
   height: 190px;
   background: linear-gradient(to bottom, var(--cream) 0%, var(--hay-soft) 100%);
+}
+
+/* Two soft clouds in the sky, each made of a few overlapping circles. */
+.welcome-scene::before,
+.welcome-scene::after {
+  content: "";
+  position: absolute;
+  width: 60px;
+  height: 26px;
+  background: #fff;
+  border-radius: 999px;
+  opacity: 0.9;
+  box-shadow:
+    22px -12px 0 4px #fff,
+    46px -2px 0 0 #fff;
+}
+
+.welcome-scene::before {
+  top: 34%;
+  left: 12%;
+}
+
+.welcome-scene::after {
+  top: 18%;
+  left: 52%;
+  transform: scale(0.75);
 }
 
 .welcome-sun {
@@ -186,21 +242,28 @@
 @media (min-width: 960px) {
   .welcome {
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
+    grid-template-columns: 0.85fr 1.15fr;
   }
 
   .welcome-scene {
     height: auto;
-    min-height: 520px;
+    min-height: 440px;
   }
 
   .welcome-cow {
-    font-size: 120px;
-    bottom: 40px;
+    font-size: 170px;
+    bottom: 44px;
   }
 
   .welcome-cow-image {
-    width: 200px;
+    width: 260px;
+  }
+
+  .welcome-sun {
+    width: 90px;
+    height: 90px;
+    top: 40px;
+    right: 56px;
   }
 
   .welcome-hill-back {
@@ -224,25 +287,60 @@
 
   .welcome-body {
     justify-content: center;
-    padding: 48px;
+    gap: 18px;
+    padding: 40px 44px;
   }
 
   .welcome-body h2 {
-    font-size: 40px;
+    font-size: 46px;
+    line-height: 1.05;
     text-align: left;
   }
 
   .welcome-intro {
     text-align: left;
+    font-size: 21px;
+  }
+
+  .welcome-how {
+    font-size: 18px;
+  }
+
+  .welcome-steps {
+    gap: 22px;
+  }
+
+  .welcome-steps li {
     font-size: 20px;
+    min-height: 42px;
+    padding-left: 58px;
+  }
+
+  .welcome-steps li::before {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  .welcome-steps li:not(:last-child)::after {
+    left: 20px;
+    top: calc(50% + 23px);
+    height: calc(100% - 24px);
+  }
+
+  .welcome-step-emoji {
+    font-size: 26px;
   }
 
   .welcome-start {
     align-self: flex-start;
+    padding: 18px 48px;
+    font-size: 22px;
   }
 
   .welcome-note {
     text-align: left;
+    font-size: 17px;
   }
 }
 

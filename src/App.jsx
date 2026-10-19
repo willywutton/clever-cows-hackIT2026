@@ -373,12 +373,15 @@ function App() {
       {/* Both views stay on the page and the other one is just hidden.
           This way switching back and forth doesn't lose quiz progress
           or the attendance the organisation has marked. */}
-      <main className="page">
-        <div hidden={view !== 'student'} className={fullWidthScreens.includes(screen) ? undefined : 'page-narrow'}>
-          {content}
-        </div>
-        <div hidden={view !== 'organisation'} className="page-narrow">
-          <OrgDashboard fedActions={fedActions}/>
+      {/* On the Welcome screen the space around the page becomes a barn wall (see Welcome.css). */}
+      <main className={view === 'student' && screen === 'welcome' ? 'barn-wall' : undefined}>
+        <div className="page">
+          <div hidden={view !== 'student'} className={fullWidthScreens.includes(screen) ? undefined : 'page-narrow'}>
+            {content}
+          </div>
+          <div hidden={view !== 'organisation'} className="page-narrow">
+            <OrgDashboard fedActions={fedActions}/>
+          </div>
         </div>
       </main>
     </>
