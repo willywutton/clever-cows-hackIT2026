@@ -1,5 +1,5 @@
 // Profile.jsx shows the student's profile: the header across the top, then two columns.
-// Left: Next up, Friends and About me. Right: the diary, History, Privacy and demo tools.
+// Left: Next up, Friends and About me. Right: Portfolio, History, Privacy and demo tools.
 // On phones the columns stack, left first.
 import { results } from './data/chapters'
 import { earnedTitles } from './titles'
@@ -7,7 +7,7 @@ import { goalById } from './goalProgress'
 import ProfileHeader from './ProfileHeader'
 import NextUp from './NextUp'
 import FriendsSection from './FriendsSection'
-import MyCollection from './MyCollection'
+import PortfolioSection from './PortfolioSection'
 import HistorySection from './HistorySection'
 import PrivacySettings from './PrivacySettings'
 import DemoTools from './DemoTools'
@@ -27,7 +27,8 @@ const ABOUT_LABELS = [
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
 // { friendIds } is the friends list, changed with { onAddFriend } and { onRemoveFriend }.
 // { onRetakeStory } and { onResetDemo } are the demo tools at the bottom.
-function Profile({ quizResult, profile, onNameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, friendIds, onAddFriend, onRemoveFriend, onRetakeStory, onResetDemo }) {
+// { portfolio }, { hoursWorked } and { onOpenPortfolio } are for the Portfolio section.
+function Profile({ quizResult, profile, onNameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, friendIds, onAddFriend, onRemoveFriend, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
@@ -68,7 +69,7 @@ function Profile({ quizResult, profile, onNameChange, onReflect, signedUp, histo
                 </div>
 
                 <div className="profile-column">
-                    <MyCollection diary={diary} shared={settings.publicDiary} signedUp={signedUp} onWrite={onReflect}/>
+                    <PortfolioSection diary={diary} portfolio={portfolio} hoursWorked={hoursWorked} onOpenPrint={onOpenPortfolio}/>
 
                     <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
 

@@ -1,0 +1,85 @@
+/* Styles for the Diary tab. Shared colours and .card are in index.css. */
+
+.diary-view-toggle {
+  display: flex;
+  padding: 4px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.diary-view-toggle button {
+  padding: 6px 14px;
+  background: transparent;
+  color: var(--text-soft);
+  border: none;
+  border-radius: 9px;
+  font-weight: 600;
+}
+
+.diary-view-toggle button[aria-pressed="true"] {
+  background: var(--hay);
+  color: var(--ink);
+}
+
+.diary-write {
+  padding: 8px 16px;
+  background: var(--hay-soft);
+  color: var(--text);
+  border: 2px dashed var(--hay);
+  font-weight: 700;
+}
+
+.diary-choose {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.diary-choose button {
+  padding: 8px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  font-weight: 600;
+}
+
+.diary-choose .diary-choose-cancel {
+  border: none;
+  background: transparent;
+  text-decoration: underline;
+  color: var(--text-soft);
+}
+
+.diary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  max-width: 680px;
+}
+
+.diary-sample {
+  max-width: 640px;
+  font-family: var(--hand);
+  font-size: 23px;
+}
+
+.diary-sample h4 {
+  margin: 0;
+  font-family: var(--hand);
+  font-size: 30px;
+}
+
+.diary-sample-tag {
+  align-self: flex-start;
+  padding: 0 10px;
+  line-height: 28px;
+  margin: 2px 0;
+  background: var(--hay-soft);
+  border: 2px dashed var(--hay);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 700;
+}

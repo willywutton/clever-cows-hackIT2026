@@ -23,7 +23,8 @@ import CalendarConnect from './CalendarConnect'
 import GoalCard from './GoalCard'
 import GoalComplete from './GoalComplete'
 import FriendsSection from './FriendsSection'
-import MyCollection from './MyCollection'
+import DiaryPage from './DiaryPage'
+import PortfolioPrint from './PortfolioPrint'
 import HostEventPage from './HostEventPage'
 import CauseNews from './CauseNews'
 import PageTitle from './PageTitle'
@@ -166,9 +167,10 @@ function App() {
     content = (
       <Reflection
         cause={openCause}
-        shared={app.settings.publicDiary}
+        publicByDefault={app.settings.publicDiary}
+        visit={app.lastVisit}
         onSave={app.saveReflection}
-        onCancel={() => navigate('profile')}
+        onCancel={() => navigate('diary')}
       />
     )
   }
@@ -178,7 +180,7 @@ function App() {
         quizResult={app.quizResult}
         profile={app.profile}
         onNameChange={(name) => app.setProfile({ ...app.profile, name })}
-        onReflect={app.startReflection}
+        onReflect={app.wentToSession}
         signedUp={app.signedUp}
         history={app.history}
         diary={app.diary}
@@ -189,6 +191,9 @@ function App() {
         onRemoveFriend={app.removeFriend}
         onRetakeStory={app.retakeStory}
         onResetDemo={app.resetDemo}
+        portfolio={app.portfolio}
+        hoursWorked={app.hoursWorked}
+        onOpenPortfolio={() => navigate('portfolio')}
       />
     )
   }
@@ -209,11 +214,18 @@ function App() {
     )
   }
   else if (screen === 'diary') {
+    content = <DiaryPage app={app}/>
+  }
+  else if (screen === 'portfolio') {
     content = (
-      <>
-        <PageTitle title="Diary"/>
-        <MyCollection diary={app.diary} shared={app.settings.publicDiary} signedUp={app.signedUp} onWrite={app.startReflection}/>
-      </>
+      <PortfolioPrint
+        name={app.profile.name}
+        quizResult={app.quizResult}
+        hoursWorked={app.hoursWorked}
+        diary={app.diary}
+        portfolio={app.portfolio}
+        onBack={() => navigate('profile')}
+      />
     )
   }
   else if (screen === 'host') {

@@ -8,7 +8,7 @@ import { clearAll } from './storage'
 import { causes } from '../data/causes'
 import { startingFriendIds } from '../data/friends'
 import { sampleEvents, startingFavourites } from '../data/events'
-import { sessionHours, visitMoolah } from '../data/economy'
+import { REFLECTION_MOOLAH, sessionHours, visitMoolah } from '../data/economy'
 import { GRASS } from '../assets/cowStages'
 import { goalById, goalProgress } from '../goalProgress'
 
@@ -59,8 +59,15 @@ export function useCleverCows() {
     // Goal progress and titles are worked out from this list.
     const [history, setHistory] = usePersistentState('history', [])
 
-    // The student's diary entries, oldest first.
+    // The student's diary entries, oldest first:
+    // { id, causeId, message, photoUrl, stickers, isPublic, at }.
     const [diary, setDiary] = usePersistentState('diary', [])
+
+    // Diary entry ids the student added to their portfolio.
+    const [portfolio, setPortfolio] = usePersistentState('portfolio', [])
+
+    // The session just recorded by "I went to this session", shown on the diary page.
+    const [lastVisit, setLastVisit] = useState(null)
 
     // The sample timetable for "Fits my week".
     const [calendarConnected, setCalendarConnected] = usePersistentState('calendarConnected', false)
@@ -213,7 +220,16 @@ export function useCleverCows() {
         ))
     }
 
+    // "I went to this session": records the visit (hours and Moolah), then opens the diary page.
+    function wentToSession(causeId) {
+        setLastVisit(recordVisit(causeId, 'self'))
+        setOpenCauseId(causeId)
+        navigate('reflection')
+    }
+
+    // "Write a diary entry" from the Diary tab, without recording another visit.
     function startReflection(causeId) {
+        setLastVisit(null)
         setOpenCauseId(causeId)
         navigate('reflection')
     }
@@ -221,8 +237,17 @@ export function useCleverCows() {
     function saveReflection(reflection) {
         const entry = { id: `diary_${Date.now()}`, causeId: openCauseId, at: new Date().toISOString(), ...reflection }
         setDiary([...diary, entry])
+        earnMoolah(REFLECTION_MOOLAH, 'Diary entry')
         recordAction(openCauseId, 'reflection')
-        navigate('profile')
+        navigate('diary')
+    }
+
+    function setEntryPublic(entryId, isPublic) {
+        setDiary(diary.map((entry) => (entry.id === entryId ? { ...entry, isPublic } : entry)))
+    }
+
+    function togglePortfolio(entryId) {
+        setPortfolio((prev) => (prev.includes(entryId) ? prev.filter((id) => id !== entryId) : [...prev, entryId]))
     }
 
     // ---- Sessions, events and the organisation ----
@@ -317,13 +342,15 @@ export function useCleverCows() {
         // values
         quizResult, screen, openCauseId, openedBySurprise, profile, signedUp,
         events, favourites, sentInvites, orgUpdates, sampleAttendance, attendance, hoursWorked,
+        portfolio, lastVisit,
         friendIds, history, diary, calendarConnected, fitsMyWeek, settings, view,
         grass, recentFeeds, justFinishedGoal, finishedGoalIds, moolah, moolahLedger,
         // actions
         navigate, setView, setProfile, setSettings, setCalendarConnected, setFitsMyWeek,
         changeGoal, chooseNextGoal, recordAction, finishWelcome, finishAboutYou, finishStory,
         retakeStory, openCause, surpriseMe, confirmSignup, answerCalendarPrompt,
-        startReflection, saveReflection, addFriend, removeFriend,
+        startReflection, wentToSession, saveReflection, setEntryPublic, togglePortfolio,
+        addFriend, removeFriend,
         recordVisit, markSampleAttended, hostEvent, addOrgEvent, approveEvent, postUpdate,
         isFavourite, toggleFavourite, inviteFriends,
         disconnectCalendar, resetDemo, earnMoolah, spendMoolah,

@@ -164,3 +164,25 @@ button:focus-visible {
   padding-bottom: 10px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='10' viewBox='0 0 40 10'%3E%3Cpath d='M0 5 Q10 0 20 5 T40 5' fill='none' stroke='%23f2c94c' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E") left bottom / 40px 10px repeat-x;
 }
+
+/* When printing (e.g. the portfolio), hide the app's header, menu and buttons,
+   and print on plain white. */
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .site-header,
+  .sidebar,
+  .no-print {
+    display: none !important;
+  }
+
+  .app-shell {
+    display: block;
+  }
+
+  .page {
+    padding: 0;
+  }
+}
