@@ -41,7 +41,7 @@ function FarmerIntro({ onDone, onBack }) {
 
             {askingName && (
                 <form className="farmer-form" onSubmit={handleSubmit}>
-                    <label htmlFor="first-name" className="farmer-line">Now, what should I call you?</label>
+                    <label htmlFor="first-name" className="farmer-line farmer-question">Now, what should I call you?</label>
                     <input
                         id="first-name"
                         type="text"

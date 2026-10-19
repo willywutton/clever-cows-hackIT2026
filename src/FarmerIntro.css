@@ -26,8 +26,10 @@
   margin-bottom: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 24px 28px;
+  align-items: center;
+  gap: 14px;
+  padding: 26px 32px;
+  text-align: center;
   background: #fffaf0;
   border: 3px solid var(--ink);
   border-radius: 24px;
@@ -62,36 +64,57 @@
   to { transform: scale(1); opacity: 1; }
 }
 
-/* Rye looks like lettering on a wooden farm sign. */
 .farmer-name {
-  font-family: 'Rye', var(--display);
-  font-size: 24px;
-  line-height: 1;
-  color: var(--barn);
+  padding: 3px 14px;
+  background: var(--barn);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
 }
 
 .farmer-line {
-  font-family: var(--display);
-  font-size: 24px;
-  font-weight: 600;
-  line-height: 1.4;
+  max-width: 34em;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.5;
   color: var(--ink);
 }
 
+.farmer-question {
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
 .farmer-form {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
 }
 
 .farmer-form input {
+  width: min(360px, 100%);
+  box-sizing: border-box;
   font: inherit;
   font-size: 19px;
+  text-align: center;
   color: var(--text);
-  padding: 11px 14px;
+  padding: 12px 14px;
   background: #fff;
   border: 2px solid var(--border);
   border-radius: 12px;
+  transition: border-color 0.2s;
+}
+
+.farmer-form input:hover {
+  border-color: var(--hay);
 }
 
 .farmer-form input:focus-visible {
@@ -105,15 +128,11 @@
 }
 
 .farmer-form .button-primary {
-  align-self: flex-start;
-}
-
-.farmer-form .button-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  margin-top: 4px;
 }
 
 .farmer-nav {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,6 +147,11 @@
   border: none;
   font-weight: 600;
   white-space: nowrap;
+}
+
+.farmer-back:hover {
+  color: var(--ink);
+  transform: translateX(-2px);
 }
 
 .farmer-next-space {
@@ -170,7 +194,7 @@
   }
 
   .farmer-line {
-    font-size: 21px;
+    font-size: 19px;
   }
 
   /* The dots get their own row so Back and Next fit beside each other. */
@@ -189,12 +213,5 @@
     left: 40px;
     bottom: -18px;
     transform: rotate(-45deg);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .farmer-bubble,
-  .farmer-held {
-    animation: none;
   }
 }

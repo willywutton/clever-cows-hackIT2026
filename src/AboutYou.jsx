@@ -7,24 +7,35 @@ import FarmerScene from './FarmerScene'
 import StoryDots from './StoryDots'
 import './AboutYou.css'
 
+const GOAL_ICONS = { "try-new": "🧭", regular: "📅", people: "👫", deeper: "🌱", story: "📔" }
+
 // The goal question offers each goal, plus "Not sure yet", which saves as no goal ('').
 // It has its own value so that nothing is ticked before the student chooses.
 const GOAL_OPTIONS = [
-    ...goals.map((goal) => ({ value: goal.id, label: goal.name, hint: goal.description })),
-    { value: "not-sure", label: "Not sure yet" },
+    ...goals.map((goal) => ({ value: goal.id, label: goal.name, hint: goal.description, icon: GOAL_ICONS[goal.id] })),
+    { value: "not-sure", label: "Not sure yet", hint: "Pick one later from Home.", icon: "🤔" },
 ]
 
 const QUESTIONS = [
     {
         id: "goal",
-        label: "Pick a goal to work towards (you can change it any time)",
+        label: "Pick a goal to work towards",
+        hint: "You can change it any time.",
         options: GOAL_OPTIONS,
-        stacked: true,
+        layout: "cards",
     },
     {
         id: "area",
         label: "Which area interests you most?",
-        options: ["Animals", "Older people", "Environment", "Young people and learning", "Making and fixing", "Not sure yet"],
+        options: [
+            { value: "Animals", label: "Animals", icon: "🐾" },
+            { value: "Older people", label: "Older people", icon: "🧓" },
+            { value: "Environment", label: "Environment", icon: "🌿" },
+            { value: "Young people and learning", label: "Young people and learning", icon: "📚" },
+            { value: "Making and fixing", label: "Making and fixing", icon: "🔧" },
+            { value: "Not sure yet", label: "Not sure yet", icon: "🤔" },
+        ],
+        layout: "tiles",
     },
     {
         id: "ageGroup",
@@ -34,9 +45,15 @@ const QUESTIONS = [
     {
         id: "region",
         label: "Which part of Singapore are you in?",
+        hint: "Used to show how far each session is.",
         options: ["North", "North-East", "East", "West", "Central", "Prefer not to say"],
     },
 ]
+
+// Plain text options use the same text for their value and label.
+function toOption(option) {
+    return typeof option === "string" ? { value: option, label: option } : option
+}
 
 // { profile } holds any earlier answers, so they show again on a return visit.
 // { onDone } receives the answers when the student continues or skips.
@@ -74,55 +91,47 @@ function AboutYou({ profile, onDone }) {
         goNext(skipped)
     }
 
-    // Plain text options use the same text for their value and label.
-    function toOption(option) {
-        return typeof option === "string" ? { value: option, label: option } : option
-    }
-
     return (
         <FarmerScene bubbleKey={question.id} centred>
-            <p className="about-kicker">About you · Question {step + 1} of {QUESTIONS.length}</p>
+            <StoryDots total={QUESTIONS.length} current={step} label="Question"/>
+
             {step === 0 && (
-                <p className="about-intro">
-                    Nice to meet you{profile.name ? `, ${profile.name}` : ""}! A few quick questions so I can
-                    suggest causes and show sessions near you. You can skip any of them.
+                <p className="about-greeting">
+                    Nice to meet you{profile.name ? `, ${profile.name}` : ""}! A few quick questions
+                    so I can suggest causes near you.
                 </p>
             )}
 
             {/* key makes React draw a fresh question each step, so the right options show. */}
             <fieldset className="about-question" key={question.id}>
-                <legend className="farmer-line">{question.label}</legend>
-                <div className={question.stacked ? "about-options about-options-stacked" : "about-options"}>
+                <legend className="farmer-question">{question.label}</legend>
+                {question.hint && <p className="about-hint">{question.hint}</p>}
+                <div className={`about-options about-options-${question.layout || "pills"}`}>
                     {question.options.map(toOption).map((option) => (
                         <label className="about-option" key={option.value}>
                             <input
+                                className="visually-hidden"
                                 type="radio"
                                 name={question.id}
                                 value={option.value}
                                 checked={answers[question.id] === option.value}
                                 onChange={() => handleChange(question.id, option.value)}
                             />
-                            <span>
-                                {option.label}
-                                {option.hint && <small>{option.hint}</small>}
-                            </span>
+                            {option.icon && <span className="about-option-icon" aria-hidden="true">{option.icon}</span>}
+                            <span className="about-option-label">{option.label}</span>
+                            {option.hint && <small>{option.hint}</small>}
                         </label>
                     ))}
                 </div>
             </fieldset>
 
-            <StoryDots total={QUESTIONS.length} current={step} label="Question"/>
             <div className="about-buttons">
-                {step > 0
-                    ? <button className="about-back" onClick={() => setStep(step - 1)}>← Back</button>
-                    : <span/>}
-                <div className="about-buttons-right">
-                    <button className="about-skip" onClick={handleSkip}>Skip</button>
-                    <button className="button-primary" onClick={() => goNext(answers)}>
-                        {isLast ? "Start the story" : "Next"}
-                    </button>
-                </div>
+                {step > 0 && <button className="farmer-back" onClick={() => setStep(step - 1)}>← Back</button>}
+                <button className="button-primary" onClick={() => goNext(answers)}>
+                    {isLast ? "Start the story" : "Next"}
+                </button>
             </div>
+            <button className="about-skip" onClick={handleSkip}>Skip this question</button>
         </FarmerScene>
     )
 }

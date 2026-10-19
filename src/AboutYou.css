@@ -1,119 +1,174 @@
 /* Styles for the About you questions, which sit in the farmer's speech bubble
    (FarmerIntro.css). Shared colours and .button-primary are in index.css. */
 
-.about-intro {
+.about-greeting {
+  max-width: 30em;
+  font-size: 16px;
   color: var(--text-soft);
 }
 
 .about-question {
+  width: 100%;
   border: none;
   margin: 0;
   padding: 0;
-}
-
-/* The question's text style comes from .farmer-line. */
-.about-question legend {
-  margin-bottom: 16px;
-  padding: 0;
-}
-
-/* "About you · Question 2 of 4" */
-.about-kicker {
-  font-size: 15px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--barn);
-}
-
-/* flex-wrap lets the options move onto a new line when the screen is narrow. */
-.about-options {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-/* Each option looks like a pill; the real radio button sits inside it. */
-.about-option {
-  display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+}
+
+.about-question legend {
+  width: 100%;
+  margin-bottom: 4px;
+  padding: 0;
+  text-align: center;
+}
+
+.about-hint {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.about-options {
+  width: 100%;
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.about-option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 18px;
   background: #fff;
   border: 2px solid var(--border);
-  border-radius: 999px;
+  border-radius: 14px;
+  box-shadow: 0 3px 0 var(--paper-line);
+  font-weight: 600;
+  text-align: center;
   cursor: pointer;
+  transition: transform 0.15s ease-out, border-color 0.15s, background 0.15s, box-shadow 0.15s;
 }
 
 .about-option:hover {
   border-color: var(--hay);
-  background: var(--hay-soft);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 0 var(--paper-line);
 }
 
 .about-option:has(input:checked) {
   border-color: var(--barn);
   background: var(--hay-soft);
+  box-shadow: 0 3px 0 var(--barn-dark);
 }
 
-.about-option input {
-  accent-color: var(--barn);
-  margin: 0;
-}
-
-.about-buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-}
-
-.about-buttons-right {
-  display: flex;
-  gap: 10px;
-}
-
-.about-back {
-  padding: 10px 14px;
-  background: transparent;
-  color: var(--text-soft);
-  border: none;
-  font-weight: 600;
-}
-
-.about-back:hover {
-  color: var(--text);
-}
-
-.about-skip {
-  padding: 12px 20px;
-  background: transparent;
-  color: var(--text-soft);
-  border: 2px solid var(--border);
-}
-
-.about-skip:hover {
-  background: #fff;
-}
-
-/* The goal options are longer, so they sit in a grid with a short description.
-   Two columns on wide screens keep the speech bubble from getting too tall. */
-.about-options-stacked {
+.about-option:has(input:checked)::after {
+  content: "✓";
+  position: absolute;
+  top: -9px;
+  right: -9px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  background: var(--barn);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  animation: about-tick 0.2s ease-out both;
 }
 
-@media (max-width: 720px) {
-  .about-options-stacked {
-    grid-template-columns: 1fr;
-  }
+@keyframes about-tick {
+  from { transform: scale(0.4); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-.about-options-stacked .about-option {
-  border-radius: 10px;
+.about-option:has(input:focus-visible) {
+  outline: 3px solid var(--hay);
+  outline-offset: 2px;
+}
+
+.about-option-icon {
+  font-size: 30px;
+  line-height: 1.1;
 }
 
 .about-option small {
   display: block;
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
   color: var(--text-soft);
+}
+
+.about-options-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.about-options-tiles .about-option {
+  min-height: 96px;
+}
+
+.about-options-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.about-options-cards .about-option {
+  justify-content: flex-start;
+  gap: 2px;
+  padding: 10px 10px 12px;
+  line-height: 1.3;
+}
+
+.about-options-cards .about-option-icon {
+  font-size: 24px;
+}
+
+.about-options-cards small {
+  font-size: 13px;
+}
+
+.about-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.about-skip {
+  padding: 2px 8px;
+  background: transparent;
+  color: var(--text-soft);
+  border: none;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.about-skip:hover {
+  color: var(--ink);
+}
+
+@media (max-width: 720px) {
+  .about-options-tiles,
+  .about-options-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .about-options-cards {
+    grid-template-columns: 1fr;
+  }
 }

@@ -25,7 +25,7 @@
 /* The farmer and speech bubble sit at the bottom, in a centred column. */
 .barn-inside-content {
   position: relative;
-  max-width: 1240px;
+  max-width: 1360px;
   min-height: calc(100svh - 70px);
   margin: 0 auto;
   display: flex;

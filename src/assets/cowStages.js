@@ -6,7 +6,7 @@
 //   1. put the image file in this folder (src/assets)
 //   2. import it at the top, e.g.  import calfImage from './cow-calf.png'
 //   3. add it to the stage, e.g.   image: calfImage
-// CloverCowdini.jsx shows the image when there is one, and the emoji when there isn't.
+// The Cow tab shows each stage's name and message.
 
 // Basic grass per action. Each action counts once per cause, and each goal once when finished.
 // Sharing and donating give no grass, so helping in person is what feeds the cow.

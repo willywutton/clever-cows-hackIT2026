@@ -19,7 +19,7 @@
 }
 
 .site-header-inner {
-  max-width: 1240px;
+  max-width: 1360px;
   margin: 0 auto;
   padding: 14px 32px 4px;
   box-sizing: border-box;
@@ -93,8 +93,8 @@
 
 .site-name {
   margin: 0;
-  font-family: var(--hand);
-  font-size: 26px;
+  font-size: 17px;
+  font-weight: 600;
   line-height: 1;
 }
 

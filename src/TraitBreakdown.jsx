@@ -21,14 +21,15 @@ function TraitBreakdown({ scores, total, topTrait }) {
     )
 
     return (
-        <div className="traits">
-            <h3 className="traits-title">Your strengths</h3>
+        <section className="traits">
+            <h3>Your strengths</h3>
             <ul className="traits-list">
                 {rows.map(({ trait, percent }) => (
                     <li key={trait} className={trait === topTrait ? "traits-row traits-row-top" : "traits-row"}>
                         <div className="traits-label">
                             <span>
                                 {traitLabels[trait].label}
+                                {trait === topTrait && <em className="traits-top-tag">Top</em>}
                                 <small>{traitLabels[trait].skills}</small>
                             </span>
                             <strong>{percent}%</strong>
@@ -46,7 +47,7 @@ function TraitBreakdown({ scores, total, topTrait }) {
                     </li>
                 ))}
             </ul>
-        </div>
+        </section>
     )
 }
 

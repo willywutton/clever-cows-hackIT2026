@@ -7,21 +7,24 @@ import SessionDetails from './SessionDetails'
 import EventCard from './EventCard'
 import InviteFriends from './InviteFriends'
 import DemoPledge from './DemoPledge'
+import { spotsFor } from './causeRows'
 import './CausePage.css'
 
 // { cause } is the cause to show. { surprise } is true when opened from Surprise me.
 // { events } are this cause's events. { updates } are the organisation's posts for it.
-// { isSignedUp } is true if the student already signed up. { userRegion } is for the travel tag.
+// { signupEntry } is the student's sign-up for this cause, or undefined. { userRegion } is for the travel tag.
 // { isFavourite } and { onToggleFavourite } handle saving. { friendIds } and { onInvite } are for invites.
 // { onSignUp } opens the sign-up screen. { onAction } records Share and the demo pledge.
 // { onBack } returns to Home.
 function CausePage({
-    cause, surprise, events, updates, isSignedUp, userRegion,
+    cause, surprise, events, updates, signupEntry, userRegion,
     isFavourite, onToggleFavourite, friendIds, onInvite, onSignUp, onAction, onBack,
 }) {
     const signup = cause.actions.find((action) => action.type === "signup")
     const donate = cause.actions.find((action) => action.type === "donate")
     const look = causeLook(cause.id)
+    const isSignedUp = Boolean(signupEntry)
+    const spots = spotsFor(cause, signupEntry)
 
     // What is open under the buttons: nothing, the invite picker or the demo pledge.
     const [panel, setPanel] = useState(null)
@@ -121,7 +124,7 @@ function CausePage({
                     <strong>{signup.label}</strong>
                     <p className="cause-session-weekly">Or every week: {signup.weeklyLabel}</p>
                     <SessionDetails action={signup} weekly={false} userRegion={userRegion}/>
-                    <p className="cause-session-needs">Each session needs {signup.peopleNeeded} volunteers.</p>
+                    <p className="cause-session-needs">{spots.going} of {spots.total} places taken for the next session.</p>
                 </div>
 
                 {visibleEvents.length > 0 && <h4 className="cause-events-title">Coming up</h4>}

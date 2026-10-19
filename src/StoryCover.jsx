@@ -53,7 +53,7 @@ function StoryCover({ name, onBegin, onSkip }) {
     return (
         <FarmerScene bubbleKey="cover" centred bubble={false}>
             <div className="cover-book">
-                <p className="cover-kicker">A short story · 8 scenes · about 5 minutes</p>
+                <p className="cover-kicker">A short story · 8 scenes · about 3 minutes</p>
                 <h2 className="cover-title">The Day Mooville Needed You</h2>
                 <span className="cover-art" aria-hidden="true">🐄🏡🌾</span>
                 <p className="cover-blurb">

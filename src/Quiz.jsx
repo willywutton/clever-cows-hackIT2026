@@ -81,22 +81,36 @@ function Quiz({whenDone}){
 
 
         return (
-            <div>
-                <div className="quiz-card card">
-                    <div className="quiz-result-layout">
-                        <div className="quiz-result-text">
-                            <p className="quiz-kicker">Your helper type</p>
-                            <h2>You are: <span className="quiz-identity">{result.name}</span></h2>
-                            <p>{result.description}</p>
-                            <p className="quiz-matches">Best matched with: {result.matchesWith}</p>
-                        </div>
-                        <TraitBreakdown scores={scores} total={chapters.length} topTrait={topTrait}/>
-                    </div>
-                    <div className="quiz-buttons">
-                        <button className="quiz-previous" onClick={handlePrevious}>← Change my last answer</button>
-                        {/* The arrow "() =>" means: only call whenDone when clicked, not straight away. */}
-                        <button className="button-primary" onClick={() => whenDone(topTrait)}>See my causes</button>
-                    </div>
+            <div className="quiz-card card quiz-result screen-enter">
+                <header className="quiz-result-hero">
+                    <span className="quiz-result-badge" aria-hidden="true">{result.emoji}</span>
+                    <p className="eyebrow">Your helper type</p>
+                    <h1 className="quiz-identity">{result.name}</h1>
+                    <p className="quiz-result-description">{result.description}</p>
+                </header>
+
+                <div className="quiz-result-layout">
+                    <section className="quiz-matches">
+                        <h3>Best matched with</h3>
+                        <ul className="quiz-match-tiles">
+                            {result.matches.map((match) => (
+                                <li key={match.label}>
+                                    <span aria-hidden="true">{match.emoji}</span>
+                                    {match.label}
+                                </li>
+                            ))}
+                        </ul>
+                        <p className="quiz-matches-note">
+                            These are just where you'll probably shine. Every cause is open to you.
+                        </p>
+                    </section>
+                    <TraitBreakdown scores={scores} total={chapters.length} topTrait={topTrait}/>
+                </div>
+
+                <div className="quiz-buttons">
+                    <button className="quiz-previous" onClick={handlePrevious}>← Change my last answer</button>
+                    {/* The arrow "() =>" means: only call whenDone when clicked, not straight away. */}
+                    <button className="button-primary" onClick={() => whenDone(topTrait)}>See my causes</button>
                 </div>
             </div>
         )
@@ -105,46 +119,50 @@ function Quiz({whenDone}){
     // Still playing: get the scene we're on.
     const chapter = chapters[currentChapter]
     return (
-    <div>
         <div className="quiz-card card">
-            <StoryDots total={chapters.length} current={currentChapter}/>
+            <div className="quiz-top">
+                <p className="eyebrow">Scene {currentChapter + 1} of {chapters.length}</p>
+                <StoryDots total={chapters.length} current={currentChapter}/>
+            </div>
             <h2>{chapter.title}</h2>
 
             {/* "condition && (...)" means: only show this part when the condition is true. */}
             {!showingResult && (
-                <>
-                <div className="quiz-layout">
-                <p className="quiz-story">{chapter.story}</p>
-                <div className="quiz-choices">
-                    <p className="quiz-kicker">What do you do?</p>
-                    {/* .map turns each choice in the list into a button.
-                        key gives each button a unique name so React can tell them apart. */}
-                    {chapter.choices.map((choice) => (
-                        <button className="quiz-choice" key={choice.key} onClick={() => handleChoice(choice)}>
-                        {choice.text}
-                        </button>
-                    ))}
-                </div>
-                </div>
-                {picks.length > 0 && (
-                    <div className="quiz-buttons">
-                        <button className="quiz-previous" onClick={handlePrevious}>← Previous</button>
+                <div className="quiz-step" key={`scene-${currentChapter}`}>
+                    <div className="quiz-layout">
+                        <p className="quiz-story">{chapter.story}</p>
+                        <div className="quiz-choices">
+                            <p className="eyebrow">What do you do?</p>
+                            {/* .map turns each choice in the list into a button.
+                                key gives each button a unique name so React can tell them apart. */}
+                            {chapter.choices.map((choice, index) => (
+                                <button className="quiz-choice" key={choice.key} onClick={() => handleChoice(choice)}>
+                                    <span className="quiz-choice-letter" aria-hidden="true">{"ABCD"[index]}</span>
+                                    {choice.text}
+                                </button>
+                            ))}
+                        </div>
                     </div>
-                )}
-                </>
+                    {picks.length > 0 && (
+                        <div className="quiz-buttons">
+                            <button className="quiz-previous" onClick={handlePrevious}>← Previous</button>
+                        </div>
+                    )}
+                </div>
             )}
 
             {showingResult && (
-                <>
-                <p className="quiz-story">{lastResultText}</p>
-                <div className="quiz-buttons">
-                    <button className="quiz-previous" onClick={handlePrevious}>← Previous</button>
-                    <button className="button-primary" onClick={handleContinue}>Continue</button>
+                <div className="quiz-step" key={`result-${currentChapter}`}>
+                    <p className="quiz-story quiz-outcome">{lastResultText}</p>
+                    <div className="quiz-buttons">
+                        <button className="quiz-previous" onClick={handlePrevious}>← Previous</button>
+                        <button className="button-primary" onClick={handleContinue}>
+                            {currentChapter === chapters.length - 1 ? "See my result" : "Continue"}
+                        </button>
+                    </div>
                 </div>
-                </>
             )}
         </div>
-    </div>
     )
 
 

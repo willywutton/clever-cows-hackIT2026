@@ -1,0 +1,78 @@
+.post-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  background: #fffdf6;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  scroll-snap-align: start;
+}
+
+.post-tile:hover {
+  border-color: var(--hay);
+}
+
+.post-tile:has(.post-tile-open:focus-visible) {
+  outline: 3px solid var(--hay);
+  outline-offset: 2px;
+}
+
+.post-tile-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.post-tile-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.post-tile-open {
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+}
+
+.post-tile-open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.post-tile-open:focus-visible {
+  outline: none;
+}
+
+.post-tile-meta {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.post-tile-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  font-family: var(--hand);
+  font-size: 22px;
+  line-height: 32px;
+  color: var(--ink);
+}
+
+.post-tile-stickers {
+  display: flex;
+  gap: 4px;
+  margin-top: auto;
+}

@@ -1,0 +1,89 @@
+.home-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  animation: screen-enter 0.4s ease-out both;
+}
+
+.home-row-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.home-row-controls {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-row-action {
+  margin-right: 4px;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--barn);
+  border: 2px solid transparent;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.home-row-action:hover {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.home-row-arrow {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0 0 3px;
+  background: var(--card);
+  color: var(--ink);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.home-row-arrow:hover:not(:disabled) {
+  background: var(--hay);
+  border-color: var(--hay);
+  transform: scale(1.08);
+}
+
+.home-row-arrow:disabled {
+  opacity: 0.35;
+}
+
+.home-row-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 224px;
+  gap: 16px;
+  margin: -8px -8px -4px;
+  padding: 8px 8px 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 8px;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.home-row-track-more {
+  mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+}
+
+@media (max-width: 720px) {
+  .home-row-track {
+    grid-auto-columns: 78%;
+  }
+
+  .home-row-arrow {
+    display: none;
+  }
+}

@@ -6,6 +6,7 @@ import { YOU, nameOf } from './people'
 import SessionDetails from './SessionDetails'
 import AddFriend from './AddFriend'
 import RepeatBonus from './RepeatBonus'
+import { spotsFor } from './causeRows'
 import './SignUp.css'
 
 // { cause } is the cause being signed up for. { existing } is an earlier sign-up
@@ -16,6 +17,7 @@ import './SignUp.css'
 function SignUp({ cause, existing, userRegion, myFriendIds, visitsSoFar, onAddFriend, onConfirm, onBack }) {
     const signup = cause.actions.find((action) => action.type === "signup")
     const needed = signup.peopleNeeded
+    const spots = spotsFor(cause, existing)
 
     const [weekly, setWeekly] = useState(existing ? existing.weekly : false)
     const [mode, setMode] = useState(existing ? existing.mode : "me")
@@ -64,7 +66,7 @@ function SignUp({ cause, existing, userRegion, myFriendIds, visitsSoFar, onAddFr
         problem = "Pick at least one friend to come with you."
     }
     else if (mode === "relay" && group.length < needed) {
-        problem = `This session needs ${needed} people, so your group needs at least ${needed} (including you).`
+        problem = `A relay group sends ${needed} people each time, so your group needs at least ${needed} (including you).`
     }
     else if (mode === "relay" && goingIds.length < needed) {
         problem = `Tick ${needed - goingIds.length} more ${needed - goingIds.length === 1 ? "person" : "people"} to go this time.`
@@ -87,7 +89,7 @@ function SignUp({ cause, existing, userRegion, myFriendIds, visitsSoFar, onAddFr
             <div className="signup-session">
                 <strong>{weekly ? signup.weeklyLabel : signup.label}</strong>
                 <SessionDetails action={signup} weekly={weekly} userRegion={userRegion}/>
-                <p className="signup-needed">Each session needs {needed} volunteers.</p>
+                <p className="signup-needed">{spots.going} of {spots.total} places taken for the next session.</p>
             </div>
 
             <div className="signup-who" role="group" aria-label="Who's coming?">

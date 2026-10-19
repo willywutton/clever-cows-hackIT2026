@@ -1,12 +1,8 @@
 // Welcome.jsx is the first screen: the app's name, what it's for in a sentence or two,
 // and a Next button that leads to the farmer's introduction.
 import BarnFront from './BarnFront'
+import welcomeFarm from './assets/welcome-farm.png'
 import './Welcome.css'
-
-// The picture of Clover Cowdini in the farm scene. While this is null, an emoji is shown.
-// To use artwork, put the image in src/assets, import it at the top of this file
-// (e.g. import cowPicture from './assets/clover-cowdini.png') and set COW_PICTURE to it.
-const COW_PICTURE = null
 
 // { onNext } moves on to the farmer's introduction.
 function Welcome({ onNext }) {
@@ -14,21 +10,12 @@ function Welcome({ onNext }) {
     return (
         <BarnFront>
             <div className="welcome card">
-                {/* A small farm scene drawn with CSS: sky, sun, hills and a fence. */}
                 <div className="welcome-scene">
-                    <span className="welcome-sun" aria-hidden="true"/>
-                    <span className="welcome-hill welcome-hill-back" aria-hidden="true"/>
-                    <span className="welcome-hill welcome-hill-front" aria-hidden="true"/>
-                    <span className="welcome-fence" aria-hidden="true"/>
-                    {COW_PICTURE ? (
-                        <img className="welcome-cow welcome-cow-image" src={COW_PICTURE} alt="Clover Cowdini"/>
-                    ) : (
-                        <span className="welcome-cow" role="img" aria-label="Clover Cowdini">🐮</span>
-                    )}
+                    <img className="welcome-picture" src={welcomeFarm} alt="Clover Cowdini sitting on a grassy hill under a blue sky"/>
                 </div>
 
                 <div className="welcome-body">
-                    <h2>Welcome to Clever Cows</h2>
+                    <h1>Welcome to Clever Cows</h1>
                     <p className="welcome-intro">
                         Lots of young people want to help their community, but it's hard to know
                         where to start, and harder to keep going.

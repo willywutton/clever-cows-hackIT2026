@@ -16,6 +16,12 @@
   line-height: 1;
 }
 
+.cow-avatar-tiny {
+  --avatar: 28px;
+  border-width: 2px;
+  box-shadow: 0 0 0 1px var(--hay);
+}
+
 .cow-avatar-small {
   --avatar: 44px;
 }

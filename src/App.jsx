@@ -9,20 +9,15 @@ import BarnInterior from './BarnInterior'
 import AboutYou from './AboutYou'
 import StoryCover from './StoryCover'
 import Quiz from './Quiz'
-import MatchFeed from './MatchFeed'
+import HomePage from './HomePage'
 import CausePage from './CausePage'
 import SignUp from './SignUp'
 import SignupDone from './SignupDone'
-import CloverCowdini from './CloverCowdini'
 import OrgView from './org/OrgView'
 import SiteHeader from './SiteHeader'
 import AppShell from './AppShell'
-import HomeLayout from './HomeLayout'
 import Profile from './Profile'
-import HomeNextUp from './HomeNextUp'
 import Reflection from './Reflection'
-import CalendarConnect from './CalendarConnect'
-import GoalCard from './GoalCard'
 import GoalComplete from './GoalComplete'
 import DiaryPage from './DiaryPage'
 import PortfolioPrint from './PortfolioPrint'
@@ -31,9 +26,7 @@ import FriendsPage from './FriendsPage'
 import FriendProfile from './FriendProfile'
 import SocialPage from './SocialPage'
 import FavouritesPage from './FavouritesPage'
-import SavedReminder from './SavedReminder'
 import HostEventPage from './HostEventPage'
-import CauseNews from './CauseNews'
 import PageTitle from './PageTitle'
 import { causes } from './data/causes'
 
@@ -89,59 +82,7 @@ function App() {
     )
   }
   else if (screen === 'home') {
-    // <> and </> group several components together without adding an extra box around them.
-    content = (
-      <HomeLayout
-        side={
-          <>
-            <HomeNextUp signedUp={app.signedUp} onSeeAll={() => navigate('profile')}/>
-            <SavedReminder
-              events={app.events}
-              favourites={app.favourites}
-              signedUp={app.signedUp}
-              onSignUp={app.signUpFor}
-              onOpenFavourites={() => navigate('favourites')}
-            />
-            <CauseNews
-              updates={app.orgUpdates}
-              causeIds={[
-                ...app.signedUp.map((entry) => entry.causeId),
-                ...app.favourites.filter((item) => item.kind === 'cause').map((item) => item.id),
-              ]}
-            />
-            <GoalCard
-              goalId={app.profile.goal}
-              history={app.history}
-              finishedIds={app.finishedGoalIds}
-              onGoalChange={app.changeGoal}
-            />
-            <CloverCowdini
-              grass={app.grass}
-              recentFeeds={app.recentFeeds}
-              onReactionDone={app.clearRecentFeeds}
-              onVisit={() => navigate('cow')}
-            />
-            <CalendarConnect
-              connected={app.calendarConnected}
-              fitsMyWeek={app.fitsMyWeek}
-              onConnect={() => app.setCalendarConnected(true)}
-              onDisconnect={app.disconnectCalendar}
-              onFitsChange={app.setFitsMyWeek}
-            />
-          </>
-        }
-        main={
-          <MatchFeed
-            result={app.quizResult}
-            onOpenCause={(causeId) => app.openCause(causeId)}
-            fitsMyWeek={app.fitsMyWeek}
-            onShowAll={() => app.setFitsMyWeek(false)}
-            signedUp={app.signedUp}
-            userRegion={app.profile.region}
-          />
-        }
-      />
-    )
+    content = <HomePage app={app}/>
   }
   else if (screen === 'cause') {
     // key makes React start a fresh page (with no old messages) for each cause.
@@ -152,7 +93,7 @@ function App() {
         surprise={app.openedBySurprise}
         events={app.events.filter((event) => event.causeId === openCause.id)}
         updates={app.orgUpdates.filter((update) => update.causeId === openCause.id)}
-        isSignedUp={app.signedUp.some((item) => item.causeId === openCause.id)}
+        signupEntry={app.signedUp.find((item) => item.causeId === openCause.id)}
         userRegion={app.profile.region}
         isFavourite={app.isFavourite}
         onToggleFavourite={app.toggleFavourite}
@@ -270,12 +211,18 @@ function App() {
   }
 
   // The menu and student bar appear once there is a character to build on.
-  const signedIn = app.quizResult !== null && !['welcome', 'intro', 'about', 'cover', 'quiz'].includes(screen)
+  const barnScreens = ['intro', 'about', 'cover', 'quiz']
+  const signedIn = app.quizResult !== null && screen !== 'welcome' && !barnScreens.includes(screen)
 
   // Reading and form screens stay a comfortable width in the middle.
+  // Every other screen fades in when it opens; the barn screens have their own animations.
   const narrowScreens = ['cause', 'signup', 'signup-done', 'reflection']
+  const pageClasses = [
+    narrowScreens.includes(screen) && 'page-narrow',
+    !barnScreens.includes(screen) && 'screen-enter',
+  ].filter(Boolean).join(' ')
   const studentPage = (
-    <div className={narrowScreens.includes(screen) ? 'page-narrow' : undefined}>{content}</div>
+    <div key={`${screen}-${app.openCauseId}`} className={pageClasses || undefined}>{content}</div>
   )
 
   return (
@@ -296,7 +243,7 @@ function App() {
           While the farmer talks, the inside of the barn fills the screen (see BarnInterior.css). */}
       <main className={app.view !== 'student' ? undefined
         : screen === 'welcome' ? 'barn-wall'
-        : ['intro', 'about', 'cover', 'quiz'].includes(screen) ? 'barn-room' : undefined}>
+        : barnScreens.includes(screen) ? 'barn-room' : undefined}>
         <div className="page">
           <div hidden={app.view !== 'student'}>
             {signedIn

@@ -26,16 +26,38 @@
 .cow-stat-bar div {
   height: 100%;
   border-radius: 999px;
-  transition: width 0.5s ease-out;
+  transition: width 0.5s ease-out, background 0.5s;
 }
 
-.cow-stat-comfort div { background: #c99a6c; }
-.cow-stat-hunger div { background: var(--grass); }
-.cow-stat-cleanliness div { background: #6fb3c9; }
-.cow-stat-happiness div { background: var(--hay); }
+.cow-stat-low div { background: var(--low); }
+.cow-stat-mid div { background: var(--mid); }
+.cow-stat-good div { background: var(--good); }
 
-@media (prefers-reduced-motion: reduce) {
-  .cow-stat-bar div {
-    transition: none;
-  }
+.cow-stats-compact {
+  gap: 7px;
+}
+
+.cow-stats-compact li {
+  display: grid;
+  grid-template-columns: 22px 1fr;
+  align-items: center;
+  gap: 6px;
+}
+
+.cow-stats-compact .cow-stat-label {
+  font-size: 16px;
+}
+
+.cow-stats-compact .cow-stat-name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.cow-stats-compact .cow-stat-bar {
+  height: 10px;
+  border-width: 1.5px;
 }

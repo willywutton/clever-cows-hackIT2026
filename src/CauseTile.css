@@ -1,0 +1,168 @@
+.cause-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+.cause-tile:hover {
+  border-color: var(--hay);
+}
+
+.cause-tile:has(.cause-tile-open:focus-visible) {
+  outline: 3px solid var(--hay);
+  outline-offset: 2px;
+}
+
+.cause-tile-art {
+  display: grid;
+  place-items: center;
+  height: 96px;
+  background:
+    radial-gradient(circle at 20% 120%, rgba(255, 255, 255, 0.45) 0 40px, transparent 41px),
+    radial-gradient(circle at 85% -20%, rgba(255, 255, 255, 0.35) 0 50px, transparent 51px),
+    var(--cause-color, var(--hay-soft));
+  font-size: 44px;
+  line-height: 1;
+}
+
+.cause-tile-art span {
+  transition: transform 0.25s ease-out;
+}
+
+.cause-tile:hover .cause-tile-art span {
+  transform: scale(1.12) rotate(-6deg);
+}
+
+.cause-tile-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 2px 10px;
+  background: var(--grass);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cause-tile-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 14px 16px 16px;
+}
+
+.cause-tile-open {
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.cause-tile-open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.cause-tile-open:focus-visible {
+  outline: none;
+}
+
+.cause-tile-meta {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.cause-tile-travel {
+  padding: 1px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cause-tile-travel-very-near {
+  background: var(--grass-soft);
+  color: var(--grass);
+}
+
+.cause-tile-travel-not-far {
+  background: var(--hay-soft);
+  color: #8a6a12;
+}
+
+.cause-tile-travel-longer {
+  background: #f1e7da;
+  color: var(--text-soft);
+}
+
+.cause-tile-spots {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cause-tile-meter {
+  flex: 1;
+  height: 8px;
+  background: #f1e7da;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.cause-tile-meter span {
+  display: block;
+  height: 100%;
+  background: var(--grass);
+  border-radius: 999px;
+}
+
+.cause-tile-count {
+  flex-shrink: 0;
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.cause-tile-count strong {
+  color: var(--ink);
+}
+
+.cause-tile-friends {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.cause-tile-faces {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.cause-tile-faces .cow-avatar + .cow-avatar {
+  margin-left: -10px;
+}
+
+.cause-tile-note {
+  padding: 3px 10px;
+  background: var(--grass-soft);
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}

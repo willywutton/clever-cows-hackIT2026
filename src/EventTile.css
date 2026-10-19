@@ -1,0 +1,92 @@
+.event-tile {
+  position: relative;
+  display: flex;
+  gap: 14px;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  scroll-snap-align: start;
+}
+
+.event-tile:hover {
+  border-color: var(--hay);
+}
+
+.event-tile:has(.event-tile-open:focus-visible) {
+  outline: 3px solid var(--hay);
+  outline-offset: 2px;
+}
+
+.event-tile-date {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 58px;
+  padding: 6px 0 8px;
+  align-self: flex-start;
+  background: var(--cause-color, var(--hay-soft));
+  border-radius: 12px;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.event-tile-month {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.event-tile-day {
+  margin: 4px 0 2px;
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.event-tile-weekday {
+  font-size: 12px;
+}
+
+.event-tile-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.event-tile-open {
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.event-tile-open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.event-tile-open:focus-visible {
+  outline: none;
+}
+
+.event-tile-meta {
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--text-soft);
+}
+
+.event-tile-meta:first-of-type {
+  font-weight: 600;
+  color: var(--text);
+}

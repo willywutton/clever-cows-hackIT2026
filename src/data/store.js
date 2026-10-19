@@ -51,6 +51,6 @@ export const STATS = [
   { id: "happiness", label: "Happiness", emoji: "💛" },
 ]
 
-export const STARTING_STATS = { comfort: 20, hunger: 20, cleanliness: 20, happiness: 20 }
+export const STARTING_STATS = { comfort: 35, hunger: 35, cleanliness: 35, happiness: 35 }
 
 export const STAT_MAX = 100

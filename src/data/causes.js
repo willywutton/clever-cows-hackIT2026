@@ -4,6 +4,7 @@
 //
 // How to read one cause:
 //   id        a unique code, used by React to tell causes apart
+//   topic     what the cause is about, used for the topic filters on Home
 //   identity  which quiz traits this cause matches (a cause can match more than one)
 //   actions   the three ways to help: share, donate and sign up.
 //             Every action is equally welcome; donating is never required.
@@ -13,7 +14,8 @@
 //   weeklyLabel      the same session for students joining every week
 //   startsAt         the next session's start, in Singapore time (+08:00). Sample dates.
 //   durationMinutes  how long one session lasts
-//   peopleNeeded     how many volunteers one session needs
+//   peopleNeeded     how many people a relay group sends to each session
+//   spots            how many places the next session has (sample number)
 //   area             the neighbourhood the session is in (general area only, no address)
 //   region           the part of Singapore: North, North-East, East, West or Central
 
@@ -21,6 +23,7 @@ export const causes = [
   {
     id: "cause_01",
     name: "Paws & Purpose",
+    topic: "Animals",
     description: "Hi, I'm one of many dogs waiting for a home at our shelter. Even an hour of your time means I get to go for a walk today.",
     identity: ["Heart"],
     actions: [
@@ -33,6 +36,7 @@ export const causes = [
         startsAt: "2026-11-07T10:00:00+08:00",
         durationMinutes: 60,
         peopleNeeded: 2,
+        spots: 8,
         area: "Sungei Tengah",
         region: "West"
       }
@@ -41,6 +45,7 @@ export const causes = [
   {
     id: "cause_02",
     name: "Golden Years Club",
+    topic: "Older people",
     description: "We're a group of elderly residents who'd love some company. A short visit or a game of chess means more than you'd think.",
     identity: ["Heart", "Community"],
     actions: [
@@ -53,6 +58,7 @@ export const causes = [
         startsAt: "2026-11-08T14:00:00+08:00",
         durationMinutes: 120,
         peopleNeeded: 3,
+        spots: 6,
         area: "Toa Payoh",
         region: "Central"
       }
@@ -61,6 +67,7 @@ export const causes = [
   {
     id: "cause_03",
     name: "FixIt Collective",
+    topic: "Making and fixing",
     description: "We repair donated furniture and electronics for families who need them. If you like figuring out how things work, we need you.",
     identity: ["Craft"],
     actions: [
@@ -73,6 +80,7 @@ export const causes = [
         startsAt: "2026-11-14T10:00:00+08:00",
         durationMinutes: 180,
         peopleNeeded: 4,
+        spots: 10,
         area: "Bedok",
         region: "East"
       }
@@ -81,6 +89,7 @@ export const causes = [
   {
     id: "cause_04",
     name: "TechBridge",
+    topic: "Older people",
     description: "We help seniors get comfortable with smartphones and video calls so they can stay connected to family. Patience is more useful than expertise.",
     identity: ["Strategy", "Craft"],
     actions: [
@@ -93,6 +102,7 @@ export const causes = [
         startsAt: "2026-11-04T18:30:00+08:00",
         durationMinutes: 90,
         peopleNeeded: 2,
+        spots: 6,
         area: "Ang Mo Kio",
         region: "North-East"
       }
@@ -101,6 +111,7 @@ export const causes = [
   {
     id: "cause_05",
     name: "Riverbank Restore",
+    topic: "Environment",
     description: "We're restoring the riverbank one cleanup at a time. Every bag of litter removed helps the fish, the birds, and the rest of us.",
     identity: ["Craft"],
     actions: [
@@ -113,6 +124,7 @@ export const causes = [
         startsAt: "2026-11-15T08:00:00+08:00",
         durationMinutes: 120,
         peopleNeeded: 4,
+        spots: 12,
         area: "Punggol",
         region: "North-East"
       }
@@ -121,6 +133,7 @@ export const causes = [
   {
     id: "cause_06",
     name: "New Friends Circle",
+    topic: "Young people and learning",
     description: "We welcome newcomer students who just moved here and don't know anyone yet. A short chat can turn into a real friendship.",
     identity: ["Community"],
     actions: [
@@ -133,6 +146,7 @@ export const causes = [
         startsAt: "2026-11-06T19:00:00+08:00",
         durationMinutes: 90,
         peopleNeeded: 3,
+        spots: 8,
         area: "Clementi",
         region: "West"
       }
@@ -141,6 +155,7 @@ export const causes = [
   {
     id: "cause_07",
     name: "Storyline Project",
+    topic: "Neighbourhood",
     description: "We turn overlooked community stories into short films and photo essays. If you notice things others walk past, this is for you.",
     identity: ["Community", "Strategy"],
     actions: [
@@ -153,6 +168,7 @@ export const causes = [
         startsAt: "2026-11-21T15:00:00+08:00",
         durationMinutes: 120,
         peopleNeeded: 2,
+        spots: 6,
         area: "Tiong Bahru",
         region: "Central"
       }
@@ -161,6 +177,7 @@ export const causes = [
   {
     id: "cause_08",
     name: "Study Buddies",
+    topic: "Young people and learning",
     description: "We pair volunteers with younger students who need a bit of extra help and encouragement with schoolwork.",
     identity: ["Strategy", "Heart"],
     actions: [
@@ -173,6 +190,7 @@ export const causes = [
         startsAt: "2026-11-10T17:30:00+08:00",
         durationMinutes: 60,
         peopleNeeded: 2,
+        spots: 6,
         area: "Woodlands",
         region: "North"
       }
@@ -181,6 +199,7 @@ export const causes = [
   {
     id: "cause_09",
     name: "Quiet Watch",
+    topic: "Neighbourhood",
     description: "We track accessibility gaps around the neighbourhood — broken ramps, missing signage — so they can actually get fixed.",
     identity: ["Strategy"],
     actions: [
@@ -193,6 +212,7 @@ export const causes = [
         startsAt: "2026-11-12T18:00:00+08:00",
         durationMinutes: 90,
         peopleNeeded: 3,
+        spots: 8,
         area: "Tampines",
         region: "East"
       }

@@ -36,113 +36,26 @@
   overflow: hidden;
 }
 
-/* The farm scene: a warm sky with hills, a fence and the cow. */
 .welcome-scene {
-  --hill-back: #9cc47a;
-  --hill-front: #6fa34b;
-  --fence: #a9744f;
-
   position: relative;
   overflow: hidden;
   height: 190px;
-  background: linear-gradient(to bottom, var(--cream) 0%, var(--hay-soft) 100%);
+  background: #9fe6fc;
 }
 
-/* Two soft clouds in the sky, each made of a few overlapping circles. */
-.welcome-scene::before,
-.welcome-scene::after {
-  content: "";
+.welcome-picture {
   position: absolute;
-  width: 60px;
-  height: 26px;
-  background: #fff;
-  border-radius: 999px;
-  opacity: 0.9;
-  box-shadow:
-    22px -12px 0 4px #fff,
-    46px -2px 0 0 #fff;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 62%;
+  animation: welcome-settle 1.2s ease-out both;
 }
 
-.welcome-scene::before {
-  top: 34%;
-  left: 12%;
-}
-
-.welcome-scene::after {
-  top: 18%;
-  left: 52%;
-  transform: scale(0.75);
-}
-
-.welcome-sun {
-  position: absolute;
-  top: 22px;
-  right: 34px;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: var(--hay);
-  box-shadow: 0 0 0 10px rgba(242, 201, 76, 0.25);
-}
-
-/* Each hill is a wide ellipse, half hidden below the bottom edge. */
-.welcome-hill {
-  position: absolute;
-  border-radius: 50%;
-}
-
-.welcome-hill-back {
-  left: -10%;
-  bottom: -70px;
-  width: 75%;
-  height: 160px;
-  background: var(--hill-back);
-}
-
-.welcome-hill-front {
-  right: -15%;
-  bottom: -90px;
-  width: 95%;
-  height: 170px;
-  background: var(--hill-front);
-}
-
-/* Fence posts and two rails, drawn with repeating stripes. */
-.welcome-fence {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 18px;
-  height: 34px;
-  background:
-    linear-gradient(var(--fence), var(--fence)) 0 9px / 100% 4px no-repeat,
-    linear-gradient(var(--fence), var(--fence)) 0 21px / 100% 4px no-repeat,
-    repeating-linear-gradient(to right, var(--fence) 0 6px, transparent 6px 46px);
-  opacity: 0.85;
-}
-
-.welcome-cow {
-  position: absolute;
-  left: 50%;
-  bottom: 22px;
-  transform: translateX(-50%);
-  font-size: 84px;
-  line-height: 1;
-  animation: welcome-cow-hop 0.8s ease-out 0.2s 1 both;
-}
-
-.welcome-cow-image {
-  width: 130px;
-  height: auto;
-}
-
-/* One small hop when the page opens. */
-@keyframes welcome-cow-hop {
-  0% { transform: translate(-50%, 0); }
-  40% { transform: translate(-50%, -16px); }
-  70% { transform: translate(-50%, 0); }
-  85% { transform: translate(-50%, -4px); }
-  100% { transform: translate(-50%, 0); }
+@keyframes welcome-settle {
+  from { transform: scale(1.06); opacity: 0.4; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .welcome-body {
@@ -152,8 +65,8 @@
   padding: 24px;
 }
 
-.welcome-body h2 {
-  font-size: 28px;
+.welcome-body h1 {
+  font-size: 30px;
   text-align: center;
 }
 
@@ -182,48 +95,13 @@
     min-height: 440px;
   }
 
-  .welcome-cow {
-    font-size: 170px;
-    bottom: 44px;
-  }
-
-  .welcome-cow-image {
-    width: 260px;
-  }
-
-  .welcome-sun {
-    width: 90px;
-    height: 90px;
-    top: 40px;
-    right: 56px;
-  }
-
-  .welcome-hill-back {
-    height: 300px;
-    bottom: -130px;
-  }
-
-  .welcome-hill-front {
-    height: 320px;
-    bottom: -170px;
-  }
-
-  .welcome-fence {
-    bottom: 34px;
-    height: 46px;
-    background:
-      linear-gradient(var(--fence), var(--fence)) 0 12px / 100% 5px no-repeat,
-      linear-gradient(var(--fence), var(--fence)) 0 28px / 100% 5px no-repeat,
-      repeating-linear-gradient(to right, var(--fence) 0 8px, transparent 8px 60px);
-  }
-
   .welcome-body {
     justify-content: center;
     gap: 18px;
     padding: 40px 44px;
   }
 
-  .welcome-body h2 {
+  .welcome-body h1 {
     font-size: 46px;
     line-height: 1.05;
     text-align: left;
@@ -239,40 +117,22 @@
     padding: 18px 48px;
     font-size: 22px;
   }
-
 }
 
 @media (max-width: 480px) {
-  .welcome {
-    padding: 0;
-  }
-
   .welcome-scene {
     height: 160px;
-  }
-
-  .welcome-cow {
-    font-size: 70px;
   }
 
   .welcome-body {
     padding: 18px;
   }
 
-  .welcome-body h2 {
-    font-size: 24px;
+  .welcome-body h1 {
+    font-size: 26px;
   }
 
   .welcome-start {
     align-self: stretch;
   }
-
-}
-
-/* People who turn off animations in their device settings see the cow without the hop. */
-@media (prefers-reduced-motion: reduce) {
-  .welcome-cow {
-    animation: none;
-  }
-
 }

@@ -1,33 +1,53 @@
-/* Styles for the two-column Home layout. */
-
 .home-layout {
   display: grid;
-  grid-template-columns: minmax(300px, 380px) 1fr;
-  gap: 32px;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  grid-template-areas:
+    "hero hero"
+    "main side";
+  gap: 28px 28px;
   align-items: start;
 }
 
-/* The left column stays in view while the causes scroll past. */
+.home-hero {
+  grid-area: hero;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 28px;
+}
+
+.home-main {
+  grid-area: main;
+  min-width: 0;
+}
+
 .home-side {
+  grid-area: side;
   position: sticky;
   top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 18px;
 }
 
-/* The side cards use the column's gap instead of their own bottom margins. */
 .home-layout .home-side > * {
   margin: 0;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 1100px) {
   .home-layout {
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "hero"
+      "side"
+      "main";
   }
 
   .home-side {
     position: static;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: start;
   }
 }

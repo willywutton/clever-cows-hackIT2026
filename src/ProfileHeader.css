@@ -19,9 +19,8 @@
 }
 
 .profile-header-hello {
-  font-family: var(--hand);
-  font-size: 28px;
-  line-height: 1;
+  font-size: 18px;
+  font-weight: 600;
   color: var(--barn);
 }
 
