@@ -11,7 +11,8 @@ import SignUp from './SignUp'
 import SignupDone from './SignupDone'
 import CloverCowdini from './CloverCowdini'
 import OrgDashboard from './OrgDashboard'
-import NavBar from './NavBar'
+import SiteHeader from './SiteHeader'
+import HomeLayout from './HomeLayout'
 import Profile from './Profile'
 import HomeNextUp from './HomeNextUp'
 import Reflection from './Reflection'
@@ -249,29 +250,35 @@ function App() {
     )
   }
   else if (screen === 'home') {
-    // <> and </> group two components together without adding an extra box around them.
+    // <> and </> group several components together without adding an extra box around them.
     content = (
-      <>
-        <HomeNextUp signedUp={signedUp} onSeeAll={() => setScreen('profile')}/>
-        <GoalCard goalId={profile.goal} history={history} finishedIds={finishedGoalIds} onGoalChange={handleGoalChange}/>
-        <CloverCowdini grass={grass} recentFeeds={recentFeeds} onReactionDone={clearRecentFeeds}/>
-        <CalendarConnect
-          connected={calendarConnected}
-          fitsMyWeek={fitsMyWeek}
-          onConnect={() => setCalendarConnected(true)}
-          onDisconnect={handleDisconnectCalendar}
-          onFitsChange={setFitsMyWeek}
-        />
-        <MatchFeed
-          result ={quizResult}
-          onOpenCause={handleOpenCause}
-          onPlayAgain={handlePlayAgain}
-          fitsMyWeek={fitsMyWeek}
-          onShowAll={() => setFitsMyWeek(false)}
-          signedUp={signedUp}
-          onSendProposal={handleSendProposal}
-        />
-      </>
+      <HomeLayout
+        side={
+          <>
+            <HomeNextUp signedUp={signedUp} onSeeAll={() => setScreen('profile')}/>
+            <GoalCard goalId={profile.goal} history={history} finishedIds={finishedGoalIds} onGoalChange={handleGoalChange}/>
+            <CloverCowdini grass={grass} recentFeeds={recentFeeds} onReactionDone={clearRecentFeeds}/>
+            <CalendarConnect
+              connected={calendarConnected}
+              fitsMyWeek={fitsMyWeek}
+              onConnect={() => setCalendarConnected(true)}
+              onDisconnect={handleDisconnectCalendar}
+              onFitsChange={setFitsMyWeek}
+            />
+          </>
+        }
+        main={
+          <MatchFeed
+            result ={quizResult}
+            onOpenCause={handleOpenCause}
+            onPlayAgain={handlePlayAgain}
+            fitsMyWeek={fitsMyWeek}
+            onShowAll={() => setFitsMyWeek(false)}
+            signedUp={signedUp}
+            onSendProposal={handleSendProposal}
+          />
+        }
+      />
     )
   }
   else if (screen === 'cause') {
@@ -349,36 +356,32 @@ function App() {
   // The menu only appears once there is a quiz result to build on.
   const showNavBar = quizResult !== null
 
+  // Home, Profile and the story use the full width; the other screens are mostly
+  // reading or forms, so they stay a comfortable width in the middle.
+  const fullWidthScreens = ['home', 'profile', 'quiz', 'welcome']
+
   return(
-    <div>
-      {/* Switch between the student app and the mock organisation view.
-          aria-pressed tells screen readers which button is currently selected. */}
-      <div className="view-toggle">
-        <button
-          aria-pressed={view === 'student'}
-          onClick={() => setView('student')}
-        >
-          Student
-        </button>
-        <button
-          aria-pressed={view === 'organisation'}
-          onClick={() => setView('organisation')}
-        >
-          Organisation
-        </button>
-      </div>
+    <>
+      <SiteHeader
+        view={view}
+        onViewChange={setView}
+        showNav={showNavBar && view === 'student'}
+        screen={screen}
+        onNavigate={setScreen}
+      />
 
       {/* Both views stay on the page and the other one is just hidden.
           This way switching back and forth doesn't lose quiz progress
           or the attendance the organisation has marked. */}
-      <div hidden={view !== 'student'}>
-        {showNavBar && <NavBar screen={screen} onNavigate={setScreen}/>}
-        {content}
-      </div>
-      <div hidden={view !== 'organisation'}>
-        <OrgDashboard fedActions={fedActions}/>
-      </div>
-    </div>
+      <main className="page">
+        <div hidden={view !== 'student'} className={fullWidthScreens.includes(screen) ? undefined : 'page-narrow'}>
+          {content}
+        </div>
+        <div hidden={view !== 'organisation'} className="page-narrow">
+          <OrgDashboard fedActions={fedActions}/>
+        </div>
+      </main>
+    </>
   )
 
 }
