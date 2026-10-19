@@ -25,6 +25,16 @@
   gap: 16px;
 }
 
+.cause-surprise {
+  align-self: flex-start;
+  padding: 4px 12px;
+  background: var(--hay-soft);
+  border: 2px dashed var(--hay);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
 .cause-page-description {
   color: var(--text-soft);
   line-height: 1.6;

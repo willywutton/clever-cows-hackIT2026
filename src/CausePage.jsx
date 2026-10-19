@@ -8,7 +8,8 @@ import './CausePage.css'
 // { cause } is the cause to show, from causes.js.
 // { onBack } returns to Home. { onAction } feeds Clover Cowdini.
 // { onSignUp } opens the sign-up screen. { isSignedUp } is true if already signed up.
-function CausePage({ cause, onBack, onAction, onSignUp, isSignedUp }) {
+// { surprise } is true when the page was opened from Surprise me.
+function CausePage({ cause, surprise, onBack, onAction, onSignUp, isSignedUp }) {
     const share = cause.actions.find((action) => action.type === "share")
     const donate = cause.actions.find((action) => action.type === "donate")
     const signup = cause.actions.find((action) => action.type === "signup")
@@ -46,6 +47,11 @@ function CausePage({ cause, onBack, onAction, onSignUp, isSignedUp }) {
             <button className="cause-back" onClick={onBack}>← Back to Home</button>
 
             <div className="card cause-page-card">
+                {surprise && (
+                    <p className="cause-surprise">
+                        <span aria-hidden="true">🎲</span> Surprise pick: not one of your usual matches, but you might enjoy it.
+                    </p>
+                )}
                 <h2>{cause.name}</h2>
                 <p className="cause-page-description">{cause.description}</p>
 

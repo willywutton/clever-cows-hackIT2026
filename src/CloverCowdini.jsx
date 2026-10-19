@@ -6,8 +6,6 @@ import './CloverCowdini.css'
 
 // How each kind of action is described in the reaction message.
 const FEED_REASONS = {
-    share: "sharing",
-    donate: "your demo pledge to",
     signup: "signing up with",
     reflection: "your reflection on",
     goal: "finishing your goal",

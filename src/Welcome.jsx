@@ -1,4 +1,6 @@
-// Welcome.jsx is the first screen: what the app is, how it works, and a Start button.
+// Welcome.jsx is the first screen: what the app is in three steps,
+// the student's first name, and a Start button.
+import { useState } from 'react'
 import BarnFront from './BarnFront'
 import './Welcome.css'
 
@@ -8,14 +10,29 @@ import './Welcome.css'
 const COW_PICTURE = null
 
 const STEPS = [
-    { emoji: "📝", text: "Tell us a little about you (optional)." },
     { emoji: "📖", text: "Play a short story set in Mooville." },
     { emoji: "🐄", text: "Find out which kind of helper you are." },
-    { emoji: "🌱", text: "Discover causes suited to you." },
+    { emoji: "🌱", text: "Find causes that suit you, and help out." },
 ]
 
-// { onStart } is App's function for moving on to the next screen.
+// A first name: letters, plus hyphens or apostrophes, with no spaces.
+const FIRST_NAME = /^[A-Za-z][A-Za-z'-]*$/
+
+// { onStart } receives the student's first name and moves on to the next screen.
 function Welcome({ onStart }) {
+    const [name, setName] = useState("")
+    const trimmed = name.trim()
+    const valid = FIRST_NAME.test(trimmed)
+
+    // A form's onSubmit runs on the Start button and on pressing Enter.
+    // preventDefault stops the browser from reloading the page, which forms do by default.
+    function handleSubmit(event) {
+        event.preventDefault()
+        if (valid) {
+            onStart(trimmed.charAt(0).toUpperCase() + trimmed.slice(1))
+        }
+    }
+
     // The card sits inside the barn front, where the big barn door would be.
     return (
         <BarnFront>
@@ -50,7 +67,27 @@ function Welcome({ onStart }) {
                         ))}
                     </ol>
 
-                    <button className="button-primary welcome-start" onClick={onStart}>Get started</button>
+                    <form className="welcome-name" onSubmit={handleSubmit}>
+                        <label htmlFor="first-name">What's your first name?</label>
+                        <div className="welcome-name-row">
+                            <input
+                                id="first-name"
+                                type="text"
+                                value={name}
+                                maxLength={20}
+                                autoComplete="given-name"
+                                placeholder="e.g. Alex"
+                                required
+                                onChange={(event) => setName(event.target.value)}
+                            />
+                            <button type="submit" className="button-primary welcome-start" disabled={!valid}>Start</button>
+                        </div>
+                        <p className="welcome-name-hint">
+                            {trimmed !== "" && !valid
+                                ? "Just your first name, please: letters only, no spaces."
+                                : "First name only. We never ask for your full name."}
+                        </p>
+                    </form>
                     <p className="welcome-note"><span aria-hidden="true">🌱</span> Giving money is always optional.</p>
                 </div>
             </div>

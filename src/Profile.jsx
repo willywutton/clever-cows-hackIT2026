@@ -11,6 +11,7 @@ import MyProposals from './MyProposals'
 import MyCollection from './MyCollection'
 import HistorySection from './HistorySection'
 import PrivacySettings from './PrivacySettings'
+import DemoTools from './DemoTools'
 import './Profile.css'
 
 const ABOUT_LABELS = [
@@ -21,13 +22,14 @@ const ABOUT_LABELS = [
 ]
 
 // { quizResult } is the student's top trait, e.g. "Heart".
-// { profile } holds their nickname and optional About you answers.
-// { onNicknameChange } updates the nickname. { onReflect } opens the reflection screen.
+// { profile } holds their name and optional About you answers.
+// { onNameChange } updates the name. { onReflect } opens the reflection screen.
 // { signedUp }, { history } and { diary } come from App.
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
 // { friendIds } is the friends list, changed with { onAddFriend } and { onRemoveFriend }.
 // { proposals } lists the event proposals the student has sent.
-function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, friendIds, onAddFriend, onRemoveFriend, proposals }) {
+// { onRetakeStory } and { onResetDemo } are the demo tools at the bottom.
+function Profile({ quizResult, profile, onNameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, friendIds, onAddFriend, onRemoveFriend, proposals, onRetakeStory, onResetDemo }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
@@ -42,8 +44,8 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
     return (
         <div className="profile">
             <ProfileHeader
-                nickname={profile.nickname}
-                onNicknameChange={onNicknameChange}
+                name={profile.name}
+                onNameChange={onNameChange}
                 character={character}
                 latestTitle={titles[titles.length - 1]}
             />
@@ -68,13 +70,15 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
                 </div>
 
                 <div className="profile-column">
-                    <MyCollection diary={diary} shared={settings.shareDiary} signedUp={signedUp} onWrite={onReflect}/>
+                    <MyCollection diary={diary} shared={settings.publicDiary} signedUp={signedUp} onWrite={onReflect}/>
 
                     <MyProposals proposals={proposals}/>
 
                     <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
 
                     <PrivacySettings settings={settings} onChange={onSettingsChange}/>
+
+                    <DemoTools onRetakeStory={onRetakeStory} onResetDemo={onResetDemo}/>
                 </div>
             </div>
         </div>

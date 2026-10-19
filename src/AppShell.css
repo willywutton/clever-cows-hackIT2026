@@ -1,0 +1,20 @@
+/* Styles for the menu-plus-content layout. */
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 230px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.app-content {
+  min-width: 0;
+}
+
+/* Phones: the menu is a bottom bar, so leave room for it under the content. */
+@media (max-width: 860px) {
+  .app-shell {
+    display: block;
+    padding-bottom: 84px;
+  }
+}

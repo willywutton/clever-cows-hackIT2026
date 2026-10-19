@@ -34,10 +34,68 @@
   align-items: center;
   gap: 10px;
   margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #fff;
   font-family: var(--display);
   font-size: 28px;
   font-weight: 800;
   letter-spacing: -0.02em;
+}
+
+.site-logo:disabled {
+  cursor: default;
+}
+
+/* Surprise me, Moolah and the student's name, in the middle of the bar. */
+.site-header-student {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-left: auto;
+}
+
+.site-surprise {
+  padding: 7px 14px;
+  background: var(--hay);
+  color: var(--ink);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: 0 3px 0 #c9a227;
+}
+
+.site-surprise:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #c9a227;
+}
+
+.site-moolah {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 5px 12px;
+  background: var(--barn-dark);
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.site-moolah-word {
+  font-weight: 400;
+  font-size: 15px;
+  color: #f6dcd4;
+}
+
+.site-name {
+  margin: 0;
+  font-family: var(--hand);
+  font-size: 26px;
+  line-height: 1;
 }
 
 .site-logo-mark {
@@ -95,4 +153,9 @@
     height: 38px;
     font-size: 24px;
   }
+}
+
+/* When the student bar is showing it already pushes the switch to the right. */
+.site-header-student + .view-toggle {
+  margin-left: 0;
 }

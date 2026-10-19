@@ -376,3 +376,52 @@
     animation: none;
   }
 }
+
+/* The first-name field with the Start button beside it. */
+.welcome-name {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.welcome-name label {
+  font-weight: 700;
+}
+
+.welcome-name-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.welcome-name input {
+  flex: 1;
+  min-width: 180px;
+  font: inherit;
+  font-size: 19px;
+  color: var(--text);
+  padding: 12px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.welcome-name input:focus-visible {
+  outline: 3px solid var(--hay);
+  outline-offset: 1px;
+}
+
+.welcome-name .welcome-start {
+  margin-top: 0;
+  align-self: stretch;
+}
+
+.welcome-name .welcome-start:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.welcome-name-hint {
+  font-size: 15px;
+  color: var(--text-soft);
+}

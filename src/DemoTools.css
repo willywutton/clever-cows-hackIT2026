@@ -1,0 +1,38 @@
+/* Styles for the demo tools on Profile. Shared colours and .card are in index.css. */
+
+.demo-tools {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-style: dashed;
+}
+
+.demo-tools-button {
+  padding: 8px 16px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-weight: 600;
+}
+
+.demo-tools-button:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.demo-tools-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 2px solid var(--barn);
+  border-radius: 12px;
+}
+
+.demo-tools-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}

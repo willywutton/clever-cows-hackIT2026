@@ -7,8 +7,6 @@ import { clashesWith, describeSlot, findFreeSlot } from './freeTime'
 import { traitLabels } from './data/traits'
 import { causeLook } from './causeColors'
 import { travelLabel } from './travel'
-import SurpriseMe from './SurpriseMe'
-import HostEvent from './HostEvent'
 
 // A short day and date in Singapore time, e.g. "Sat 7 Nov".
 function shortDate(startsAt) {
@@ -24,12 +22,10 @@ function signupOf(cause) {
 
 // { result } is the player's top trait, handed down from App (e.g. "Heart").
 // { onOpenCause } is App's function for opening a cause's page.
-// { onPlayAgain } is App's function for going back to the start.
 // { fitsMyWeek } is true when the "Fits my week" switch is on, and { onShowAll } turns it off.
 // { signedUp } is App's list of sign-ups, used to hide clashing sessions.
-// { onSendProposal } keeps an event proposal from the Host your own event card.
 // { userRegion } is the student's part of Singapore, for the travel label ('' if not given).
-function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, signedUp, onSendProposal, userRegion}){
+function MatchFeed ({result, onOpenCause, fitsMyWeek, onShowAll, signedUp, userRegion}){
     // .filter keeps only the causes whose identity list includes the player's trait.
     const matchingCauses = causes.filter((cause)=>
         cause.identity.includes(result)
@@ -102,11 +98,6 @@ function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, si
          ))}
            </div>
 
-           <SurpriseMe result={result} fitsMyWeek={fitsMyWeek} onOpenCause={onOpenCause}/>
-
-           <HostEvent onSendProposal={onSendProposal}/>
-
-           <button className="button-primary" onClick={onPlayAgain}>Play again</button>
         </div>
     )
 }
