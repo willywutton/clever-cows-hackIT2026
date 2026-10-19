@@ -143,6 +143,7 @@ function App() {
         existing={app.signedUp.find((item) => item.causeId === openCause.id) || null}
         userRegion={app.profile.region}
         myFriendIds={app.friendIds}
+        visitsSoFar={app.attendance.filter((visit) => visit.causeId === openCause.id).length}
         onAddFriend={app.addFriend}
         onConfirm={app.confirmSignup}
         onBack={() => navigate('cause')}

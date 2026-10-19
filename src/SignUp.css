@@ -21,6 +21,45 @@
   font-size: 16px;
 }
 
+/* The two big choices: alone or with friends. */
+.signup-who {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.signup-who button {
+  padding: 16px 14px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.signup-who button:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.signup-who button[aria-pressed="true"] {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+  box-shadow: inset 0 0 0 1px var(--barn);
+}
+
+.signup-choice .signup-relay {
+  margin-top: 6px;
+  border-style: dashed;
+}
+
+@media (max-width: 480px) {
+  .signup-who {
+    grid-template-columns: 1fr;
+  }
+}
+
 .signup-choice {
   display: flex;
   flex-direction: column;

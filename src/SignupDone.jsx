@@ -19,6 +19,12 @@ function SignupDone({ cause, entry, userRegion, onCalendarAnswered, onHome, onBa
             <SessionDetails action={signup} weekly={entry.weekly} userRegion={userRegion}/>
             <p>{describeWho(entry)}</p>
 
+            {entry.mode !== "me" && entry.friendIds.length > 0 && (
+                <p className="signup-done-sent">
+                    <span aria-hidden="true">✉</span> Confirmation sent to {joinNames(entry.friendIds.map(nameOf))} (demo, no real email sent).
+                </p>
+            )}
+
             {entry.weekly && entry.mode === "relay" && (
                 <p className="signup-done-turn">
                     Suggested next turn: {joinNames(suggestNextTurn(entry, signup.peopleNeeded).map(nameOf))}.

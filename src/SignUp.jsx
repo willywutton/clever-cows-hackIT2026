@@ -1,24 +1,19 @@
-// SignUp.jsx lets the student sign up for a cause's session:
-// just this once or every week, and alone, with friends or as a relay group.
-// A relay group shares the commitment: only as many people as the session
-// needs go each time, and the group takes turns.
+// SignUp.jsx lets the student sign up for a cause's session: alone or with friends,
+// just this once or every week. Friends can also take turns as a relay group, which
+// shares the commitment: only as many people as the session needs go each time.
 import { useState } from 'react'
 import { YOU, nameOf } from './people'
 import SessionDetails from './SessionDetails'
 import AddFriend from './AddFriend'
+import RepeatBonus from './RepeatBonus'
 import './SignUp.css'
-
-const MODES = [
-    { id: "me", label: "Just me" },
-    { id: "friends", label: "With friends" },
-    { id: "relay", label: "Relay group", hint: "Your group takes turns, so not everyone has to go every time." },
-]
 
 // { cause } is the cause being signed up for. { existing } is an earlier sign-up
 // for this cause, or null. { userRegion } is used for the travel tag.
 // { myFriendIds } is the student's friends list, and { onAddFriend } adds someone to it.
+// { visitsSoFar } is how many sessions the student has been to for this cause.
 // { onConfirm } receives the new sign-up entry. { onBack } returns to the cause page.
-function SignUp({ cause, existing, userRegion, myFriendIds, onAddFriend, onConfirm, onBack }) {
+function SignUp({ cause, existing, userRegion, myFriendIds, visitsSoFar, onAddFriend, onConfirm, onBack }) {
     const signup = cause.actions.find((action) => action.type === "signup")
     const needed = signup.peopleNeeded
 
@@ -28,6 +23,7 @@ function SignUp({ cause, existing, userRegion, myFriendIds, onAddFriend, onConfi
     const [goingIds, setGoingIds] = useState(existing ? existing.goingIds : [YOU])
 
     const [addingFriend, setAddingFriend] = useState(false)
+    const withFriends = mode !== "me"
 
     const group = [YOU, ...friendIds]
 
@@ -94,6 +90,15 @@ function SignUp({ cause, existing, userRegion, myFriendIds, onAddFriend, onConfi
                 <p className="signup-needed">Each session needs {needed} volunteers.</p>
             </div>
 
+            <div className="signup-who" role="group" aria-label="Who's coming?">
+                <button type="button" aria-pressed={!withFriends} onClick={() => setMode("me")}>
+                    <span aria-hidden="true">🙋</span> Sign up alone
+                </button>
+                <button type="button" aria-pressed={withFriends} onClick={() => setMode(mode === "relay" ? "relay" : "friends")}>
+                    <span aria-hidden="true">👫</span> Sign up with friends
+                </button>
+            </div>
+
             <fieldset className="signup-choice">
                 <legend>How often?</legend>
                 <label>
@@ -106,20 +111,7 @@ function SignUp({ cause, existing, userRegion, myFriendIds, onAddFriend, onConfi
                 </label>
             </fieldset>
 
-            <fieldset className="signup-choice">
-                <legend>Who's coming?</legend>
-                {MODES.map((option) => (
-                    <label key={option.id}>
-                        <input type="radio" name="mode" checked={mode === option.id} onChange={() => setMode(option.id)}/>
-                        <span>
-                            {option.label}
-                            {option.hint && <small>{option.hint}</small>}
-                        </span>
-                    </label>
-                ))}
-            </fieldset>
-
-            {mode !== "me" && (
+            {withFriends && (
                 <fieldset className="signup-choice">
                     <legend>
                         {mode === "relay" ? "Who's in your relay group?" : "Which friends are coming?"}{" "}
@@ -137,6 +129,17 @@ function SignUp({ cause, existing, userRegion, myFriendIds, onAddFriend, onConfi
                         </button>
                     )}
                     {addingFriend && <AddFriend friendIds={myFriendIds} onAdd={handleAddFriend}/>}
+                    <label className="signup-relay">
+                        <input
+                            type="checkbox"
+                            checked={mode === "relay"}
+                            onChange={(event) => setMode(event.target.checked ? "relay" : "friends")}
+                        />
+                        <span>
+                            Take turns as a relay group
+                            <small>Only {needed} of you go each time, so not everyone has to come every week.</small>
+                        </span>
+                    </label>
                 </fieldset>
             )}
 
@@ -153,6 +156,8 @@ function SignUp({ cause, existing, userRegion, myFriendIds, onAddFriend, onConfi
                     ))}
                 </fieldset>
             )}
+
+            <RepeatBonus visitsSoFar={visitsSoFar}/>
 
             {problem && <p className="signup-problem">{problem}</p>}
 
