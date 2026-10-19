@@ -1,0 +1,50 @@
+/* Styles for the barn interior backdrop. */
+
+.barn-inside {
+  position: relative;
+  min-height: calc(100svh - 70px);
+  overflow: hidden;
+  background: #a9481b;
+}
+
+/* The drawing fills the screen and trims its edges when the screen is a different
+   shape (preserveAspectRatio="xMidYMid slice" in BarnInterior.jsx). */
+.barn-inside-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The barn fills the whole screen under the header, so the page drops its width and padding. */
+.barn-room .page {
+  max-width: none;
+  padding: 0;
+}
+
+/* The farmer and speech bubble sit at the bottom, in a centred column. */
+.barn-inside-content {
+  position: relative;
+  max-width: 1240px;
+  min-height: calc(100svh - 70px);
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  padding: 40px 32px;
+  box-sizing: border-box;
+}
+
+.barn-inside-content-centred {
+  align-items: center;
+}
+
+@media (max-width: 720px) {
+  .barn-inside-content {
+    padding: 24px 16px;
+  }
+}
+
+/* The story pages fill the width of the centred column. */
+.barn-story {
+  width: 100%;
+}

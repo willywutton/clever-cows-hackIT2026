@@ -1,7 +1,9 @@
 // AboutYou.jsx asks four optional questions before the quiz, one per page,
-// including which goal to work towards. Every question can be skipped.
+// including which goal to work towards. The farmer asks them inside the barn.
+// Every question can be skipped.
 import { useState } from 'react'
 import { goals } from './data/goals'
+import FarmerScene from './FarmerScene'
 import StoryDots from './StoryDots'
 import './AboutYou.css'
 
@@ -78,19 +80,18 @@ function AboutYou({ profile, onDone }) {
     }
 
     return (
-        <div className="about card">
-            <StoryDots total={QUESTIONS.length} current={step} label="Question"/>
+        <FarmerScene bubbleKey={question.id} centred>
             <p className="about-kicker">About you · Question {step + 1} of {QUESTIONS.length}</p>
             {step === 0 && (
                 <p className="about-intro">
-                    A few quick questions to help us suggest causes and show sessions near you.
-                    Every question is optional.
+                    Nice to meet you{profile.name ? `, ${profile.name}` : ""}! A few quick questions so I can
+                    suggest causes and show sessions near you. You can skip any of them.
                 </p>
             )}
 
             {/* key makes React draw a fresh question each step, so the right options show. */}
             <fieldset className="about-question" key={question.id}>
-                <legend>{question.label}</legend>
+                <legend className="farmer-line">{question.label}</legend>
                 <div className={question.stacked ? "about-options about-options-stacked" : "about-options"}>
                     {question.options.map(toOption).map((option) => (
                         <label className="about-option" key={option.value}>
@@ -110,6 +111,7 @@ function AboutYou({ profile, onDone }) {
                 </div>
             </fieldset>
 
+            <StoryDots total={QUESTIONS.length} current={step} label="Question"/>
             <div className="about-buttons">
                 {step > 0
                     ? <button className="about-back" onClick={() => setStep(step - 1)}>← Back</button>
@@ -121,7 +123,7 @@ function AboutYou({ profile, onDone }) {
                     </button>
                 </div>
             </div>
-        </div>
+        </FarmerScene>
     )
 }
 

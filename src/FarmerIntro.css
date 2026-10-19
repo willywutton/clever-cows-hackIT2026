@@ -1,0 +1,200 @@
+/* Styles for the farmer's introduction. The barn backdrop is in BarnInterior.css. */
+
+.farmer {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+}
+
+.farmer-figure {
+  flex-shrink: 0;
+  font-size: 150px;
+  line-height: 1;
+  filter: drop-shadow(0 8px 6px rgba(0, 0, 0, 0.25));
+}
+
+.farmer-figure img {
+  width: 200px;
+}
+
+/* A speech bubble with a little tail pointing at the farmer. */
+.farmer-bubble {
+  position: relative;
+  flex: 1;
+  max-width: 640px;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 28px;
+  background: #fffaf0;
+  border: 3px solid var(--ink);
+  border-radius: 24px;
+  box-shadow: 6px 6px 0 rgba(58, 36, 24, 0.35);
+  animation: farmer-pop 0.3s ease-out both;
+}
+
+.farmer-bubble::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  bottom: 30px;
+  width: 26px;
+  height: 26px;
+  background: #fffaf0;
+  border-left: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  transform: rotate(45deg) skew(10deg, 10deg);
+}
+
+/* Something the farmer holds up instead of speaking, such as the story book.
+   It is as wide as a bubble, so the farmer stands in the same place. */
+.farmer-held {
+  width: min(640px, 100%);
+  display: flex;
+  justify-content: center;
+  animation: farmer-pop 0.3s ease-out both;
+}
+
+@keyframes farmer-pop {
+  from { transform: scale(0.94); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Rye looks like lettering on a wooden farm sign. */
+.farmer-name {
+  font-family: 'Rye', var(--display);
+  font-size: 24px;
+  line-height: 1;
+  color: var(--barn);
+}
+
+.farmer-line {
+  font-family: var(--display);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.farmer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.farmer-form input {
+  font: inherit;
+  font-size: 19px;
+  color: var(--text);
+  padding: 11px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.farmer-form input:focus-visible {
+  outline: 3px solid var(--hay);
+  outline-offset: 1px;
+}
+
+.farmer-hint {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.farmer-form .button-primary {
+  align-self: flex-start;
+}
+
+.farmer-form .button-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.farmer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.farmer-back {
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--text-soft);
+  border: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.farmer-next-space {
+  width: 80px;
+}
+
+/* A centred bubble sits in the middle of the screen, with the farmer standing
+   just to its left. Narrower screens keep the farmer beside it in the row. */
+.farmer-centred {
+  justify-content: center;
+}
+
+@media (min-width: 1100px) {
+  .farmer-centred {
+    position: relative;
+  }
+
+  .farmer-centred .farmer-figure {
+    position: absolute;
+    bottom: 0;
+    right: calc(50% + 320px + 18px);
+  }
+}
+
+@media (max-width: 720px) {
+  .farmer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .farmer-figure {
+    order: 2;
+    font-size: 90px;
+  }
+
+  .farmer-bubble {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+  }
+
+  .farmer-line {
+    font-size: 21px;
+  }
+
+  /* The dots get their own row so Back and Next fit beside each other. */
+  .farmer-nav {
+    flex-wrap: wrap;
+  }
+
+  .farmer-nav .story-dots {
+    order: -1;
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* On phones the bubble sits above the farmer, so the tail points down. */
+  .farmer-bubble::before {
+    left: 40px;
+    bottom: -18px;
+    transform: rotate(-45deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .farmer-bubble,
+  .farmer-held {
+    animation: none;
+  }
+}

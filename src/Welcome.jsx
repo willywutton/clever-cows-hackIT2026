@@ -1,6 +1,5 @@
-// Welcome.jsx is the first screen: what the app is in three steps,
-// the student's first name, and a Start button.
-import { useState } from 'react'
+// Welcome.jsx is the first screen: the app's name, what it's for in a sentence or two,
+// and a Next button that leads to the farmer's introduction.
 import BarnFront from './BarnFront'
 import './Welcome.css'
 
@@ -9,30 +8,8 @@ import './Welcome.css'
 // (e.g. import cowPicture from './assets/clover-cowdini.png') and set COW_PICTURE to it.
 const COW_PICTURE = null
 
-const STEPS = [
-    { emoji: "📖", text: "Play a short story set in Mooville." },
-    { emoji: "🐄", text: "Find out which kind of helper you are." },
-    { emoji: "🌱", text: "Find causes that suit you, and help out." },
-]
-
-// A first name: letters, plus hyphens or apostrophes, with no spaces.
-const FIRST_NAME = /^[A-Za-z][A-Za-z'-]*$/
-
-// { onStart } receives the student's first name and moves on to the next screen.
-function Welcome({ onStart }) {
-    const [name, setName] = useState("")
-    const trimmed = name.trim()
-    const valid = FIRST_NAME.test(trimmed)
-
-    // A form's onSubmit runs on the Start button and on pressing Enter.
-    // preventDefault stops the browser from reloading the page, which forms do by default.
-    function handleSubmit(event) {
-        event.preventDefault()
-        if (valid) {
-            onStart(trimmed.charAt(0).toUpperCase() + trimmed.slice(1))
-        }
-    }
-
+// { onNext } moves on to the farmer's introduction.
+function Welcome({ onNext }) {
     // The card sits inside the barn front, where the big barn door would be.
     return (
         <BarnFront>
@@ -53,42 +30,14 @@ function Welcome({ onStart }) {
                 <div className="welcome-body">
                     <h2>Welcome to Clever Cows</h2>
                     <p className="welcome-intro">
-                        A short story game that matches you with local causes,
-                        and small, real ways to help them.
+                        Lots of young people want to help their community, but it's hard to know
+                        where to start, and harder to keep going.
                     </p>
-
-                    <h3 className="welcome-how">How it works</h3>
-                    <ol className="welcome-steps">
-                        {STEPS.map((step) => (
-                            <li key={step.text}>
-                                <span className="welcome-step-emoji" aria-hidden="true">{step.emoji}</span>
-                                {step.text}
-                            </li>
-                        ))}
-                    </ol>
-
-                    <form className="welcome-name" onSubmit={handleSubmit}>
-                        <label htmlFor="first-name">What's your first name?</label>
-                        <div className="welcome-name-row">
-                            <input
-                                id="first-name"
-                                type="text"
-                                value={name}
-                                maxLength={20}
-                                autoComplete="given-name"
-                                placeholder="e.g. Alex"
-                                required
-                                onChange={(event) => setName(event.target.value)}
-                            />
-                            <button type="submit" className="button-primary welcome-start" disabled={!valid}>Start</button>
-                        </div>
-                        <p className="welcome-name-hint">
-                            {trimmed !== "" && !valid
-                                ? "Just your first name, please: letters only, no spaces."
-                                : "First name only. We never ask for your full name."}
-                        </p>
-                    </form>
-                    <p className="welcome-note"><span aria-hidden="true">🌱</span> Giving money is always optional.</p>
+                    <p className="welcome-intro">
+                        Clever Cows matches you with causes that suit you, and makes it easy to keep
+                        showing up: with friends, around your week, and without guilt.
+                    </p>
+                    <button className="button-primary welcome-start" onClick={onNext}>Next</button>
                 </div>
             </div>
         </BarnFront>

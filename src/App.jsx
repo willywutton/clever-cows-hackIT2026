@@ -4,6 +4,8 @@
 // It also switches between the student view and the mock organisation view.
 import { useCleverCows } from './state/useCleverCows'
 import Welcome from './Welcome'
+import FarmerIntro from './FarmerIntro'
+import BarnInterior from './BarnInterior'
 import AboutYou from './AboutYou'
 import StoryCover from './StoryCover'
 import Quiz from './Quiz'
@@ -46,7 +48,10 @@ function App() {
   // Pick what to draw for the current screen.
   let content
   if (screen === 'welcome') {
-    content = <Welcome onStart={app.finishWelcome}/>
+    content = <Welcome onNext={() => navigate('intro')}/>
+  }
+  else if (screen === 'intro') {
+    content = <FarmerIntro onDone={app.finishWelcome} onBack={() => navigate('welcome')}/>
   }
   else if (screen === 'about') {
     content = <AboutYou profile={app.profile} onDone={app.finishAboutYou}/>
@@ -63,7 +68,12 @@ function App() {
   else if (screen === 'quiz') {
     // whenDone is a "prop": a value handed down to the Quiz component.
     // Here we hand it a function so Quiz can report back when it's finished.
-    content = <Quiz whenDone={app.finishStory}/>
+    // The story is read inside the barn, in the middle of the screen.
+    content = (
+      <BarnInterior centred>
+        <div className="barn-story"><Quiz whenDone={app.finishStory}/></div>
+      </BarnInterior>
+    )
   }
   else if (screen === 'home' && app.justFinishedGoal) {
     // A goal was just finished, so thank the student before showing Home.
@@ -260,10 +270,10 @@ function App() {
   }
 
   // The menu and student bar appear once there is a character to build on.
-  const signedIn = app.quizResult !== null && !['welcome', 'about', 'cover', 'quiz'].includes(screen)
+  const signedIn = app.quizResult !== null && !['welcome', 'intro', 'about', 'cover', 'quiz'].includes(screen)
 
   // Reading and form screens stay a comfortable width in the middle.
-  const narrowScreens = ['about', 'cause', 'signup', 'signup-done', 'reflection']
+  const narrowScreens = ['cause', 'signup', 'signup-done', 'reflection']
   const studentPage = (
     <div className={narrowScreens.includes(screen) ? 'page-narrow' : undefined}>{content}</div>
   )
@@ -282,8 +292,11 @@ function App() {
 
       {/* Both views stay on the page and the other one is just hidden.
           This way switching back and forth doesn't lose progress in either. */}
-      {/* On the Welcome screen the space around the page becomes a barn wall (see Welcome.css). */}
-      <main className={app.view === 'student' && screen === 'welcome' ? 'barn-wall' : undefined}>
+      {/* On the Welcome screen the space around the page becomes a barn wall (see Welcome.css).
+          While the farmer talks, the inside of the barn fills the screen (see BarnInterior.css). */}
+      <main className={app.view !== 'student' ? undefined
+        : screen === 'welcome' ? 'barn-wall'
+        : ['intro', 'about', 'cover', 'quiz'].includes(screen) ? 'barn-room' : undefined}>
         <div className="page">
           <div hidden={app.view !== 'student'}>
             {signedIn

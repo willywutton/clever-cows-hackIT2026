@@ -163,79 +163,11 @@
   text-align: center;
 }
 
-.welcome-how {
-  font-size: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-soft);
-  margin-top: 4px;
-}
-
-/* A numbered list with a dotted line joining the numbers, so the steps read
-   as a sequence rather than as buttons. */
-.welcome-steps {
-  list-style: none;
-  counter-reset: step;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.welcome-steps li {
-  counter-increment: step;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 34px;
-  padding-left: 48px;
-  line-height: 1.4;
-}
-
-.welcome-steps li::before {
-  content: counter(step);
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 34px;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--hay);
-  color: var(--text);
-  border-radius: 50%;
-  font-weight: 700;
-}
-
-/* The dotted line from one number down to the next. */
-.welcome-steps li:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: 16px;
-  top: calc(50% + 19px);
-  height: calc(100% - 20px);
-  border-left: 2px dotted var(--hay);
-}
-
-.welcome-step-emoji {
-  font-size: 22px;
-}
-
 .welcome-start {
   align-self: center;
   margin-top: 6px;
   padding: 14px 36px;
   font-size: 18px;
-}
-
-.welcome-note {
-  text-align: center;
-  font-size: 16px;
-  color: var(--text-soft);
 }
 
 /* Wide screens: the farm scene fills the left half, the welcome text the right. */
@@ -302,46 +234,12 @@
     font-size: 21px;
   }
 
-  .welcome-how {
-    font-size: 18px;
-  }
-
-  .welcome-steps {
-    gap: 22px;
-  }
-
-  .welcome-steps li {
-    font-size: 20px;
-    min-height: 42px;
-    padding-left: 58px;
-  }
-
-  .welcome-steps li::before {
-    width: 42px;
-    height: 42px;
-    font-size: 20px;
-  }
-
-  .welcome-steps li:not(:last-child)::after {
-    left: 20px;
-    top: calc(50% + 23px);
-    height: calc(100% - 24px);
-  }
-
-  .welcome-step-emoji {
-    font-size: 26px;
-  }
-
   .welcome-start {
     align-self: flex-start;
     padding: 18px 48px;
     font-size: 22px;
   }
 
-  .welcome-note {
-    text-align: left;
-    font-size: 17px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -368,6 +266,7 @@
   .welcome-start {
     align-self: stretch;
   }
+
 }
 
 /* People who turn off animations in their device settings see the cow without the hop. */
@@ -375,53 +274,5 @@
   .welcome-cow {
     animation: none;
   }
-}
 
-/* The first-name field with the Start button beside it. */
-.welcome-name {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.welcome-name label {
-  font-weight: 700;
-}
-
-.welcome-name-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.welcome-name input {
-  flex: 1;
-  min-width: 180px;
-  font: inherit;
-  font-size: 19px;
-  color: var(--text);
-  padding: 12px 14px;
-  background: #fff;
-  border: 2px solid var(--border);
-  border-radius: 12px;
-}
-
-.welcome-name input:focus-visible {
-  outline: 3px solid var(--hay);
-  outline-offset: 1px;
-}
-
-.welcome-name .welcome-start {
-  margin-top: 0;
-  align-self: stretch;
-}
-
-.welcome-name .welcome-start:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.welcome-name-hint {
-  font-size: 15px;
-  color: var(--text-soft);
 }
