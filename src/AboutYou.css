@@ -17,9 +17,22 @@
 }
 
 .about-question legend {
-  font-weight: 600;
-  margin-bottom: 10px;
+  font-family: var(--display);
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 18px;
   padding: 0;
+}
+
+/* "About you · Question 2 of 4" */
+.about-kicker {
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--barn);
 }
 
 /* flex-wrap lets the options move onto a new line when the screen is narrow. */
@@ -59,7 +72,25 @@
 .about-buttons {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 12px;
+}
+
+.about-buttons-right {
+  display: flex;
+  gap: 10px;
+}
+
+.about-back {
+  padding: 10px 14px;
+  background: transparent;
+  color: var(--text-soft);
+  border: none;
+  font-weight: 600;
+}
+
+.about-back:hover {
+  color: var(--text);
 }
 
 .about-skip {
