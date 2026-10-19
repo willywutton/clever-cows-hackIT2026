@@ -1,0 +1,60 @@
+/* Styles for the Invites list. Shared colours and .card are in index.css. */
+
+.invites {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.invites-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.invite-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.invite-card-text {
+  flex: 1;
+  min-width: 200px;
+}
+
+.invite-card-note {
+  font-family: var(--hand);
+  font-size: 22px;
+}
+
+.invite-card-join {
+  padding: 8px 18px;
+  background: var(--barn);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  box-shadow: 0 3px 0 var(--barn-dark);
+}
+
+.invite-card-joined {
+  font-weight: 700;
+  color: #3f6b2a;
+}
+
+.invites-empty {
+  color: var(--text-soft);
+}
+
+.invite-sent-item {
+  padding: 8px 12px;
+  background: var(--card);
+  border: 2px dashed var(--border);
+  border-radius: 10px;
+  font-size: 16px;
+}

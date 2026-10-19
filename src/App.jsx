@@ -22,10 +22,12 @@ import Reflection from './Reflection'
 import CalendarConnect from './CalendarConnect'
 import GoalCard from './GoalCard'
 import GoalComplete from './GoalComplete'
-import FriendsSection from './FriendsSection'
 import DiaryPage from './DiaryPage'
 import PortfolioPrint from './PortfolioPrint'
 import CowPage from './CowPage'
+import FriendsPage from './FriendsPage'
+import FriendProfile from './FriendProfile'
+import SocialPage from './SocialPage'
 import HostEventPage from './HostEventPage'
 import CauseNews from './CauseNews'
 import PageTitle from './PageTitle'
@@ -187,9 +189,6 @@ function App() {
         diary={app.diary}
         settings={app.settings}
         onSettingsChange={app.setSettings}
-        friendIds={app.friendIds}
-        onAddFriend={app.addFriend}
-        onRemoveFriend={app.removeFriend}
         onRetakeStory={app.retakeStory}
         onResetDemo={app.resetDemo}
         portfolio={app.portfolio}
@@ -199,12 +198,20 @@ function App() {
     )
   }
   else if (screen === 'friends') {
+    content = <FriendsPage app={app}/>
+  }
+  else if (screen === 'friend') {
     content = (
-      <>
-        <PageTitle title="Friends"/>
-        <FriendsSection friendIds={app.friendIds} onAdd={app.addFriend} onRemove={app.removeFriend}/>
-      </>
+      <FriendProfile
+        key={app.viewingFriendId}
+        friendId={app.viewingFriendId}
+        onBack={() => navigate('friends')}
+        onChat={app.openChat}
+      />
     )
+  }
+  else if (screen === 'social') {
+    content = <SocialPage app={app}/>
   }
   else if (screen === 'cow') {
     content = <CowPage app={app}/>

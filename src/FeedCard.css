@@ -1,0 +1,93 @@
+/* Styles for a Social feed card. Shared colours and .card are in index.css. */
+
+.feed-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feed-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.feed-card-meta {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.feed-card-photo {
+  max-width: 100%;
+  max-height: 320px;
+  align-self: flex-start;
+  border: 8px solid #fff;
+  border-bottom-width: 28px;
+  box-shadow: 0 4px 12px rgba(74, 52, 38, 0.18);
+  transform: rotate(-1.5deg);
+}
+
+.feed-card-text {
+  font-family: var(--hand);
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.feed-card-stickers {
+  display: flex;
+  gap: 8px;
+}
+
+.feed-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.feed-card-like,
+.feed-card-react {
+  padding: 6px 12px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.feed-card-like[aria-pressed="true"] {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.feed-card-count {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.feed-card-reactions {
+  display: flex;
+  gap: 4px;
+}
+
+.feed-card-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.feed-card-picker button {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+.feed-card-picker button[aria-pressed="true"] {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+}

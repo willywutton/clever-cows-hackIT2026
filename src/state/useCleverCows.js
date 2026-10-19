@@ -8,6 +8,7 @@ import { clearAll } from './storage'
 import { causes } from '../data/causes'
 import { startingFriendIds } from '../data/friends'
 import { sampleEvents, startingFavourites } from '../data/events'
+import { sampleChatReplies } from '../data/sampleSocial'
 import { REFLECTION_MOOLAH, sessionHours, visitMoolah } from '../data/economy'
 import { GRASS } from '../assets/cowStages'
 import { goalById, goalProgress } from '../goalProgress'
@@ -375,6 +376,65 @@ export function useCleverCows() {
         setSentInvites((prev) => [...prev, { id: `invite_${Date.now()}`, causeId, friendIds: invitedIds, at: new Date().toISOString() }])
     }
 
+    // ---- Social ----
+
+    // Entries the student liked, and stickers they reacted with, by entry id.
+    const [likes, setLikes] = usePersistentState('likes', {})
+    const [reactions, setReactions] = usePersistentState('reactions', {})
+    // Chat messages with each friend: { from: 'me' | 'them', text, at }.
+    const [chats, setChats] = usePersistentState('chats', {})
+    // Ids of incoming invites the student has joined.
+    const [joinedInvites, setJoinedInvites] = usePersistentState('joinedInvites', [])
+    // The friend whose profile is open, and the friend whose chat is open on Social.
+    const [viewingFriendId, setViewingFriendId] = useState(null)
+    const [chatFriendId, setChatFriendId] = useState(null)
+
+    function toggleLike(entryId) {
+        setLikes((prev) => ({ ...prev, [entryId]: !prev[entryId] }))
+    }
+
+    function toggleReaction(entryId, stickerId) {
+        setReactions((prev) => {
+            const current = prev[entryId] || []
+            const next = current.includes(stickerId) ? current.filter((id) => id !== stickerId) : [...current, stickerId]
+            return { ...prev, [entryId]: next }
+        })
+    }
+
+    // Sends a chat message. The sample friend answers with a canned reply a moment later.
+    function sendChat(friendId, text) {
+        const sentCount = (chats[friendId] || []).filter((message) => message.from === 'me').length
+        const reply = sampleChatReplies[sentCount % sampleChatReplies.length]
+        setChats((prev) => ({
+            ...prev, [friendId]: [...(prev[friendId] || []), { from: 'me', text, at: new Date().toISOString() }],
+        }))
+        setTimeout(() => {
+            setChats((prev) => ({
+                ...prev, [friendId]: [...(prev[friendId] || []), { from: 'them', text: reply, at: new Date().toISOString() }],
+            }))
+        }, 900)
+    }
+
+    // Joining an invite signs the student up for that cause, together with the friend who invited them.
+    function joinInvite(invite) {
+        setJoinedInvites((prev) => [...prev, invite.id])
+        setOpenCauseId(invite.causeId)
+        confirmSignup({
+            causeId: invite.causeId, weekly: false, mode: 'friends', friendIds: [invite.fromId],
+            goingIds: [], calendarAnswered: false,
+        })
+    }
+
+    function openChat(friendId) {
+        setChatFriendId(friendId)
+        navigate('social')
+    }
+
+    function openFriend(friendId) {
+        setViewingFriendId(friendId)
+        navigate('friend')
+    }
+
     // ---- Friends, calendar ----
 
     function addFriend(id) {
@@ -400,7 +460,7 @@ export function useCleverCows() {
         // values
         quizResult, screen, openCauseId, openedBySurprise, profile, signedUp,
         events, favourites, sentInvites, orgUpdates, sampleAttendance, attendance, hoursWorked,
-        portfolio, lastVisit, cow, basicGrassLeft,
+        portfolio, lastVisit, cow, basicGrassLeft, likes, reactions, chats, joinedInvites, viewingFriendId, chatFriendId,
         friendIds, history, diary, calendarConnected, fitsMyWeek, settings, view,
         grass, recentFeeds, justFinishedGoal, finishedGoalIds, moolah, moolahLedger,
         // actions
@@ -412,6 +472,7 @@ export function useCleverCows() {
         recordVisit, markSampleAttended, hostEvent, addOrgEvent, approveEvent, postUpdate,
         isFavourite, toggleFavourite, inviteFriends,
         feedBasicGrass, buyItem, giftItem, toggleAccessory,
+        toggleLike, toggleReaction, sendChat, joinInvite, openFriend, openChat, setChatFriendId,
         disconnectCalendar, resetDemo, earnMoolah, spendMoolah,
         clearRecentFeeds: () => setRecentFeeds([]),
     }
