@@ -1,5 +1,9 @@
-// HostEvent.jsx is a card with a simple checklist for running your own small event.
+// HostEvent.jsx is a card with a simple checklist for running your own small event,
+// and a form for proposing the event to an organisation.
 // The checklist is for reading only: nothing is ticked or tracked.
+import { useState } from 'react'
+import { causes } from './data/causes'
+import ProposalForm from './ProposalForm'
 import './HostEvent.css'
 
 const STEPS = [
@@ -11,7 +15,18 @@ const STEPS = [
     "Afterwards, write a reflection about how it went.",
 ]
 
-function HostEvent() {
+// { onSendProposal } receives a new proposal to keep in App.
+function HostEvent({ onSendProposal }) {
+    const [writing, setWriting] = useState(false)
+    // The name of the organisation the last proposal went to, for the thank-you line.
+    const [sentTo, setSentTo] = useState(null)
+
+    function handleSend(proposal) {
+        onSendProposal(proposal)
+        setSentTo(causes.find((cause) => cause.id === proposal.causeId).name)
+        setWriting(false)
+    }
+
     return (
         <section className="card host-event">
             <h3><span aria-hidden="true">🌾</span> Host your own event</h3>
@@ -24,6 +39,20 @@ function HostEvent() {
                     <li key={step}>{step}</li>
                 ))}
             </ol>
+
+            {sentTo && !writing && (
+                <p className="host-event-sent" role="status">
+                    Proposal sent to {sentTo} (demo). You can see it on your Profile.
+                </p>
+            )}
+
+            {!writing && (
+                <button className="host-event-propose" onClick={() => setWriting(true)}>
+                    <span aria-hidden="true">📮</span> {sentTo ? "Send another proposal" : "Propose your event to an organisation"}
+                </button>
+            )}
+
+            {writing && <ProposalForm onSend={handleSend} onCancel={() => setWriting(false)}/>}
         </section>
     )
 }

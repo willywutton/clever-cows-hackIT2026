@@ -11,6 +11,26 @@
   line-height: 1.6;
 }
 
+.host-event-propose {
+  align-self: flex-start;
+  padding: 10px 16px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--grass);
+  font-weight: 600;
+}
+
+.host-event-propose:hover {
+  background: var(--grass-soft);
+}
+
+.host-event-sent {
+  padding: 8px 14px;
+  background: var(--grass-soft);
+  border-left: 4px solid var(--grass);
+  border-radius: 8px;
+}
+
 /* A numbered list drawn with CSS counters so the numbers can be styled. */
 .host-event-steps {
   list-style: none;

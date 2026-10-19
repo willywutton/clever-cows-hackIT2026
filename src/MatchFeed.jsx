@@ -17,7 +17,8 @@ function signupOf(cause) {
 // { onPlayAgain } is App's function for going back to the start.
 // { fitsMyWeek } is true when the "Fits my week" switch is on, and { onShowAll } turns it off.
 // { signedUp } is App's list of sign-ups, used to hide clashing sessions.
-function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, signedUp}){
+// { onSendProposal } keeps an event proposal from the Host your own event card.
+function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, signedUp, onSendProposal}){
     // .filter keeps only the causes whose identity list includes the player's trait.
     const matchingCauses = causes.filter((cause)=>
         cause.identity.includes(result)
@@ -73,7 +74,7 @@ function MatchFeed ({result, onOpenCause, onPlayAgain, fitsMyWeek, onShowAll, si
 
            <SurpriseMe result={result} fitsMyWeek={fitsMyWeek} onOpenCause={onOpenCause}/>
 
-           <HostEvent/>
+           <HostEvent onSendProposal={onSendProposal}/>
 
            <button className="button-primary" onClick={onPlayAgain}>Play again</button>
         </div>

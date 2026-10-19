@@ -1,11 +1,12 @@
 // Profile.jsx shows the student's profile, in this order: header, Next up,
-// Friends, My collection, History, About me and Privacy.
+// Friends, My collection, My event proposals, History, About me and Privacy.
 import { results } from './data/chapters'
 import { earnedTitles } from './titles'
 import { goalById } from './goalProgress'
 import ProfileHeader from './ProfileHeader'
 import NextUp from './NextUp'
 import FriendsSection from './FriendsSection'
+import MyProposals from './MyProposals'
 import MyCollection from './MyCollection'
 import HistorySection from './HistorySection'
 import PrivacySettings from './PrivacySettings'
@@ -24,7 +25,8 @@ const ABOUT_LABELS = [
 // { signedUp }, { history } and { diary } come from App.
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
 // { friendIds } is the friends list, changed with { onAddFriend } and { onRemoveFriend }.
-function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, friendIds, onAddFriend, onRemoveFriend }) {
+// { proposals } lists the event proposals the student has sent.
+function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, friendIds, onAddFriend, onRemoveFriend, proposals }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
@@ -50,6 +52,8 @@ function Profile({ quizResult, profile, onNicknameChange, onReflect, signedUp, h
             <FriendsSection friendIds={friendIds} onAdd={onAddFriend} onRemove={onRemoveFriend}/>
 
             <MyCollection diary={diary} shared={settings.shareDiary} signedUp={signedUp} onWrite={onReflect}/>
+
+            <MyProposals proposals={proposals}/>
 
             <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
 

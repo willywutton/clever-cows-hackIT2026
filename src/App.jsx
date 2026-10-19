@@ -43,6 +43,9 @@ function App() {
   // See people.js for what an entry looks like.
   const [signedUp, setSignedUp] = useState([])
 
+  // Event proposals the student has sent from Host your own event (demo, nothing is sent).
+  const [proposals, setProposals] = useState([])
+
   // The ids of the student's friends (sample students from friends.js).
   const [friendIds, setFriendIds] = useState(startingFriendIds)
 
@@ -188,6 +191,11 @@ function App() {
     setRecentFeeds((prev) => [...prev, { type: actionType, causeName, amount: GRASS[actionType] }])
   }
 
+  // HostEvent calls this with a new proposal; it is shown on the Profile.
+  function handleSendProposal(proposal) {
+    setProposals([...proposals, { id: `proposal_${proposals.length + 1}`, sentAt: new Date().toISOString(), ...proposal }])
+  }
+
   // Adds a friend by id (from a friend code), or removes one. Removing a friend
   // leaves any sign-ups they're already part of unchanged.
   function handleAddFriend(id) {
@@ -261,6 +269,7 @@ function App() {
           fitsMyWeek={fitsMyWeek}
           onShowAll={() => setFitsMyWeek(false)}
           signedUp={signedUp}
+          onSendProposal={handleSendProposal}
         />
       </>
     )
@@ -332,6 +341,7 @@ function App() {
         friendIds={friendIds}
         onAddFriend={handleAddFriend}
         onRemoveFriend={handleRemoveFriend}
+        proposals={proposals}
       />
     )
   }
