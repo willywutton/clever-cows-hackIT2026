@@ -12,7 +12,7 @@ import CausePage from './CausePage'
 import SignUp from './SignUp'
 import SignupDone from './SignupDone'
 import CloverCowdini from './CloverCowdini'
-import OrgDashboard from './OrgDashboard'
+import OrgView from './org/OrgView'
 import SiteHeader from './SiteHeader'
 import AppShell from './AppShell'
 import HomeLayout from './HomeLayout'
@@ -24,7 +24,8 @@ import GoalCard from './GoalCard'
 import GoalComplete from './GoalComplete'
 import FriendsSection from './FriendsSection'
 import MyCollection from './MyCollection'
-import HostEvent from './HostEvent'
+import HostEventPage from './HostEventPage'
+import CauseNews from './CauseNews'
 import PageTitle from './PageTitle'
 import { causes } from './data/causes'
 
@@ -78,6 +79,13 @@ function App() {
         side={
           <>
             <HomeNextUp signedUp={app.signedUp} onSeeAll={() => navigate('profile')}/>
+            <CauseNews
+              updates={app.orgUpdates}
+              causeIds={[
+                ...app.signedUp.map((entry) => entry.causeId),
+                ...app.favourites.filter((item) => item.kind === 'cause').map((item) => item.id),
+              ]}
+            />
             <GoalCard
               goalId={app.profile.goal}
               history={app.history}
@@ -114,10 +122,17 @@ function App() {
         key={openCause.id}
         cause={openCause}
         surprise={app.openedBySurprise}
-        onBack={() => navigate('home')}
-        onAction={app.recordAction}
-        onSignUp={() => navigate('signup')}
+        events={app.events.filter((event) => event.causeId === openCause.id)}
+        updates={app.orgUpdates.filter((update) => update.causeId === openCause.id)}
         isSignedUp={app.signedUp.some((item) => item.causeId === openCause.id)}
+        userRegion={app.profile.region}
+        isFavourite={app.isFavourite}
+        onToggleFavourite={app.toggleFavourite}
+        friendIds={app.friendIds}
+        onInvite={app.inviteFriends}
+        onSignUp={() => navigate('signup')}
+        onAction={app.recordAction}
+        onBack={() => navigate('home')}
       />
     )
   }
@@ -171,7 +186,6 @@ function App() {
         friendIds={app.friendIds}
         onAddFriend={app.addFriend}
         onRemoveFriend={app.removeFriend}
-        proposals={app.proposals}
         onRetakeStory={app.retakeStory}
         onResetDemo={app.resetDemo}
       />
@@ -202,12 +216,7 @@ function App() {
     )
   }
   else if (screen === 'host') {
-    content = (
-      <>
-        <PageTitle title="Host your own event"/>
-        <HostEvent onSendProposal={app.sendProposal}/>
-      </>
-    )
+    content = <HostEventPage events={app.events} onHost={app.hostEvent}/>
   }
   else {
     content = <PageTitle title="Coming soon" subtitle="This page is being built."/>
@@ -245,7 +254,7 @@ function App() {
               : studentPage}
           </div>
           <div hidden={app.view !== 'organisation'} className="page-narrow">
-            <OrgDashboard fedActions={[]}/>
+            <OrgView app={app}/>
           </div>
         </div>
       </main>

@@ -1,0 +1,26 @@
+/* Styles for the list of student-proposed events. Shared colours and .card are in index.css. */
+
+.org-pending {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.org-pending-empty {
+  color: var(--text-soft);
+}
+
+.org-pending-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.org-approve {
+  align-self: flex-start;
+  padding: 8px 16px;
+  background: var(--grass);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+}

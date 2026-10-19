@@ -7,6 +7,8 @@ import { usePersistentState } from './usePersistentState'
 import { clearAll } from './storage'
 import { causes } from '../data/causes'
 import { startingFriendIds } from '../data/friends'
+import { sampleEvents, startingFavourites } from '../data/events'
+import { sessionHours, visitMoolah } from '../data/economy'
 import { GRASS } from '../assets/cowStages'
 import { goalById, goalProgress } from '../goalProgress'
 
@@ -29,8 +31,26 @@ export function useCleverCows() {
     // Every session the student has signed up for, one entry per cause (see people.js).
     const [signedUp, setSignedUp] = usePersistentState('signedUp', [])
 
-    // Event proposals the student has sent from Host your own event.
-    const [proposals, setProposals] = usePersistentState('proposals', [])
+    // Events shown on cause pages: sample ones, ones the organisation adds,
+    // and ones the student proposes (pending until the organisation approves).
+    const [events, setEvents] = usePersistentState('events', sampleEvents)
+
+    // Causes and events the student has saved, e.g. { kind: 'event', id: 'event_sample_1' }.
+    const [favourites, setFavourites] = usePersistentState('favourites', startingFavourites)
+
+    // Invites the student has sent to friends: { id, causeId, friendIds, at }.
+    const [sentInvites, setSentInvites] = usePersistentState('sentInvites', [])
+
+    // Updates the organisation has posted: { id, causeId, text, at }.
+    const [orgUpdates, setOrgUpdates] = usePersistentState('orgUpdates', [])
+
+    // Attendance the organisation has confirmed for sample students, by sign-up id.
+    const [sampleAttendance, setSampleAttendance] = usePersistentState('sampleAttendance', {})
+
+    // Every session the student went to: { id, causeId, hours, moolah, source, at }.
+    // source is 'self' ("I went to this session") or 'org' (marked by the organisation).
+    const [attendance, setAttendance] = usePersistentState('attendance', [])
+    const hoursWorked = attendance.reduce((total, visit) => total + visit.hours, 0)
 
     // The ids of the student's friends (sample students from friends.js).
     const [friendIds, setFriendIds] = usePersistentState('friendIds', startingFriendIds)
@@ -205,7 +225,74 @@ export function useCleverCows() {
         navigate('profile')
     }
 
-    // ---- Friends, proposals, calendar ----
+    // ---- Sessions, events and the organisation ----
+
+    // Records one session the student went to. Hours come from the session's length,
+    // and Moolah grows with each return visit to the same cause (see economy.js).
+    function recordVisit(causeId, source) {
+        const cause = causes.find((c) => c.id === causeId)
+        const session = cause.actions.find((action) => action.type === "signup")
+        const earlier = attendance.filter((visit) => visit.causeId === causeId).length
+        const amount = visitMoolah(earlier)
+        const visit = {
+            id: `visit_${Date.now()}`, causeId, hours: sessionHours(session), moolah: amount,
+            source, at: new Date().toISOString(),
+        }
+        setAttendance((prev) => [...prev, visit])
+        earnMoolah(amount, `Session at ${cause.name}`)
+        return visit
+    }
+
+    // Adds one confirmed visit for a sample student in the Organisation view.
+    function markSampleAttended(signupId) {
+        setSampleAttendance((prev) => ({ ...prev, [signupId]: (prev[signupId] || 0) + 1 }))
+    }
+
+    // A student's own event proposal. It waits as "pending" for the organisation.
+    function hostEvent(details) {
+        setEvents((prev) => [...prev, {
+            id: `event_${Date.now()}`, ...details, source: 'student', status: 'pending',
+            host: profile.name, sample: false,
+        }])
+    }
+
+    // An event added by the organisation, shown straight away on the cause page.
+    function addOrgEvent(details) {
+        setEvents((prev) => [...prev, {
+            id: `event_${Date.now()}`, ...details, source: 'org', status: 'approved', sample: false,
+        }])
+    }
+
+    function approveEvent(eventId) {
+        setEvents((prev) => prev.map((event) =>
+            event.id === eventId ? { ...event, status: 'approved' } : event
+        ))
+    }
+
+    function postUpdate(causeId, text) {
+        setOrgUpdates((prev) => [...prev, { id: `update_${Date.now()}`, causeId, text, at: new Date().toISOString() }])
+    }
+
+    // ---- Favourites and invites ----
+
+    function isFavourite(kind, id) {
+        return favourites.some((item) => item.kind === kind && item.id === id)
+    }
+
+    function toggleFavourite(kind, id) {
+        setFavourites((prev) => (
+            prev.some((item) => item.kind === kind && item.id === id)
+                ? prev.filter((item) => !(item.kind === kind && item.id === id))
+                : [...prev, { kind, id }]
+        ))
+    }
+
+    // Invites friends to a cause. Nothing is really sent; it's kept for the Social tab.
+    function inviteFriends(causeId, invitedIds) {
+        setSentInvites((prev) => [...prev, { id: `invite_${Date.now()}`, causeId, friendIds: invitedIds, at: new Date().toISOString() }])
+    }
+
+    // ---- Friends, calendar ----
 
     function addFriend(id) {
         setFriendIds((prev) => (prev.includes(id) ? prev : [...prev, id]))
@@ -213,10 +300,6 @@ export function useCleverCows() {
 
     function removeFriend(id) {
         setFriendIds(friendIds.filter((friendId) => friendId !== id))
-    }
-
-    function sendProposal(proposal) {
-        setProposals([...proposals, { id: `proposal_${Date.now()}`, sentAt: new Date().toISOString(), ...proposal }])
     }
 
     function disconnectCalendar() {
@@ -232,14 +315,17 @@ export function useCleverCows() {
 
     return {
         // values
-        quizResult, screen, openCauseId, openedBySurprise, profile, signedUp, proposals,
+        quizResult, screen, openCauseId, openedBySurprise, profile, signedUp,
+        events, favourites, sentInvites, orgUpdates, sampleAttendance, attendance, hoursWorked,
         friendIds, history, diary, calendarConnected, fitsMyWeek, settings, view,
         grass, recentFeeds, justFinishedGoal, finishedGoalIds, moolah, moolahLedger,
         // actions
         navigate, setView, setProfile, setSettings, setCalendarConnected, setFitsMyWeek,
         changeGoal, chooseNextGoal, recordAction, finishWelcome, finishAboutYou, finishStory,
         retakeStory, openCause, surpriseMe, confirmSignup, answerCalendarPrompt,
-        startReflection, saveReflection, addFriend, removeFriend, sendProposal,
+        startReflection, saveReflection, addFriend, removeFriend,
+        recordVisit, markSampleAttended, hostEvent, addOrgEvent, approveEvent, postUpdate,
+        isFavourite, toggleFavourite, inviteFriends,
         disconnectCalendar, resetDemo, earnMoolah, spendMoolah,
         clearRecentFeeds: () => setRecentFeeds([]),
     }

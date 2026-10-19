@@ -1,5 +1,5 @@
 // Profile.jsx shows the student's profile: the header across the top, then two columns.
-// Left: Next up, Friends and About me. Right: the diary, event proposals, History and Privacy.
+// Left: Next up, Friends and About me. Right: the diary, History, Privacy and demo tools.
 // On phones the columns stack, left first.
 import { results } from './data/chapters'
 import { earnedTitles } from './titles'
@@ -7,7 +7,6 @@ import { goalById } from './goalProgress'
 import ProfileHeader from './ProfileHeader'
 import NextUp from './NextUp'
 import FriendsSection from './FriendsSection'
-import MyProposals from './MyProposals'
 import MyCollection from './MyCollection'
 import HistorySection from './HistorySection'
 import PrivacySettings from './PrivacySettings'
@@ -27,9 +26,8 @@ const ABOUT_LABELS = [
 // { signedUp }, { history } and { diary } come from App.
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
 // { friendIds } is the friends list, changed with { onAddFriend } and { onRemoveFriend }.
-// { proposals } lists the event proposals the student has sent.
 // { onRetakeStory } and { onResetDemo } are the demo tools at the bottom.
-function Profile({ quizResult, profile, onNameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, friendIds, onAddFriend, onRemoveFriend, proposals, onRetakeStory, onResetDemo }) {
+function Profile({ quizResult, profile, onNameChange, onReflect, signedUp, history, diary, settings, onSettingsChange, friendIds, onAddFriend, onRemoveFriend, onRetakeStory, onResetDemo }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
@@ -71,8 +69,6 @@ function Profile({ quizResult, profile, onNameChange, onReflect, signedUp, histo
 
                 <div className="profile-column">
                     <MyCollection diary={diary} shared={settings.publicDiary} signedUp={signedUp} onWrite={onReflect}/>
-
-                    <MyProposals proposals={proposals}/>
 
                     <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
 

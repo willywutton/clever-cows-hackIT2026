@@ -16,8 +16,11 @@ export const TITLES = [
     { id: "storyteller", name: "Storyteller", description: "Finished the goal Share my story" },
 ]
 
-// Which automatic titles one history item earns.
+// Which automatic titles one history item earns. Donating never earns a title.
 function titlesFor(item) {
+    if (item.type === "donate") {
+        return []
+    }
     const earned = ["first-step"]
     if (item.type === "share") {
         earned.push("word-spreader")

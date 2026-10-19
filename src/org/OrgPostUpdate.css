@@ -1,0 +1,56 @@
+/* Styles for the organisation's Post an update box. Shared colours and .card are in index.css. */
+
+.org-post {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.org-post-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.org-post-form textarea {
+  font: inherit;
+  color: var(--text);
+  padding: 9px 12px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  resize: vertical;
+}
+
+.org-post-form textarea:focus-visible {
+  outline: 3px solid var(--hay);
+  outline-offset: 1px;
+}
+
+.org-post-form button {
+  align-self: flex-start;
+  padding: 8px 16px;
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+}
+
+.org-post-form button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.org-post-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--grass-soft);
+  border-left: 4px solid var(--grass);
+  border-radius: 8px;
+}
+
+.org-post-item span {
+  flex-shrink: 0;
+  font-weight: 700;
+}
