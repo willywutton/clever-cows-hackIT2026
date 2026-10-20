@@ -14,7 +14,7 @@ function eventInfo(cause, entry) {
     const label = entry.weekly ? signup.weeklyLabel : signup.label
     return {
         title: `${cause.name}: ${label}`,
-        details: `Who's going: ${describeWho(entry)}\n\nSample session from Clever Cows (demo)`,
+        details: `Who's going: ${describeWho(entry)}\n\nSession from Clever Cows`,
         location: `${signup.area}, Singapore`,
         start: toUtcStamp(new Date(signup.startsAt)),
         end: toUtcStamp(sessionEnd(signup)),

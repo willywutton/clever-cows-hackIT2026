@@ -58,8 +58,6 @@ function HostEventForm({ onSubmit, fixedCauseId, submitLabel = "Send for approva
 
     return (
         <form className="card host-form" onSubmit={handleSubmit}>
-            <p className="host-form-demo">Demo: nothing is really sent</p>
-
             <label className="host-field">
                 <span>Event title</span>
                 <input type="text" value={title} maxLength={60} required

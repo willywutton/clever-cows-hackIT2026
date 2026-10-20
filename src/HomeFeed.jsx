@@ -62,10 +62,9 @@ function HomeFeed({ app }) {
                 "Fits my week" checks each session against your timetable, so you only see ones you can
                 actually make.
             </p>
-            <p>This demo uses a sample timetable. Nothing is read from a real calendar.</p>
             <div className="modal-buttons">
                 <button className="modal-secondary" onClick={() => setAskCalendar(false)}>Not now</button>
-                <button className="button-primary" onClick={connectCalendar}>Connect calendar (demo)</button>
+                <button className="button-primary" onClick={connectCalendar}>Connect calendar</button>
             </div>
         </Modal>
     )
@@ -166,7 +165,7 @@ function HomeFeed({ app }) {
             </HomeRow>
 
             <p className="home-feed-note">
-                Causes, sessions, places and people shown here are sample data for the demo.
+                Causes, sessions, places and people shown here are sample data.
             </p>
             {calendarModal}
         </div>

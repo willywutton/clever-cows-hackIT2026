@@ -80,7 +80,7 @@ function OrgSignups({ app, cause, rows, stats }) {
                 {shown.length === 0 && <li className="org-section-note">No one here right now.</li>}
             </ul>
             <p className="org-note">
-                Each session counts as {hours} {hours === 1 ? "hour" : "hours"}. Thank-yous to sample volunteers are only marked here (demo).
+                Each session counts as {hours} {hours === 1 ? "hour" : "hours"}.
             </p>
         </section>
     )

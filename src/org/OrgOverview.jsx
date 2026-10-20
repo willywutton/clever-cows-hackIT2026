@@ -73,7 +73,7 @@ function OrgOverview({ app, org, cause, rows, stats, pending, onGo }) {
                     <strong>{feedback.length}</strong> diary {feedback.length === 1 ? "page" : "pages"} about you
                 </p>
             </div>
-            <p className="org-section-note">Numbers include sample volunteers for the demo.</p>
+            <p className="org-section-note">Numbers include sample volunteers.</p>
 
             <div className="org-columns">
                 <section className="card org-section">

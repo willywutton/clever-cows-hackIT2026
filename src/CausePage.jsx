@@ -36,13 +36,13 @@ function CausePage({
     function handleShare() {
         onAction(cause.id, "share")
         setPanel(null)
-        setMessage(`Thanks for sharing ${cause.name}. (Demo: nothing is posted anywhere.)`)
+        setMessage(`Thanks for sharing ${cause.name}!`)
     }
 
     function handlePledge() {
         onAction(cause.id, "donate")
         setPanel(null)
-        setMessage(`Thanks for your demo pledge to ${cause.name}. No money was taken.`)
+        setMessage(`Thanks for your pledge to ${cause.name}!`)
     }
 
     const saved = isFavourite("cause", cause.id)
@@ -111,7 +111,7 @@ function CausePage({
 
                 {panel !== "pledge" && (
                     <button className="cause-donate-link" onClick={() => setPanel("pledge")}>
-                        Want to donate instead? It's optional (demo pledge).
+                        Want to donate instead? It's always optional.
                     </button>
                 )}
             </div>

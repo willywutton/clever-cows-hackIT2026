@@ -58,7 +58,7 @@ function AddFriend({ friendIds, onAdd }) {
 
             {notYetFriends.length > 0 && (
                 <p className="add-friend-demo">
-                    <span className="add-friend-demo-label">Demo codes</span>{" "}
+                    <span className="add-friend-demo-label">Try these codes:</span>{" "}
                     {notYetFriends.map((student) => `${student.code} (${student.name})`).join(", ")}
                 </p>
             )}

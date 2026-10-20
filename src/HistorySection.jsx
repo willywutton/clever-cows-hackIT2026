@@ -6,7 +6,7 @@ const COUNTS = [
     { type: "share", one: "time shared", many: "times shared" },
     { type: "signup", one: "sign-up", many: "sign-ups" },
     { type: "reflection", one: "reflection", many: "reflections" },
-    { type: "donate", one: "demo pledge", many: "demo pledges" },
+    { type: "donate", one: "pledge", many: "pledges" },
 ]
 
 // { history } is App's list of actions. { titles } is the list from earnedTitles().

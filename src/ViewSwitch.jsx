@@ -3,7 +3,7 @@ import './ViewSwitch.css'
 
 const VIEWS = [
     { id: "student", emoji: "🎓", label: "Student", hint: "Find causes and keep going" },
-    { id: "organisation", emoji: "🏡", label: "Organisation", hint: "Manage volunteers (demo)" },
+    { id: "organisation", emoji: "🏡", label: "Organisation", hint: "Manage volunteers" },
 ]
 
 function ViewSwitch({ view, onChange }) {

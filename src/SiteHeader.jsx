@@ -32,7 +32,7 @@ function SiteHeader({ view, signedIn, name, moolah, characterHead, onLogo }) {
                     </div>
                 )}
 
-                {view === 'organisation' && <p className="site-org-label">Organisation view · demo</p>}
+                {view === 'organisation' && <p className="site-org-label">Organisation view</p>}
             </div>
         </header>
     )

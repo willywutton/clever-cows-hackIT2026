@@ -15,7 +15,7 @@ function EventCard({ event, saved, onToggleSave, causeName }) {
             <div className="event-card-body">
                 <div className="event-card-tags">
                     {event.sample && <span className="event-tag">Sample</span>}
-                    {pending && <span className="event-tag event-tag-pending">Pending (demo)</span>}
+                    {pending && <span className="event-tag event-tag-pending">Pending</span>}
                     {event.source === "student" && !pending && <span className="event-tag">Student-hosted</span>}
                 </div>
                 <h4 className="event-card-title">{event.title}</h4>

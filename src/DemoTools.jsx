@@ -10,11 +10,11 @@ function DemoTools({ onRetakeStory, onResetDemo }) {
 
     return (
         <section className="card demo-tools">
-            <h3>Demo tools</h3>
+            <h3>Start again</h3>
             <button className="demo-tools-button" onClick={onRetakeStory}>Retake the story</button>
 
             {!confirming && (
-                <button className="demo-tools-button" onClick={() => setConfirming(true)}>Reset demo</button>
+                <button className="demo-tools-button" onClick={() => setConfirming(true)}>Reset everything</button>
             )}
             {confirming && (
                 <div className="demo-tools-confirm" role="alert">

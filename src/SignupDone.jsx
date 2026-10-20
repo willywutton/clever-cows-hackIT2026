@@ -118,11 +118,11 @@ function SignupDone({ app, cause, entry, onCalendarAnswered, onHome, onBackToCau
                         <div>
                             <strong>{friendsToo ? "Your friends are coming" : "Bring a friend"}</strong>
                             {friendsToo && (
-                                <p>Confirmation sent to {joinNames(entry.friendIds.map(nameOf))} (demo, no real email sent).</p>
+                                <p>Confirmation sent to {joinNames(entry.friendIds.map(nameOf))}.</p>
                             )}
                             {!friendsToo && !inviting && (
                                 <div className="signup-done-row">
-                                    <p>{invited ? "Invite sent (demo)." : "Helping is easier together."}</p>
+                                    <p>{invited ? "Invite sent." : "Helping is easier together."}</p>
                                     {!invited && <button className="signup-done-small" onClick={() => setInviting(true)}>Invite friends</button>}
                                 </div>
                             )}

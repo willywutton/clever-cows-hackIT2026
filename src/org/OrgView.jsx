@@ -56,7 +56,7 @@ function OrgView({ app }) {
                     {org.causeIds.map((id) => <option key={id} value={id}>{causes.find((c) => c.id === id).name}</option>)}
                 </select>
             </label>
-            <small>Coordinator view · demo</small>
+            <small>Coordinator view</small>
         </div>
     )
 

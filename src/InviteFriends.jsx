@@ -34,7 +34,7 @@ function InviteFriends({ friendIds, onSend, onClose }) {
             </div>
             {sentTo && (
                 <p className="invite-sent" role="status">
-                    Invite sent to {sentTo} (demo, nothing is really sent).
+                    Invite sent to {sentTo}.
                 </p>
             )}
             <div className="invite-buttons">

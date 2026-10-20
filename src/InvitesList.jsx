@@ -40,7 +40,7 @@ function InvitesList({ joined, onJoin, sent }) {
                 {[...sent].reverse().map((invite) => (
                     <p key={invite.id} className="invite-sent-item">
                         You invited {joinNames(invite.friendIds.map(nameOf))} to{" "}
-                        <strong>{causes.find((c) => c.id === invite.causeId).name}</strong> (demo, nothing was sent).
+                        <strong>{causes.find((c) => c.id === invite.causeId).name}</strong>.
                     </p>
                 ))}
             </section>

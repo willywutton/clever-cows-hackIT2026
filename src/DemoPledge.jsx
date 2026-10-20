@@ -7,7 +7,6 @@ import './DemoPledge.css'
 function DemoPledge({ cause, action, onPledge, onBack }) {
     return (
         <div className="pledge">
-            <p className="pledge-label">Demo: no money is taken</p>
             <h3>{cause.name}</h3>
             <p>{action.label}</p>
             <p className="pledge-note">
@@ -15,7 +14,7 @@ function DemoPledge({ cause, action, onPledge, onBack }) {
             </p>
             <div className="pledge-buttons">
                 <button className="pledge-back" onClick={onBack}>Back</button>
-                <button className="button-primary" onClick={onPledge}>Pledge (demo)</button>
+                <button className="button-primary" onClick={onPledge}>Pledge</button>
             </div>
         </div>
     )

@@ -31,7 +31,7 @@ export function volunteersFor(cause, app) {
     if (entry) {
         rows.push({
             id: "student",
-            name: `${app.profile.name || "Student"} (demo student)`,
+            name: `${app.profile.name || "Student"} (you)`,
             weekly: entry.weekly,
             attended: app.attendance.filter((visit) => visit.causeId === cause.id).length,
             trait: app.quizResult,

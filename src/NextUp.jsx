@@ -31,7 +31,7 @@ function NextUp({ signedUp, userRegion, onReflect }) {
                     )}
                     <AddToCalendar cause={cause} entry={entry}/>
                     <button className="next-up-went" onClick={() => onReflect(cause.id)}>
-                        I went to this session <span>(demo)</span>
+                        I went to this session
                     </button>
                 </div>
             ))}

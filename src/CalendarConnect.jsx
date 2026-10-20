@@ -8,21 +8,17 @@ function CalendarConnect({ connected, onConnect, onDisconnect }) {
     return (
         <section className="calendar-connect card">
             <h3><span aria-hidden="true">📅</span> Calendar</h3>
-            <p className="calendar-connect-demo">Demo</p>
 
             {!connected && (
                 <>
                     <p>Connect your calendar to unlock "Fits my week" on Home.</p>
-                    <p className="calendar-connect-note">
-                        Uses a sample timetable. Nothing is read from your real calendar.
-                    </p>
-                    <button className="calendar-connect-button" onClick={onConnect}>Connect calendar (demo)</button>
+                    <button className="calendar-connect-button" onClick={onConnect}>Connect calendar</button>
                 </>
             )}
 
             {connected && (
                 <>
-                    <p><span aria-hidden="true">✓</span> Sample timetable connected. "Fits my week" is unlocked on Home.</p>
+                    <p><span aria-hidden="true">✓</span> Calendar connected. "Fits my week" is unlocked on Home.</p>
                     <button className="calendar-connect-disconnect" onClick={onDisconnect}>Disconnect</button>
                 </>
             )}

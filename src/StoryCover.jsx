@@ -67,7 +67,7 @@ function StoryCover({ name, onBegin, onSkip }) {
                 <p className="cover-note">There are no wrong answers.</p>
                 <div className="cover-buttons">
                     <button className="button-primary cover-begin" onClick={onBegin}>Begin</button>
-                    <button className="cover-skip" onClick={onSkip}>Skip story (demo)</button>
+                    <button className="cover-skip" onClick={onSkip}>Skip story</button>
                 </div>
             </div>
         </FarmerScene>

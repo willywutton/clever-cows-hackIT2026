@@ -14,7 +14,7 @@ function OrgPendingEvents({ events, onApprove }) {
             {pending.map((event) => (
                 <div key={event.id} className="org-pending-item">
                     <EventCard event={event}/>
-                    <button className="org-approve" onClick={() => onApprove(event.id)}>Approve (demo)</button>
+                    <button className="org-approve" onClick={() => onApprove(event.id)}>Approve</button>
                 </div>
             ))}
         </section>
