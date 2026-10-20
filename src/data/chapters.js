@@ -9,7 +9,7 @@
 export const chapters = [
   {
     title: "The Runaway Calf",
-    story: `You arrive in Mooville to a loud "Moooo!" Daisy, a tiny calf, has climbed onto a wobbly hay cart and is too scared to come down.
+    story: `You arrive in Mooville to a loud "Moooo!" Clover, a tiny calf, has climbed onto a wobbly hay cart and is too scared to come down.
 
 "Please help her!" calls Granny Bess, leaning on her cane.`,
     choices: [
@@ -17,7 +17,7 @@ export const chapters = [
         key: "hay",
         text: "Hold out some sweet hay and talk to her softly.",
         trait: "Heart",
-        result: "Daisy calms down and hops into your arms. She stays close to you all morning."
+        result: "Clover calms down and hops into your arms. She stays close to you all morning."
       },
       {
         key: "guide",
@@ -29,13 +29,13 @@ export const chapters = [
         key: "song",
         text: "Get the crowd singing her favourite barn song.",
         trait: "Community",
-        result: "Daisy giggles and trots down. The singing puts the whole square in a good mood."
+        result: "Clover giggles and trots down. The singing puts the whole square in a good mood."
       },
       {
         key: "latch",
         text: "Fix her pen gate first, so she has somewhere safe to go.",
         trait: "Craft",
-        result: "With the gate fixed, Daisy heads straight back to her pen. You notice lots of Mooville needs repairs."
+        result: "With the gate fixed, Clover heads straight back to her pen. You notice lots of Mooville needs repairs."
       }
     ]
   },
@@ -179,9 +179,9 @@ export const chapters = [
       },
       {
         key: "introduce",
-        text: "Bring him over to meet Daisy and her friends.",
+        text: "Bring him over to meet Clover and her friends.",
         trait: "Community",
-        result: "Daisy pulls him into a game of tag. He's part of the gang in no time."
+        result: "Clover pulls him into a game of tag. He's part of the gang in no time."
       },
       {
         key: "role",
