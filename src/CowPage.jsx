@@ -59,7 +59,7 @@ function CowPage({ app }) {
                 <section className="card cow-page-stats">
                     <h3>How she's doing</h3>
                     <CowStats stats={app.cow.stats}/>
-                    <p className="cow-page-stats-note">These only go up. Clover never gets sad if you're busy.</p>
+                    <p className="cow-page-stats-note">These drop a little each week, so check in on Clover when you can.</p>
                 </section>
             </div>
 

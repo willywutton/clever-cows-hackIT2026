@@ -1,5 +1,5 @@
 // store.js lists what can be bought for Clover Cowdini with Moolah, and how much each
-// raises her stats. Stats only ever go up: nothing wears off and nothing is lost.
+// raises her stats. Her stats also drop a little each week (WEEKLY_STAT_DROP below).
 //
 // How to read one item:
 //   category    furniture, accessory, grass, entertainment or care
@@ -54,3 +54,6 @@ export const STATS = [
 export const STARTING_STATS = { comfort: 35, hunger: 35, cleanliness: 35, happiness: 35 }
 
 export const STAT_MAX = 100
+
+// Every stat drops by this much for each full week that passes, but never below 0.
+export const WEEKLY_STAT_DROP = 10

@@ -1,5 +1,5 @@
-// CowStats.jsx shows Clover Cowdini's four stats as bars. Stats only go up when the
-// student cares for her; they never drop, so there's nothing to "fail" at.
+// CowStats.jsx shows Clover Cowdini's four stats as bars. Caring for her raises them,
+// and they drop a little each week.
 import { STATS, STAT_MAX } from './data/store'
 import './CowStats.css'
 

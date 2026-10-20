@@ -12,9 +12,27 @@ import { sampleChatReplies } from '../data/sampleSocial'
 import { REFLECTION_MOOLAH, sessionHours, visitMoolah } from '../data/economy'
 import { GRASS } from '../assets/cowStages'
 import { goalById, goalProgress } from '../goalProgress'
-import { BASIC_GRASS_BOOST, STARTING_STATS, STAT_MAX } from '../data/store'
+import { BASIC_GRASS_BOOST, STARTING_STATS, STAT_MAX, WEEKLY_STAT_DROP } from '../data/store'
 
 const EMPTY_PROFILE = { name: '', about: '', goal: '', area: '', ageGroup: '', region: '', goalHistory: [] }
+
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000
+
+// Lowers every stat by WEEKLY_STAT_DROP for each full week since the last drop,
+// never below 0. A cow saved before stats could drop starts counting from now.
+function applyWeeklyDrop(cow, now) {
+    if (!cow.lastDrop) {
+        return { ...cow, lastDrop: now }
+    }
+    const weeks = Math.floor((now - cow.lastDrop) / WEEK_MS)
+    if (weeks < 1) {
+        return cow
+    }
+    const stats = Object.fromEntries(
+        Object.entries(cow.stats).map(([stat, level]) => [stat, Math.max(0, level - weeks * WEEKLY_STAT_DROP)])
+    )
+    return { ...cow, stats, lastDrop: cow.lastDrop + weeks * WEEK_MS }
+}
 
 export function useCleverCows() {
     // The student's top trait from the story, e.g. "Heart", or null before the story.
@@ -110,11 +128,12 @@ export function useCleverCows() {
     const [moolahLedger, setMoolahLedger] = usePersistentState('moolah', [])
     const moolah = moolahLedger.reduce((total, entry) => total + entry.amount, 0)
 
-    // Clover Cowdini's care: her stats (which only ever go up), the items she owns,
-    // the accessories she's wearing, and how much free basic grass has been fed.
-    const [cow, setCow] = usePersistentState('cow', {
-        stats: STARTING_STATS, owned: [], equipped: [], grassFed: 0,
-    })
+    // Clover Cowdini's care: her stats, the items she owns, the accessories she's
+    // wearing, how much free basic grass has been fed, and when her stats last dropped.
+    // Each time the app opens, her stats drop for every full week since then.
+    const [cow, setCow] = usePersistentState('cow', () => ({
+        stats: STARTING_STATS, owned: [], equipped: [], grassFed: 0, lastDrop: Date.now(),
+    }), (saved) => applyWeeklyDrop(saved, Date.now()))
     const basicGrassLeft = Math.max(0, grass - cow.grassFed)
 
     // Grass gained since the cow last reacted on Home: { type, causeName, amount }.
@@ -181,7 +200,7 @@ export function useCleverCows() {
 
     // ---- Caring for Clover Cowdini ----
 
-    // Raises one stat, never above the maximum. Stats never go down.
+    // Raises one stat, never above the maximum.
     function raiseStat(stats, stat, amount) {
         return { ...stats, [stat]: Math.min(STAT_MAX, stats[stat] + amount) }
     }
