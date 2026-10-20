@@ -18,7 +18,7 @@ function shortDay(startsAt) {
     })
 }
 
-function cowMessage({ name, recentFeeds, news, grassLeft, next }) {
+function cowMessage({ name, recentFeeds, note, grassLeft, next }) {
     if (recentFeeds.length === 1) {
         const feed = recentFeeds[0]
         return `Yum! +${feed.amount} grass from ${FEED_REASONS[feed.type]} ${feed.causeName}.`
@@ -27,8 +27,8 @@ function cowMessage({ name, recentFeeds, news, grassLeft, next }) {
         const total = recentFeeds.reduce((sum, feed) => sum + feed.amount, 0)
         return `Yum! +${total} grass from your last ${recentFeeds.length} actions.`
     }
-    if (news) {
-        return `Moo! News from ${news.causeName}: "${news.text}"`
+    if (note) {
+        return note.text
     }
     if (grassLeft > 0) {
         return `You've saved ${grassLeft} ${grassLeft === 1 ? "handful" : "handfuls"} of grass for me. Snack time?`
@@ -39,11 +39,12 @@ function cowMessage({ name, recentFeeds, news, grassLeft, next }) {
     return `Hi ${name}! Every time you help out, I get a little grass.`
 }
 
-function CowPeek({ name, cow, grass, grassLeft, recentFeeds, onReactionDone, news, next, onVisit }) {
+function CowPeek({ name, cow, grass, grassLeft, recentFeeds, onReactionDone, note, next, onVisit }) {
     const reached = cowStages.filter((stage) => grass >= stage.minGrass)
     const stage = reached[reached.length - 1]
     const reacting = recentFeeds.length > 0
-    const message = cowMessage({ name, recentFeeds, news, grassLeft, next })
+    const message = cowMessage({ name, recentFeeds, note, grassLeft, next })
+    const action = !reacting && note ? note.action : null
 
     useEffect(() => {
         if (!reacting) {
@@ -55,7 +56,10 @@ function CowPeek({ name, cow, grass, grassLeft, recentFeeds, onReactionDone, new
 
     return (
         <section className="cow-peek" aria-label="Clover Cowdini">
-            <p key={message} className="cow-peek-bubble" role="status">{message}</p>
+            <div key={message} className="cow-peek-bubble" role="status">
+                <p>{message}</p>
+                {action && <button className="cow-peek-action" onClick={action.onClick}>{action.label}</button>}
+            </div>
 
             <div className="cow-peek-barn">
                 <button className="cow-peek-window" onClick={onVisit} aria-label="Visit Clover Cowdini in the barn">

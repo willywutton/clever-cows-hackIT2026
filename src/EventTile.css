@@ -1,7 +1,8 @@
 .event-tile {
   position: relative;
   display: flex;
-  gap: 14px;
+  flex-direction: column;
+  gap: 10px;
   height: 100%;
   box-sizing: border-box;
   padding: 14px;
@@ -24,10 +25,9 @@
 .event-tile-date {
   flex-shrink: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 58px;
-  padding: 6px 0 8px;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 12px;
   align-self: flex-start;
   background: var(--cause-color, var(--hay-soft));
   border-radius: 12px;
@@ -43,9 +43,9 @@
 }
 
 .event-tile-day {
-  margin: 4px 0 2px;
+  order: -1;
   font-family: var(--display);
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 800;
 }
 

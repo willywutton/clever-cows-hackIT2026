@@ -60,9 +60,8 @@
 }
 
 .home-row-track {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 224px;
+  display: flex;
+  align-items: stretch;
   gap: 16px;
   margin: -8px -8px -4px;
   padding: 8px 8px 14px;
@@ -74,16 +73,30 @@
   scrollbar-color: var(--border) transparent;
 }
 
+.home-row-track > * {
+  flex: 0 0 224px;
+}
+
+.home-row-track > .surprise-tile {
+  flex-basis: 160px;
+}
+
 .home-row-track-more {
   mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
 }
 
 @media (max-width: 720px) {
-  .home-row-track {
-    grid-auto-columns: 78%;
+  .home-row-track > * {
+    flex-basis: 78%;
+  }
+
+  .home-row-track > .surprise-tile {
+    flex-basis: 42%;
   }
 
   .home-row-arrow {
-    display: none;
+    width: 32px;
+    height: 32px;
+    font-size: 22px;
   }
 }

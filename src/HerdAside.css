@@ -1,0 +1,115 @@
+.herd-aside {
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.herd-aside .card {
+  padding: 20px;
+}
+
+.herd-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.herd-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.herd-stats-grid p {
+  padding: 8px 6px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.herd-stats-grid strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 24px;
+  color: var(--barn);
+}
+
+.herd-invite {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  background: var(--hay-soft);
+  border-color: var(--hay);
+  font-size: 16px;
+}
+
+.herd-invite button {
+  padding: 6px 14px;
+  background: var(--barn);
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 3px 0 var(--barn-dark);
+}
+
+.herd-suggest {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.herd-suggest ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.herd-suggest li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.herd-suggest li > div {
+  flex: 1;
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.herd-suggest small {
+  display: block;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.herd-suggest button {
+  flex-shrink: 0;
+  padding: 5px 10px;
+  background: var(--grass);
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.herd-suggest button:hover {
+  background: #4a7a31;
+}
+
+@media (max-width: 1100px) {
+  .herd-aside {
+    position: static;
+  }
+}

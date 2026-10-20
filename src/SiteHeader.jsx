@@ -1,13 +1,12 @@
-// SiteHeader.jsx is the bar across the top of every page: the Clever Cows name,
-// and once the student has a character, Surprise me, their Moolah and their name.
-// The Student / Organisation switch is always at the far right.
+// SiteHeader.jsx is the bar across the top of every page: the Clever Cows name on the left,
+// and once the student has a character, their name and Moolah on the right.
+// The Student / Organisation switch lives at the bottom of the side menu.
 import './SiteHeader.css'
 
-// { view } is 'student' or 'organisation', changed with { onViewChange }.
-// { signedIn } is true once the student has finished (or skipped) the story.
-// { name } and { moolah } are shown at the top. { onSurprise } opens a surprise cause.
+// { view } is 'student' or 'organisation'. { signedIn } is true once the student has
+// finished (or skipped) the story. { name } and { moolah } are shown on the right.
 // { onLogo } goes Home when the logo is clicked.
-function SiteHeader({ view, onViewChange, signedIn, name, moolah, onSurprise, onLogo }) {
+function SiteHeader({ view, signedIn, name, moolah, onLogo }) {
     const showStudentBar = signedIn && view === 'student'
 
     return (
@@ -20,25 +19,15 @@ function SiteHeader({ view, onViewChange, signedIn, name, moolah, onSurprise, on
 
                 {showStudentBar && (
                     <div className="site-header-student">
-                        <button className="site-surprise" onClick={onSurprise}>
-                            <span aria-hidden="true">🎲</span> Surprise me
-                        </button>
-                        <p className="site-moolah" title="Moolah is earned by helping. It can't be bought.">
-                            <span aria-hidden="true">🪙</span> {moolah} <span className="site-moolah-word">Moolah</span>
-                        </p>
                         <p className="site-name">{name}</p>
+                        <p className="site-moolah" title="Moolah is earned by helping. It can't be bought.">
+                            <span aria-hidden="true">🪙</span> <strong key={moolah} className="site-moolah-count">{moolah}</strong>
+                            <span className="site-moolah-word">Moolah</span>
+                        </p>
                     </div>
                 )}
 
-                {/* aria-pressed tells screen readers which button is currently selected. */}
-                <div className="view-toggle" role="group" aria-label="View">
-                    <button aria-pressed={view === 'student'} onClick={() => onViewChange('student')}>
-                        Student
-                    </button>
-                    <button aria-pressed={view === 'organisation'} onClick={() => onViewChange('organisation')}>
-                        Organisation
-                    </button>
-                </div>
+                {view === 'organisation' && <p className="site-org-label">Organisation view · demo</p>}
             </div>
         </header>
     )

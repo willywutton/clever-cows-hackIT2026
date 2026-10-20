@@ -48,29 +48,13 @@
   cursor: default;
 }
 
-/* Surprise me, Moolah and the student's name, in the middle of the bar. */
+/* The student's name, then their Moolah at the far right. */
 .site-header-student {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 10px 16px;
   margin-left: auto;
-}
-
-.site-surprise {
-  padding: 7px 14px;
-  background: var(--hay);
-  color: var(--ink);
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  font-weight: 700;
-  box-shadow: 0 3px 0 #c9a227;
-}
-
-.site-surprise:active {
-  transform: translateY(2px);
-  box-shadow: 0 1px 0 #c9a227;
 }
 
 .site-moolah {
@@ -83,6 +67,17 @@
   border-radius: 999px;
   font-weight: 700;
   font-size: 17px;
+}
+
+.site-moolah-count {
+  display: inline-block;
+  animation: site-moolah-bump 0.5s ease-out;
+}
+
+@keyframes site-moolah-bump {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.35); color: var(--hay); }
+  100% { transform: scale(1); }
 }
 
 .site-moolah-word {
@@ -109,36 +104,6 @@
   box-shadow: 0 3px 0 var(--barn-dark);
 }
 
-/* The Student / Organisation switch sits at the far right. */
-.view-toggle {
-  display: flex;
-  gap: 4px;
-  margin-left: auto;
-  padding: 4px;
-  background: var(--barn-dark);
-  border-radius: 12px;
-}
-
-.view-toggle button {
-  padding: 6px 14px;
-  background: transparent;
-  color: #f6dcd4;
-  border: none;
-  border-radius: 9px;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.view-toggle button:hover {
-  color: #fff;
-}
-
-/* aria-pressed="true" is the selected button. */
-.view-toggle button[aria-pressed="true"] {
-  background: var(--cream);
-  color: var(--ink);
-}
-
 @media (max-width: 720px) {
   .site-header-inner {
     padding: 12px 16px 4px;
@@ -155,7 +120,12 @@
   }
 }
 
-/* When the student bar is showing it already pushes the switch to the right. */
-.site-header-student + .view-toggle {
-  margin-left: 0;
+.site-org-label {
+  margin: 0 0 0 auto;
+  padding: 5px 14px;
+  background: var(--barn-dark);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #f6dcd4;
 }

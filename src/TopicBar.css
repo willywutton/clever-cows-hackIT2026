@@ -1,0 +1,99 @@
+.topic-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.topic-bar-track {
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+  padding: 4px 2px 6px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.topic-bar-track::-webkit-scrollbar {
+  display: none;
+}
+
+.topic-bar-fade-end {
+  mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+}
+
+.topic-bar-fade-start {
+  mask-image: linear-gradient(to left, #000 calc(100% - 40px), transparent);
+}
+
+.topic-bar-fade-start.topic-bar-fade-end {
+  mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+}
+
+.topic-bar-track button {
+  flex-shrink: 0;
+  padding: 7px 14px;
+  background: var(--card);
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.topic-bar-track button:hover {
+  border-color: var(--hay);
+  transform: translateY(-1px);
+}
+
+.topic-bar-track button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.topic-bar-track .topic-bar-locked {
+  background: #f1e7da;
+  border-style: dashed;
+  color: var(--text-soft);
+}
+
+.topic-bar-track .topic-bar-locked:hover {
+  border-color: var(--text-soft);
+}
+
+.topic-bar-divider {
+  flex-shrink: 0;
+  width: 2px;
+  margin: 6px 2px;
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.topic-bar-arrow {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0 0 3px;
+  background: var(--card);
+  color: var(--ink);
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.topic-bar-arrow:hover:not(:disabled) {
+  background: var(--hay);
+  border-color: var(--hay);
+  transform: scale(1.08);
+}
+
+.topic-bar-arrow:disabled {
+  opacity: 0.35;
+}

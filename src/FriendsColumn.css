@@ -1,0 +1,145 @@
+.friends-column {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px;
+}
+
+.friends-column-head {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.friends-column-count {
+  display: inline-block;
+  padding: 0 9px;
+  background: var(--hay-soft);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 15px;
+  vertical-align: 3px;
+}
+
+.friends-column-head input {
+  width: 100%;
+  box-sizing: border-box;
+  font: inherit;
+  font-size: 16px;
+  padding: 9px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+}
+
+.friends-column-head input:focus-visible {
+  outline: 3px solid var(--hay);
+  outline-offset: 1px;
+}
+
+.friends-column-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.friends-column-list li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.friends-column-person {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  text-align: left;
+}
+
+button.friends-column-person:hover {
+  border-color: var(--hay);
+  transform: translateX(2px);
+}
+
+.friends-column-person[aria-pressed="true"] {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+}
+
+.friends-column-person small {
+  display: block;
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.friends-column-remove {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  background: transparent;
+  color: var(--text-soft);
+  border: none;
+  font-size: 14px;
+}
+
+.friends-column-remove:hover {
+  background: #f1e7da;
+  color: var(--ink);
+}
+
+.friends-column-add {
+  padding: 6px 12px;
+  background: var(--grass);
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.friends-column-add:hover {
+  background: #4a7a31;
+}
+
+.friends-column-empty {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.friends-column-find {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.friends-column-code {
+  padding-top: 12px;
+  border-top: 2px dashed var(--border);
+  font-size: 15px;
+}
+
+.friends-column-code summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--barn);
+}
+
+.friends-column-code[open] summary {
+  margin-bottom: 8px;
+}
+
+.friends-column-code p {
+  margin-bottom: 8px;
+  color: var(--text-soft);
+}

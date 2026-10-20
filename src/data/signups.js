@@ -6,15 +6,16 @@
 //   name            first name and last initial
 //   weekly          true if they come every week, false for just once
 //   timesAttended   how many times they had already been confirmed as attending
+//   trait           their helper type from the story (Heart, Strategy, Community or Craft)
 
 const SAMPLE_PEOPLE = [
-  { name: "Aisha K.", weekly: false, timesAttended: 2 },
-  { name: "Ben T.", weekly: true, timesAttended: 5 },
-  { name: "Chloe L.", weekly: false, timesAttended: 0 },
-  { name: "Daniel W.", weekly: false, timesAttended: 1 },
-  { name: "Farah N.", weekly: true, timesAttended: 3 },
-  { name: "Hui Min S.", weekly: false, timesAttended: 1 },
-  { name: "Ivan R.", weekly: true, timesAttended: 4 },
+  { name: "Aisha K.", weekly: false, timesAttended: 2, trait: "Heart" },
+  { name: "Ben T.", weekly: true, timesAttended: 5, trait: "Strategy" },
+  { name: "Chloe L.", weekly: false, timesAttended: 0, trait: "Community" },
+  { name: "Daniel W.", weekly: false, timesAttended: 1, trait: "Craft" },
+  { name: "Farah N.", weekly: true, timesAttended: 3, trait: "Heart" },
+  { name: "Hui Min S.", weekly: false, timesAttended: 1, trait: "Community" },
+  { name: "Ivan R.", weekly: true, timesAttended: 4, trait: "Heart" },
 ]
 
 // A few sample sign-ups for a cause. Each cause gets a different mix of people,

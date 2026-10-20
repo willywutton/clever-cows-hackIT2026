@@ -16,13 +16,14 @@ import SignupDone from './SignupDone'
 import OrgView from './org/OrgView'
 import SiteHeader from './SiteHeader'
 import AppShell from './AppShell'
+import Sidebar from './Sidebar'
+import { STUDENT_NAV } from './navigation'
 import Profile from './Profile'
 import Reflection from './Reflection'
 import GoalComplete from './GoalComplete'
 import DiaryPage from './DiaryPage'
 import PortfolioPrint from './PortfolioPrint'
 import CowPage from './CowPage'
-import FriendsPage from './FriendsPage'
 import FriendProfile from './FriendProfile'
 import SocialPage from './SocialPage'
 import FavouritesPage from './FavouritesPage'
@@ -145,6 +146,9 @@ function App() {
   else if (screen === 'profile') {
     content = (
       <Profile
+        calendarConnected={app.calendarConnected}
+        onConnectCalendar={() => app.setCalendarConnected(true)}
+        onDisconnectCalendar={app.disconnectCalendar}
         quizResult={app.quizResult}
         profile={app.profile}
         onNameChange={(name) => app.setProfile((prev) => ({ ...prev, name }))}
@@ -167,7 +171,7 @@ function App() {
     )
   }
   else if (screen === 'friends') {
-    content = <FriendsPage app={app}/>
+    content = <SocialPage app={app} initialTab="friends"/>
   }
   else if (screen === 'friend') {
     content = (
@@ -229,11 +233,9 @@ function App() {
     <>
       <SiteHeader
         view={app.view}
-        onViewChange={app.setView}
         signedIn={signedIn}
         name={app.profile.name}
         moolah={app.moolah}
-        onSurprise={app.surpriseMe}
         onLogo={() => navigate('home')}
       />
 
@@ -247,10 +249,16 @@ function App() {
         <div className="page">
           <div hidden={app.view !== 'student'}>
             {signedIn
-              ? <AppShell screen={screen} onNavigate={navigate}>{studentPage}</AppShell>
+              ? (
+                <AppShell
+                  sidebar={<Sidebar items={STUDENT_NAV} screen={screen} onNavigate={navigate} view={app.view} onViewChange={app.setView}/>}
+                >
+                  {studentPage}
+                </AppShell>
+              )
               : studentPage}
           </div>
-          <div hidden={app.view !== 'organisation'} className="page-narrow">
+          <div hidden={app.view !== 'organisation'}>
             <OrgView app={app}/>
           </div>
         </div>

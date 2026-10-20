@@ -1,64 +1,87 @@
-// OrgSignups.jsx lists who signed up for a cause, with a button to confirm each
-// person attended a session. Confirming adds hours worked to that student.
-import { sampleSignupsFor } from '../data/signups'
-import { describeWho } from '../people'
+// OrgSignups.jsx is the Volunteers page: everyone signed up for the cause, with their
+// helper type and how often they've come. Mark attended adds hours to that volunteer;
+// Say thanks sends a short thank-you, which the demo student hears from Clover on Home.
+import { useState } from 'react'
 import { sessionHours } from '../data/economy'
+import { sessionOf } from '../causeRows'
+import { TRAIT_TIPS } from './orgData'
 import './OrgSignups.css'
 
-// { cause } is the cause being managed. { sampleAttendance } holds extra confirmed visits
-// for sample students, and { onMarkSample } adds one. { studentEntry } is the real
-// student's sign-up for this cause (or null), { studentName } their name,
-// { studentVisits } their visits so far, and { onMarkStudent } confirms one more.
-function OrgSignups({ cause, sampleAttendance, onMarkSample, studentEntry, studentName, studentVisits, onMarkStudent }) {
-    const session = cause.actions.find((action) => action.type === "signup")
-    const hours = sessionHours(session)
-    const samples = sampleSignupsFor(cause.id)
+const FILTERS = [
+    { id: "all", label: "Everyone" },
+    { id: "first", label: "Came once" },
+    { id: "returning", label: "Came back" },
+    { id: "new", label: "Not been yet" },
+]
 
-    const rows = samples.map((person) => {
-        const attended = person.timesAttended + (sampleAttendance[person.id] || 0)
-        return { ...person, attended, sample: true }
-    })
-    if (studentEntry) {
-        rows.push({
-            id: "student", name: `${studentName} (you)`, weekly: studentEntry.weekly,
-            attended: studentVisits, who: describeWho(studentEntry), sample: false,
-        })
+// { app } is everything from useCleverCows. { cause } is the cause being managed.
+// { rows } are its volunteers (see orgData.js) and { stats } their totals.
+function OrgSignups({ app, cause, rows, stats }) {
+    const [filter, setFilter] = useState("all")
+    const hours = sessionHours(sessionOf(cause))
+    const shown = filter === "all" ? rows : rows.filter((row) => row.status.id === filter)
+
+    function markAttended(row) {
+        if (row.sample) {
+            app.markSampleAttended(row.id)
+        }
+        else {
+            app.recordVisit(cause.id, 'org')
+        }
     }
-
-    const totalVisits = rows.reduce((sum, row) => sum + row.attended, 0)
 
     return (
         <section className="card org-signups">
-            <h3>Sign-ups</h3>
-            <div className="org-totals">
-                <p><strong>{rows.length}</strong> signed up</p>
-                <p><strong>{totalVisits}</strong> visits confirmed</p>
-                <p><strong>{totalVisits * hours}</strong> hours given</p>
+            <div className="org-signups-head">
+                <div>
+                    <h2>Volunteers</h2>
+                    <p className="org-section-note">
+                        Confirm who came after each session, and thank first-timers so they come back.
+                    </p>
+                </div>
+                <div className="org-filter" role="group" aria-label="Filter volunteers">
+                    {FILTERS.map((f) => (
+                        <button key={f.id} aria-pressed={filter === f.id} onClick={() => setFilter(f.id)}>{f.label}</button>
+                    ))}
+                </div>
             </div>
 
+            {stats.toThank.length > 0 && (
+                <p className="org-nudge">
+                    <span aria-hidden="true">💛</span> {stats.toThank.length} {stats.toThank.length === 1 ? "person has" : "people have"} come
+                    once and not been thanked yet.
+                </p>
+            )}
+
             <ul className="org-rows">
-                {rows.map((row) => (
+                {shown.map((row) => (
                     <li key={row.id} className={row.sample ? "org-row" : "org-row org-row-student"}>
                         <div className="org-row-who">
                             <strong>{row.name}</strong>
                             {row.sample && <span className="org-sample">Sample</span>}
+                            <span className={`org-chip org-chip-${row.status.id}`}>{row.status.label}</span>
+                            {row.weekly && <span className="org-chip">Every week</span>}
                             <span className="org-row-detail">
-                                {row.weekly ? "Every week" : "Just once"}
+                                {row.trait ? TRAIT_TIPS[row.trait].name.slice(0, -1) : "Helper type unknown"}
                                 {row.who && row.who !== "Just you" ? ` · ${row.who}` : ""}
                             </span>
                         </div>
                         <div className="org-row-attend">
-                            <span>
-                                {row.attended} {row.attended === 1 ? "visit" : "visits"} · {row.attended * hours} h
-                            </span>
-                            <button onClick={() => (row.sample ? onMarkSample(row.id) : onMarkStudent())}>
-                                Mark attended
-                            </button>
+                            <span>{row.attended} {row.attended === 1 ? "visit" : "visits"} · {row.attended * hours} h</span>
+                            <button className="org-row-mark" onClick={() => markAttended(row)}>Mark attended</button>
+                            {row.attended > 0 && (
+                                row.thanked
+                                    ? <span className="org-row-thanked">Thanked ✓</span>
+                                    : <button className="org-row-thank" onClick={() => app.thankVolunteer(cause.id, row.id)}>💛 Say thanks</button>
+                            )}
                         </div>
                     </li>
                 ))}
+                {shown.length === 0 && <li className="org-section-note">No one here right now.</li>}
             </ul>
-            <p className="org-note">Each session counts as {hours} {hours === 1 ? "hour" : "hours"} for this cause.</p>
+            <p className="org-note">
+                Each session counts as {hours} {hours === 1 ? "hour" : "hours"}. Thank-yous to sample volunteers are only marked here (demo).
+            </p>
         </section>
     )
 }

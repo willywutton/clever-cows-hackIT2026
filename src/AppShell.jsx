@@ -1,13 +1,12 @@
-// AppShell.jsx places the main menu beside the page content once the student
-// has finished the story. On phones the menu moves to a bar along the bottom.
-import Sidebar from './Sidebar'
+// AppShell.jsx places a menu beside the page content. On phones the menu moves
+// to a bar along the bottom. The student and organisation views each pass their own menu.
 import './AppShell.css'
 
-// { screen } and { onNavigate } are passed to the menu. { children } is the page.
-function AppShell({ screen, onNavigate, children }) {
+// { sidebar } is the menu. { children } is the page.
+function AppShell({ sidebar, children }) {
     return (
         <div className="app-shell">
-            <Sidebar screen={screen} onNavigate={onNavigate}/>
+            {sidebar}
             <div className="app-content">{children}</div>
         </div>
     )

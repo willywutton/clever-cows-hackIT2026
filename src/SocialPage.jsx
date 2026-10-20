@@ -1,73 +1,82 @@
-// SocialPage.jsx is the Social tab: a feed of public diary pages (sample friends' and the
-// student's own public ones), chats with friends, and invites to volunteer together.
+// SocialPage.jsx is the Herd tab: friends and social in one place.
+// Feed shows public diary pages beside herd stats and people to add,
+// Friends & chat holds the friend list, search and chat, and Invites holds plans to help together.
 import { useState } from 'react'
-import { samplePublicEntries } from './data/sampleSocial'
-import { sampleStudentById } from './data/friends'
+import { publicPosts } from './herd'
 import PageTitle from './PageTitle'
 import FeedCard from './FeedCard'
+import HerdAside from './HerdAside'
+import FriendsColumn from './FriendsColumn'
 import ChatPanel from './ChatPanel'
 import InvitesList from './InvitesList'
 import './SocialPage.css'
 
 const TABS = [
-    { id: "feed", label: "Feed" },
-    { id: "chat", label: "Chat" },
-    { id: "invites", label: "Invites" },
+    { id: "feed", label: "Feed", emoji: "📰" },
+    { id: "friends", label: "Friends & chat", emoji: "💬" },
+    { id: "invites", label: "Invites", emoji: "💌" },
 ]
 
-// { app } is everything from useCleverCows.
-function SocialPage({ app }) {
-    // Opening a chat from the Friends tab starts on the Chat tab.
-    const [tab, setTab] = useState(app.chatFriendId ? "chat" : "feed")
-
-    const myEntries = app.diary
-        .filter((entry) => entry.isPublic)
-        .map((entry) => ({ entry, author: { name: `${app.profile.name} (you)`, accessories: app.cow.equipped, sample: false }, baseLikes: 0 }))
-    const sampleEntries = samplePublicEntries.map((entry) => {
-        const student = sampleStudentById(entry.authorId)
-        return { entry, author: { name: student.name, accessories: student.accessories, sample: true }, baseLikes: entry.likes }
-    })
-    const feed = [...myEntries, ...sampleEntries].sort((a, b) => (a.entry.at < b.entry.at ? 1 : -1))
+// { app } is everything from useCleverCows. { initialTab } picks the tab to open on.
+function SocialPage({ app, initialTab }) {
+    // Opening a chat from elsewhere starts on Friends & chat.
+    const [tab, setTab] = useState(app.chatFriendId ? "friends" : initialTab || "feed")
+    const feed = publicPosts({ diary: app.diary, name: app.profile.name, accessories: app.cow.equipped })
 
     return (
         <div className="social">
-            <PageTitle title="Social" subtitle="See what friends have been up to, and plan sessions together.">
-                <div className="social-tabs" role="group" aria-label="Social sections">
+            <PageTitle title="Your herd" subtitle="Friends, diary pages and plans to help together.">
+                <div className="social-tabs" role="tablist" aria-label="Herd sections">
                     {TABS.map((t) => (
-                        <button key={t.id} aria-pressed={tab === t.id} onClick={() => setTab(t.id)}>{t.label}</button>
+                        <button key={t.id} role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)}>
+                            <span aria-hidden="true">{t.emoji}</span> {t.label}
+                        </button>
                     ))}
                 </div>
             </PageTitle>
 
             {tab === "feed" && (
-                <div className="social-feed">
-                    {feed.map(({ entry, author, baseLikes }) => (
-                        <FeedCard
-                            key={entry.id}
-                            entry={entry}
-                            author={author}
-                            baseLikes={baseLikes}
-                            liked={Boolean(app.likes[entry.id])}
-                            reacted={app.reactions[entry.id] || []}
-                            onToggleLike={() => app.toggleLike(entry.id)}
-                            onToggleReaction={(stickerId) => app.toggleReaction(entry.id, stickerId)}
-                        />
-                    ))}
+                <div className="social-columns screen-enter">
+                    <div className="social-feed">
+                        {feed.map(({ entry, author, baseLikes }) => (
+                            <FeedCard
+                                key={entry.id}
+                                entry={entry}
+                                author={author}
+                                baseLikes={baseLikes}
+                                liked={Boolean(app.likes[entry.id])}
+                                reacted={app.reactions[entry.id] || []}
+                                onToggleLike={() => app.toggleLike(entry.id)}
+                                onToggleReaction={(stickerId) => app.toggleReaction(entry.id, stickerId)}
+                            />
+                        ))}
+                    </div>
+                    <HerdAside app={app} onOpenInvites={() => setTab("invites")}/>
                 </div>
             )}
 
-            {tab === "chat" && (
-                <ChatPanel
-                    friendIds={app.friendIds}
-                    activeId={app.chatFriendId}
-                    onPick={app.setChatFriendId}
-                    chats={app.chats}
-                    onSend={app.sendChat}
-                />
+            {tab === "friends" && (
+                <div className="social-chat screen-enter">
+                    <FriendsColumn
+                        friendIds={app.friendIds}
+                        activeId={app.chatFriendId}
+                        onPick={app.setChatFriendId}
+                        onRemove={app.removeFriend}
+                        onAdd={app.addFriend}
+                    />
+                    <ChatPanel
+                        activeId={app.chatFriendId}
+                        chats={app.chats}
+                        onSend={app.sendChat}
+                        onViewProfile={app.openFriend}
+                    />
+                </div>
             )}
 
             {tab === "invites" && (
-                <InvitesList joined={app.joinedInvites} onJoin={app.joinInvite} sent={app.sentInvites}/>
+                <div className="screen-enter">
+                    <InvitesList joined={app.joinedInvites} onJoin={app.joinInvite} sent={app.sentInvites}/>
+                </div>
             )}
         </div>
     )

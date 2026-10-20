@@ -217,5 +217,115 @@ export const causes = [
         region: "East"
       }
     ]
+  },
+  {
+    id: "cause_10",
+    name: "Food Rescue Crew",
+    topic: "Environment",
+    description: "We collect unsold bread and vegetables from markets and get them to families before they go to waste.",
+    identity: ["Community", "Strategy"],
+    actions: [
+      { type: "share", label: "Share our rescue runs" },
+      { type: "donate", label: "Donate $2 for crates", optional: true },
+      {
+        type: "signup",
+        label: "Join a market rescue run",
+        weeklyLabel: "Join the weekly rescue crew",
+        startsAt: "2026-11-11T07:30:00+08:00",
+        durationMinutes: 90,
+        peopleNeeded: 3,
+        spots: 10,
+        area: "Yishun",
+        region: "North"
+      }
+    ]
+  },
+  {
+    id: "cause_11",
+    name: "Kampung Kitchen",
+    topic: "Older people",
+    description: "We cook and pack warm lunches for seniors who live alone, then deliver them with a short chat at the door.",
+    identity: ["Heart", "Craft"],
+    actions: [
+      { type: "share", label: "Share our kitchen" },
+      { type: "donate", label: "Donate $2 for ingredients", optional: true },
+      {
+        type: "signup",
+        label: "Cook and pack lunches for a morning",
+        weeklyLabel: "Become a weekly cook",
+        startsAt: "2026-11-09T09:00:00+08:00",
+        durationMinutes: 150,
+        peopleNeeded: 3,
+        spots: 8,
+        area: "Bedok",
+        region: "East"
+      }
+    ]
+  },
+  {
+    id: "cause_12",
+    name: "Bike Kitchen",
+    topic: "Making and fixing",
+    description: "We fix donated bicycles so migrant workers and students have a cheap way to get around.",
+    identity: ["Craft", "Community"],
+    actions: [
+      { type: "share", label: "Share our workshop" },
+      { type: "donate", label: "Donate $2 for spare tubes", optional: true },
+      {
+        type: "signup",
+        label: "Join a bike repair afternoon",
+        weeklyLabel: "Join the repair bench",
+        startsAt: "2026-11-13T14:00:00+08:00",
+        durationMinutes: 120,
+        peopleNeeded: 2,
+        spots: 8,
+        area: "Jalan Besar",
+        region: "Central"
+      }
+    ]
+  },
+  {
+    id: "cause_13",
+    name: "Reading Pals",
+    topic: "Young people and learning",
+    description: "We read picture books with young kids at the library and help them pick stories they'll love.",
+    identity: ["Heart", "Community"],
+    actions: [
+      { type: "share", label: "Share our story time" },
+      { type: "donate", label: "Donate $2 for books", optional: true },
+      {
+        type: "signup",
+        label: "Read at a Saturday story time",
+        weeklyLabel: "Become a weekly reading pal",
+        startsAt: "2026-11-14T10:30:00+08:00",
+        durationMinutes: 60,
+        peopleNeeded: 2,
+        spots: 6,
+        area: "Sengkang",
+        region: "North-East"
+      }
+    ]
+  },
+  {
+    id: "cause_14",
+    name: "Green Corridors",
+    topic: "Environment",
+    description: "We plan and plant native trees along park connectors so birds and butterflies can travel across the island.",
+    identity: ["Strategy", "Craft"],
+    actions: [
+      { type: "share", label: "Share our planting map" },
+      { type: "donate", label: "Donate $2 for saplings", optional: true },
+      {
+        type: "signup",
+        label: "Join a planting morning",
+        weeklyLabel: "Join the planting team",
+        startsAt: "2026-11-21T08:00:00+08:00",
+        durationMinutes: 180,
+        peopleNeeded: 4,
+        spots: 12,
+        area: "Jurong West",
+        region: "West"
+      }
+    ]
   }
 ];

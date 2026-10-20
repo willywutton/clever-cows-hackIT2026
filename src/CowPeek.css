@@ -19,6 +19,22 @@
   animation: cow-peek-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+.cow-peek-action {
+  margin-top: 8px;
+  padding: 5px 12px;
+  background: var(--barn);
+  color: #fff;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: 0 3px 0 var(--barn-dark);
+}
+
+.cow-peek-action:hover {
+  background: #c24e37;
+  transform: translateY(-1px);
+}
+
 .cow-peek-bubble::after {
   content: "";
   position: absolute;

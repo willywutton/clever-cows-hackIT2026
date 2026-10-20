@@ -7,12 +7,12 @@ function PostTile({ entry, author, cause, onOpen }) {
     const date = new Date(entry.at).toLocaleDateString('en-SG', { day: 'numeric', month: 'short' })
 
     return (
-        <article className="post-tile lift">
+        <article className={onOpen ? "post-tile lift" : "post-tile"}>
             <header className="post-tile-top">
                 <CowAvatar accessories={author.accessories} size="small" label={`${author.name}'s cow`}/>
                 <div>
                     <p className="post-tile-name">
-                        <button className="post-tile-open" onClick={onOpen}>{author.name}</button>
+                        {onOpen ? <button className="post-tile-open" onClick={onOpen}>{author.name}</button> : author.name}
                         {author.sample && <SampleTag/>}
                     </p>
                     <p className="post-tile-meta">{cause.name} · {date}</p>

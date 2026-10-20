@@ -11,6 +11,7 @@ import PortfolioSection from './PortfolioSection'
 import HistorySection from './HistorySection'
 import PrivacySettings from './PrivacySettings'
 import DemoTools from './DemoTools'
+import CalendarConnect from './CalendarConnect'
 import './Profile.css'
 
 const ABOUT_LABELS = [
@@ -27,9 +28,10 @@ const ABOUT_LABELS = [
 // { moolah } and { accessories } (what Clover wears) are shown in the banner.
 // { signedUp }, { history } and { diary } come from App.
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
+// { calendarConnected } and its handlers drive the Calendar card.
 // { onRetakeStory } and { onResetDemo } are the demo tools at the bottom.
 // { portfolio }, { hoursWorked } and { onOpenPortfolio } are for the Portfolio section.
-function Profile({ quizResult, profile, onNameChange, onAboutChange, onGoalChange, moolah, accessories, onReflect, signedUp, history, diary, settings, onSettingsChange, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
+function Profile({ calendarConnected, onConnectCalendar, onDisconnectCalendar, quizResult, profile, onNameChange, onAboutChange, onGoalChange, moolah, accessories, onReflect, signedUp, history, diary, settings, onSettingsChange, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
@@ -83,6 +85,8 @@ function Profile({ quizResult, profile, onNameChange, onAboutChange, onGoalChang
                     <PortfolioSection diary={diary} portfolio={portfolio} hoursWorked={hoursWorked} onOpenPrint={onOpenPortfolio}/>
 
                     <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
+
+                    <CalendarConnect connected={calendarConnected} onConnect={onConnectCalendar} onDisconnect={onDisconnectCalendar}/>
 
                     <PrivacySettings settings={settings} onChange={onSettingsChange}/>
 

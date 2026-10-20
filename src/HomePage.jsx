@@ -8,7 +8,6 @@ import HomeFeed from './HomeFeed'
 import CowPeek from './CowPeek'
 import GoalCard from './GoalCard'
 import SavedReminder from './SavedReminder'
-import CalendarConnect from './CalendarConnect'
 import './HomePage.css'
 
 function HomePage({ app }) {
@@ -17,8 +16,25 @@ function HomePage({ app }) {
         ...app.signedUp.map((entry) => entry.causeId),
         ...app.favourites.filter((item) => item.kind === 'cause').map((item) => item.id),
     ]
-    const latest = app.orgUpdates.filter((update) => followed.includes(update.causeId)).at(-1)
-    const news = latest ? { causeName: causes.find((c) => c.id === latest.causeId).name, text: latest.text } : null
+    const causeName = (id) => causes.find((c) => c.id === id).name
+    const latestNews = app.orgUpdates.filter((update) => followed.includes(update.causeId)).at(-1)
+    const latestThanks = app.thanks.filter((item) => item.personId === 'student').at(-1)
+    const needsDiary = app.attendance
+        .filter((visit) => visit.source === 'org' && !app.diary.some((entry) => entry.causeId === visit.causeId && entry.at > visit.at))
+        .at(-1)
+    const notes = [
+        latestNews && { at: latestNews.at, text: `Moo! News from ${causeName(latestNews.causeId)}: "${latestNews.text}"` },
+        latestThanks && {
+            at: latestThanks.at,
+            text: `Moo! ${causeName(latestThanks.causeId)} says thank you for coming, ${app.profile.name}! They'd love to see you again.`,
+            action: { label: "See their next session", onClick: () => app.openCause(latestThanks.causeId) },
+        },
+        needsDiary && {
+            at: needsDiary.at,
+            text: `${causeName(needsDiary.causeId)} marked you as attended: +${needsDiary.hours} h and ${needsDiary.moolah} Moolah! How did it go?`,
+            action: { label: "Write in my diary", onClick: () => app.startReflection(needsDiary.causeId) },
+        },
+    ].filter(Boolean).sort((a, b) => (a.at < b.at ? 1 : -1))
     const hours = app.hoursWorked
 
     return (
@@ -44,7 +60,7 @@ function HomePage({ app }) {
                         grassLeft={app.basicGrassLeft}
                         recentFeeds={app.recentFeeds}
                         onReactionDone={app.clearRecentFeeds}
-                        news={news}
+                        note={notes[0]}
                         next={upcomingSessions(app.signedUp)[0]}
                         onVisit={() => app.navigate('cow')}
                     />
@@ -65,13 +81,6 @@ function HomePage({ app }) {
                         signedUp={app.signedUp}
                         onSignUp={app.signUpFor}
                         onOpenFavourites={() => app.navigate('favourites')}
-                    />
-                    <CalendarConnect
-                        connected={app.calendarConnected}
-                        fitsMyWeek={app.fitsMyWeek}
-                        onConnect={() => app.setCalendarConnected(true)}
-                        onDisconnect={app.disconnectCalendar}
-                        onFitsChange={app.setFitsMyWeek}
                     />
                 </>
             }

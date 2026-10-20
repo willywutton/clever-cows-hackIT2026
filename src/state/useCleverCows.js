@@ -35,7 +35,11 @@ export function useCleverCows() {
 
     // Events shown on cause pages: sample ones, ones the organisation adds,
     // and ones the student proposes (pending until the organisation approves).
-    const [events, setEvents] = usePersistentState('events', sampleEvents)
+    const [storedEvents, setEvents] = usePersistentState('events', sampleEvents)
+    const events = [
+        ...sampleEvents.filter((sample) => !storedEvents.some((event) => event.id === sample.id)),
+        ...storedEvents,
+    ]
 
     // Causes and events the student has saved, e.g. { kind: 'event', id: 'event_sample_1' }.
     const [favourites, setFavourites] = usePersistentState('favourites', startingFavourites)
@@ -45,6 +49,10 @@ export function useCleverCows() {
 
     // Updates the organisation has posted: { id, causeId, text, at }.
     const [orgUpdates, setOrgUpdates] = usePersistentState('orgUpdates', [])
+
+    // Thank-you notes the organisation sent after a visit: { id, causeId, personId, at }.
+    // personId is a sample sign-up id, or 'student' for the demo student.
+    const [thanks, setThanks] = usePersistentState('thanks', [])
 
     // Attendance the organisation has confirmed for sample students, by sign-up id.
     const [sampleAttendance, setSampleAttendance] = usePersistentState('sampleAttendance', {})
@@ -71,9 +79,8 @@ export function useCleverCows() {
     // The session just recorded by "I went to this session", shown on the diary page.
     const [lastVisit, setLastVisit] = useState(null)
 
-    // The sample timetable for "Fits my week".
+    // The sample timetable that unlocks "Fits my week" on Home.
     const [calendarConnected, setCalendarConnected] = usePersistentState('calendarConnected', false)
-    const [fitsMyWeek, setFitsMyWeek] = usePersistentState('fitsMyWeek', false)
 
     // Privacy choices. All off unless the student turns them on.
     const [settings, setSettings] = usePersistentState('settings', {
@@ -365,6 +372,10 @@ export function useCleverCows() {
         ))
     }
 
+    function thankVolunteer(causeId, personId) {
+        setThanks((prev) => [...prev, { id: `thanks_${Date.now()}`, causeId, personId, at: new Date().toISOString() }])
+    }
+
     function postUpdate(causeId, text) {
         setOrgUpdates((prev) => [...prev, { id: `update_${Date.now()}`, causeId, text, at: new Date().toISOString() }])
     }
@@ -459,7 +470,6 @@ export function useCleverCows() {
 
     function disconnectCalendar() {
         setCalendarConnected(false)
-        setFitsMyWeek(false)
     }
 
     // Clears everything saved and starts the demo again from the Welcome screen.
@@ -471,17 +481,17 @@ export function useCleverCows() {
     return {
         // values
         quizResult, screen, openCauseId, openedBySurprise, profile, signedUp,
-        events, favourites, sentInvites, orgUpdates, sampleAttendance, attendance, hoursWorked,
+        events, favourites, sentInvites, orgUpdates, thanks, sampleAttendance, attendance, hoursWorked,
         portfolio, lastVisit, cow, basicGrassLeft, likes, reactions, chats, joinedInvites, viewingFriendId, chatFriendId,
-        friendIds, history, diary, calendarConnected, fitsMyWeek, settings, view,
+        friendIds, history, diary, calendarConnected, settings, view,
         grass, recentFeeds, justFinishedGoal, finishedGoalIds, moolah, moolahLedger,
         // actions
-        navigate, setView, setProfile, setSettings, setCalendarConnected, setFitsMyWeek,
+        navigate, setView, setProfile, setSettings, setCalendarConnected,
         changeGoal, chooseNextGoal, recordAction, finishWelcome, finishAboutYou, finishStory,
         retakeStory, openCause, signUpFor, surpriseMe, confirmSignup, answerCalendarPrompt,
         startReflection, wentToSession, saveReflection, setEntryPublic, togglePortfolio,
         addFriend, removeFriend,
-        recordVisit, markSampleAttended, hostEvent, addOrgEvent, approveEvent, postUpdate,
+        recordVisit, markSampleAttended, hostEvent, addOrgEvent, approveEvent, postUpdate, thankVolunteer,
         isFavourite, toggleFavourite, inviteFriends,
         feedBasicGrass, buyItem, giftItem, toggleAccessory,
         toggleLike, toggleReaction, sendChat, joinInvite, openFriend, openChat, setChatFriendId,

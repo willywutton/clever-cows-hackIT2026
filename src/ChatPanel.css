@@ -1,44 +1,55 @@
 /* Styles for chatting with friends. Shared colours and .card are in index.css. */
 
-.chat {
-  display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 16px;
-  align-items: start;
-}
-
-.chat-friends {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.chat-friends button {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 6px 10px;
-  background: var(--card);
-  color: var(--text);
-  border: 2px solid var(--border);
-  font-weight: 600;
-  text-align: left;
-}
-
-.chat-friends button[aria-pressed="true"] {
-  border-color: var(--barn);
-  background: var(--hay-soft);
-}
-
 .chat-window {
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 18px;
+  animation: screen-enter 0.25s ease-out both;
+}
+
+.chat-window-empty {
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  text-align: center;
+  color: var(--text-soft);
+}
+
+.chat-window-empty span {
+  font-size: 44px;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed var(--border);
+}
+
+.chat-header > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-header p {
+  font-size: 14px;
+  color: var(--text-soft);
+}
+
+.chat-profile {
+  padding: 5px 12px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chat-profile:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
 }
 
 .chat-empty {
@@ -53,7 +64,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  height: 300px;
+  height: 360px;
   overflow-y: auto;
 }
 
@@ -124,18 +135,3 @@
   cursor: not-allowed;
 }
 
-@media (max-width: 720px) {
-  .chat {
-    grid-template-columns: 1fr;
-  }
-
-  .chat-friends {
-    flex-direction: row;
-    overflow-x: auto;
-  }
-
-  .chat-friends button {
-    width: auto;
-    white-space: nowrap;
-  }
-}

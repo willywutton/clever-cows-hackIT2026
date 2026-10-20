@@ -31,31 +31,26 @@ export function friendsGoingTo(causeId, friendIds) {
     return sampleStudents.filter((student) => friendIds.includes(student.id) && student.goingTo.includes(causeId))
 }
 
-export function matchedCards(trait, signedUp, fitsMyWeek) {
-    const cards = causes
-        .filter((cause) => cause.identity.includes(trait))
+export function matchedCauses(trait) {
+    return causes.filter((cause) => cause.identity.includes(trait))
+}
+
+export function causesFittingWeek(signedUp) {
+    return causes
         .map((cause) => {
+            const session = sessionOf(cause)
             const isSignedUp = signedUp.some((entry) => entry.causeId === cause.id)
-            const freeSlot = findFreeSlot(sessionOf(cause))
+            const freeSlot = findFreeSlot(session)
             const clashes = signedUp.some((entry) => {
                 if (entry.causeId === cause.id) {
                     return false
                 }
-                const other = sessionOf(causes.find((c) => c.id === entry.causeId))
-                return clashesWith(sessionOf(cause), other, entry.weekly)
+                return clashesWith(session, sessionOf(causes.find((c) => c.id === entry.causeId)), entry.weekly)
             })
             return { cause, isSignedUp, freeSlot, clashes }
         })
-
-    if (!fitsMyWeek) {
-        return cards.map(({ cause }) => ({ cause }))
-    }
-    return cards
-        .filter((card) => card.isSignedUp || (card.freeSlot && !card.clashes))
-        .map((card) => ({
-            cause: card.cause,
-            note: card.isSignedUp ? null : `Fits your week: free ${describeSlot(card.freeSlot)}`,
-        }))
+        .filter((card) => !card.isSignedUp && card.freeSlot && !card.clashes)
+        .map((card) => ({ cause: card.cause, note: `Free ${describeSlot(card.freeSlot)}` }))
 }
 
 export function causesFriendsAreGoingTo(friendIds) {
