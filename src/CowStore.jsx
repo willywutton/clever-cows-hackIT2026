@@ -2,13 +2,16 @@
 // Moolah can't be bought, so nothing here costs real money.
 import { useState } from 'react'
 import { ART } from './assets/cowArt'
-import { CATEGORIES, STATS, STORE_ITEMS } from './data/store'
+import { CATEGORIES, STAT_MAX, STATS, STORE_ITEMS } from './data/store'
 import './CowStore.css'
 
 // { moolah } is the student's balance. { owned } and { equipped } are her items.
 // { onBuy } buys an item and returns false if it couldn't. { onToggleAccessory } puts one on or off.
 // { onBought } is told the item's name after a purchase, for a thank-you message.
-function CowStore({ moolah, owned, equipped, onBuy, onToggleAccessory, onBought }) {
+// { stats } are her current stats: grass and care can't be used once that stat is full.
+// { headwear } is what her helper-type outfit already wears on its head, if anything;
+// hats and crowns are hidden under it, and the store says so.
+function CowStore({ moolah, owned, equipped, stats, headwear, onBuy, onToggleAccessory, onBought }) {
     const [category, setCategory] = useState("furniture")
     const items = STORE_ITEMS.filter((item) => item.category === category)
 
@@ -37,6 +40,7 @@ function CowStore({ moolah, owned, equipped, onBuy, onToggleAccessory, onBought 
                 {items.map((item) => {
                     const isOwned = !item.consumable && owned.includes(item.id)
                     const statLabel = STATS.find((s) => s.id === item.stat).label
+                    const statFull = item.consumable && stats[item.stat] >= STAT_MAX
                     return (
                         <li key={item.id} className="cow-store-item">
                             <span className="cow-store-art" aria-hidden="true">
@@ -44,6 +48,9 @@ function CowStore({ moolah, owned, equipped, onBuy, onToggleAccessory, onBought 
                             </span>
                             <strong>{item.name}</strong>
                             <span className="cow-store-effect">+{item.boost} {statLabel}</span>
+                            {headwear && ART[item.id].slot === "head" && (
+                                <span className="cow-store-hidden">Hidden under her {headwear}</span>
+                            )}
                             {isOwned && item.category === "accessory" ? (
                                 <button className="cow-store-wear" aria-pressed={equipped.includes(item.id)} onClick={() => onToggleAccessory(item.id)}>
                                     {equipped.includes(item.id) ? "Wearing ✓" : "Put on"}
@@ -51,8 +58,8 @@ function CowStore({ moolah, owned, equipped, onBuy, onToggleAccessory, onBought 
                             ) : isOwned ? (
                                 <span className="cow-store-owned">In her room ✓</span>
                             ) : (
-                                <button className="cow-store-buy" onClick={() => handleBuy(item)} disabled={moolah < item.price}>
-                                    {item.consumable ? "Use" : "Buy"} · {item.price} 🪙
+                                <button className="cow-store-buy" onClick={() => handleBuy(item)} disabled={moolah < item.price || statFull}>
+                                    {statFull ? `${statLabel} is full` : `${item.consumable ? "Use" : "Buy"} · ${item.price} 🪙`}
                                 </button>
                             )}
                         </li>

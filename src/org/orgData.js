@@ -27,7 +27,7 @@ export function volunteersFor(cause, app) {
         attended: person.timesAttended + (app.sampleAttendance[person.id] || 0),
         sample: true,
     }))
-    const entry = app.signedUp.find((item) => item.causeId === cause.id)
+    const entry = app.allSignups.find((item) => item.causeId === cause.id)
     if (entry) {
         rows.push({
             id: "student",

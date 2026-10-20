@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { cowStages } from './assets/cowStages'
-import CowAvatar from './CowAvatar'
+import CowFigure from './CowFigure'
 import CowStats from './CowStats'
 import './CowPeek.css'
 
@@ -39,7 +39,7 @@ function cowMessage({ name, recentFeeds, note, grassLeft, next }) {
     return `Hi ${name}! Every time you help out, I get a little grass.`
 }
 
-function CowPeek({ name, cow, grass, grassLeft, recentFeeds, onReactionDone, note, next, onVisit }) {
+function CowPeek({ name, art, cow, grass, grassLeft, recentFeeds, onReactionDone, note, next, onVisit }) {
     const reached = cowStages.filter((stage) => grass >= stage.minGrass)
     const stage = reached[reached.length - 1]
     const reacting = recentFeeds.length > 0
@@ -65,7 +65,7 @@ function CowPeek({ name, cow, grass, grassLeft, recentFeeds, onReactionDone, not
                 <button className="cow-peek-window" onClick={onVisit} aria-label="Visit Clover Cowdini in the barn">
                     <span className="cow-peek-inside">
                         <span className={reacting ? "cow-peek-cow cow-peek-happy" : "cow-peek-cow"}>
-                            <CowAvatar accessories={cow.equipped} label="Clover Cowdini"/>
+                            <CowFigure art={art} accessories={cow.equipped} label="Clover Cowdini"/>
                         </span>
                     </span>
                 </button>

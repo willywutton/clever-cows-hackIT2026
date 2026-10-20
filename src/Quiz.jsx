@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { chapters, results } from './data/chapters'
 import StoryDots from './StoryDots'
 import TraitBreakdown from './TraitBreakdown'
+import CowFigure from './CowFigure'
+import { CHARACTERS } from './assets/characters'
 
 
 import './Quiz.css'
@@ -83,7 +85,9 @@ function Quiz({whenDone}){
         return (
             <div className="quiz-card card quiz-result screen-enter">
                 <header className="quiz-result-hero">
-                    <span className="quiz-result-badge" aria-hidden="true">{result.emoji}</span>
+                    <div className="quiz-result-stage">
+                        <CowFigure art={CHARACTERS[topTrait]} label={`${result.name} cow`} className="quiz-result-cow"/>
+                    </div>
                     <p className="eyebrow">Your helper type</p>
                     <h1 className="quiz-identity">{result.name}</h1>
                     <p className="quiz-result-description">{result.description}</p>

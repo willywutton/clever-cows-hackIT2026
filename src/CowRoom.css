@@ -49,7 +49,12 @@
 }
 
 .cow-room-cow {
-  margin-bottom: 6px;
+  --figure-height: 200px;
+  margin-bottom: -4px;
+}
+
+.cow-room-cow .cow-figure {
+  --figure-height: 200px;
 }
 
 .cow-room-happy {

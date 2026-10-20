@@ -114,3 +114,9 @@
   font-size: 15px;
   color: var(--text-soft);
 }
+
+.cow-store-hidden {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-soft);
+}

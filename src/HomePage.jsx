@@ -1,5 +1,8 @@
 import { causes } from './data/causes'
+import { organisationById } from './data/organisations'
 import { results } from './data/chapters'
+import { CHARACTERS } from './assets/characters'
+import CowAvatar from './CowAvatar'
 import { traitLabels } from './data/traits'
 import { upcomingSessions } from './upcoming'
 import HomeLayout from './HomeLayout'
@@ -13,8 +16,9 @@ import './HomePage.css'
 function HomePage({ app }) {
     const character = results[app.quizResult]
     const followed = [
-        ...app.signedUp.map((entry) => entry.causeId),
+        ...app.allSignups.map((entry) => entry.causeId),
         ...app.favourites.filter((item) => item.kind === 'cause').map((item) => item.id),
+        ...app.followedOrgIds.flatMap((id) => organisationById(id).causeIds),
     ]
     const causeName = (id) => causes.find((c) => c.id === id).name
     const latestNews = app.orgUpdates.filter((update) => followed.includes(update.causeId)).at(-1)
@@ -42,8 +46,8 @@ function HomePage({ app }) {
             hero={
                 <>
                     <div className="home-greeting">
-                        <p className="eyebrow">
-                            <span aria-hidden="true">{character.emoji}</span> {character.name} · {traitLabels[app.quizResult].label}
+                        <p className="eyebrow home-greeting-type">
+                            <CowAvatar face={CHARACTERS[app.quizResult].head} size="tiny" label=""/> {character.name} · {traitLabels[app.quizResult].label}
                         </p>
                         <h1>Welcome, {app.profile.name || "friend"}</h1>
                         <p className="home-greeting-sub">
@@ -55,6 +59,7 @@ function HomePage({ app }) {
                     </div>
                     <CowPeek
                         name={app.profile.name}
+                        art={CHARACTERS[app.quizResult]}
                         cow={app.cow}
                         grass={app.grass}
                         grassLeft={app.basicGrassLeft}

@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { goalById, progressText } from './goalProgress'
 import GoalPicker from './GoalPicker'
 import GoalReward from './GoalReward'
+import Modal from './Modal'
+import Confetti from './Confetti'
 import './GoalComplete.css'
 
 // { goalId } is the goal just finished. { history } is App's list of actions, for progress lines.
@@ -17,9 +19,9 @@ function GoalComplete({ goalId, history, finishedIds, onChoose, onTakeBreak }) {
         .map(goalById)
 
     return (
-        <div className="goal-complete card">
-            <span className="goal-complete-emoji" aria-hidden="true">🎉</span>
-            <h2>You finished "{goal.name}"!</h2>
+        <Modal eyebrow="🎯 Goal complete" title={`You finished "${goal.name}"!`} icon="🏆" wide onClose={onTakeBreak}>
+            <Confetti/>
+            <p className="goal-complete-goal">{goal.description}</p>
             <p className="goal-complete-thanks">
                 Thank you for showing up for your community. Every step counted.
             </p>
@@ -73,7 +75,7 @@ function GoalComplete({ goalId, history, finishedIds, onChoose, onTakeBreak }) {
                     />
                 </>
             )}
-        </div>
+        </Modal>
     )
 }
 

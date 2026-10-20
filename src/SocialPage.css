@@ -61,3 +61,28 @@
     order: -1;
   }
 }
+
+.social-filter {
+  display: flex;
+  gap: 6px;
+}
+
+.social-filter button {
+  padding: 6px 14px;
+  background: var(--card);
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.social-filter button:hover {
+  border-color: var(--hay);
+}
+
+.social-filter button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}

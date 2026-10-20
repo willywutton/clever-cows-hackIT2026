@@ -23,6 +23,14 @@ export function useCleverCows() {
     // Which screen is showing. A returning student goes straight to Home.
     const [screen, setScreen] = useState(() => (quizResult ? 'home' : 'welcome'))
 
+    // The organisation whose page is open, e.g. "org_paws".
+    const [openOrgId, setOpenOrgId] = useState(null)
+    const [orgReturnTo, setOrgReturnTo] = useState('organisations')
+    const [causeReturnTo, setCauseReturnTo] = useState('home')
+
+    // Organisations the student follows, to hear how they're doing.
+    const [followedOrgIds, setFollowedOrgIds] = usePersistentState('followedOrgIds', [])
+
     // The cause whose page is open, e.g. "cause_02", and whether it came from Surprise me.
     const [openCauseId, setOpenCauseId] = useState(null)
     const [openedBySurprise, setOpenedBySurprise] = useState(false)
@@ -31,7 +39,10 @@ export function useCleverCows() {
     const [profile, setProfile] = usePersistentState('profile', EMPTY_PROFILE)
 
     // Every session the student has signed up for, one entry per cause (see people.js).
-    const [signedUp, setSignedUp] = usePersistentState('signedUp', [])
+    // A one-off sign-up is marked done once the student has been (weekly ones carry on).
+    // signedUp holds only the ones still coming up; allSignups keeps the finished ones too.
+    const [allSignups, setSignedUp] = usePersistentState('signedUp', [])
+    const signedUp = allSignups.filter((entry) => !entry.done)
 
     // Events shown on cause pages: sample ones, ones the organisation adds,
     // and ones the student proposes (pending until the organisation approves).
@@ -177,7 +188,7 @@ export function useCleverCows() {
 
     // Feeds one handful of the free basic grass earned by helping.
     function feedBasicGrass() {
-        if (basicGrassLeft <= 0) {
+        if (basicGrassLeft <= 0 || cow.stats.hunger >= STAT_MAX) {
             return
         }
         setCow((prev) => ({
@@ -188,8 +199,12 @@ export function useCleverCows() {
     // Buys a store item with Moolah. Grass and care items are used straight away;
     // furniture, fun things and accessories stay in her room (accessories are put on).
     // Returns false if there isn't enough Moolah.
+    // Grass and care items can't be used once that stat is already full.
     function buyItem(item) {
         if (!item.consumable && cow.owned.includes(item.id)) {
+            return false
+        }
+        if (item.consumable && cow.stats[item.stat] >= STAT_MAX) {
             return false
         }
         if (!spendMoolah(item.price, `Bought ${item.name}`)) {
@@ -263,7 +278,23 @@ export function useCleverCows() {
         navigate('cover')
     }
 
+    function openOrganisation(orgId) {
+        if (screen !== 'organisation') {
+            setOrgReturnTo(screen)
+        }
+        setOpenOrgId(orgId)
+        navigate('organisation')
+    }
+
+    function toggleFollow(orgId) {
+        setFollowedOrgIds((prev) => (prev.includes(orgId) ? prev.filter((id) => id !== orgId) : [...prev, orgId]))
+    }
+
+    // Back on a cause page returns to where it was opened from (sign-up screens excepted).
     function openCause(causeId, fromSurprise = false) {
+        if (!['cause', 'signup', 'signup-done'].includes(screen)) {
+            setCauseReturnTo(screen)
+        }
         setOpenCauseId(causeId)
         setOpenedBySurprise(fromSurprise)
         navigate('cause')
@@ -286,14 +317,13 @@ export function useCleverCows() {
     // ---- Sign-ups and diary ----
 
     function confirmSignup(entry) {
-        const others = signedUp.filter((item) => item.causeId !== entry.causeId)
-        setSignedUp([...others, entry])
+        setSignedUp((prev) => [...prev.filter((item) => item.causeId !== entry.causeId), entry])
         recordAction(entry.causeId, 'signup', { weekly: entry.weekly, mode: entry.mode })
         navigate('signup-done')
     }
 
     function answerCalendarPrompt(causeId) {
-        setSignedUp(signedUp.map((item) =>
+        setSignedUp((prev) => prev.map((item) =>
             item.causeId === causeId ? { ...item, calendarAnswered: true } : item
         ))
     }
@@ -342,6 +372,9 @@ export function useCleverCows() {
             source, at: new Date().toISOString(),
         }
         setAttendance((prev) => [...prev, visit])
+        setSignedUp((prev) => prev.map((item) =>
+            item.causeId === causeId && !item.weekly ? { ...item, done: true } : item
+        ))
         earnMoolah(amount, `Session at ${cause.name}`)
         return visit
     }
@@ -480,7 +513,7 @@ export function useCleverCows() {
 
     return {
         // values
-        quizResult, screen, openCauseId, openedBySurprise, profile, signedUp,
+        quizResult, screen, openCauseId, openedBySurprise, openOrgId, orgReturnTo, causeReturnTo, followedOrgIds, profile, signedUp, allSignups,
         events, favourites, sentInvites, orgUpdates, thanks, sampleAttendance, attendance, hoursWorked,
         portfolio, lastVisit, cow, basicGrassLeft, likes, reactions, chats, joinedInvites, viewingFriendId, chatFriendId,
         friendIds, history, diary, calendarConnected, settings, view,
@@ -488,7 +521,7 @@ export function useCleverCows() {
         // actions
         navigate, setView, setProfile, setSettings, setCalendarConnected,
         changeGoal, chooseNextGoal, recordAction, finishWelcome, finishAboutYou, finishStory,
-        retakeStory, openCause, signUpFor, surpriseMe, confirmSignup, answerCalendarPrompt,
+        retakeStory, openCause, openOrganisation, toggleFollow, signUpFor, surpriseMe, confirmSignup, answerCalendarPrompt,
         startReflection, wentToSession, saveReflection, setEntryPublic, togglePortfolio,
         addFriend, removeFriend,
         recordVisit, markSampleAttended, hostEvent, addOrgEvent, approveEvent, postUpdate, thankVolunteer,

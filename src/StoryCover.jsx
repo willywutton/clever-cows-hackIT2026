@@ -4,6 +4,8 @@
 // character straight away.
 import { useState } from 'react'
 import FarmerScene from './FarmerScene'
+import CowFigure from './CowFigure'
+import { CLOVER } from './assets/characters'
 import './StoryCover.css'
 
 // The other books on the farmer's shelf, as [colour, height in pixels].
@@ -55,7 +57,9 @@ function StoryCover({ name, onBegin, onSkip }) {
             <div className="cover-book">
                 <p className="cover-kicker">A short story · 8 scenes · about 3 minutes</p>
                 <h2 className="cover-title">The Day Mooville Needed You</h2>
-                <span className="cover-art" aria-hidden="true">🐄🏡🌾</span>
+                <span className="cover-art">
+                    <CowFigure art={CLOVER} label="A cow from Mooville"/>
+                </span>
                 <p className="cover-blurb">
                     {name ? `${name}, it` : "It"}'s a busy morning in Mooville, and things keep going wrong.
                     How you choose to help shows what kind of helper you are.

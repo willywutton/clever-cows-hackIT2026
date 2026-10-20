@@ -28,8 +28,18 @@ import FriendProfile from './FriendProfile'
 import SocialPage from './SocialPage'
 import FavouritesPage from './FavouritesPage'
 import HostEventPage from './HostEventPage'
+import OrganisationPage from './OrganisationPage'
+import OrganisationsPage from './OrganisationsPage'
 import PageTitle from './PageTitle'
 import { causes } from './data/causes'
+import { CHARACTERS } from './assets/characters'
+import { organisationById } from './data/organisations'
+
+// Where a cause page's Back button says it goes.
+const BACK_LABELS = {
+  home: 'Home', organisations: 'Organisations', social: 'Social',
+  favourites: 'Favourites', profile: 'Profile', diary: 'Diary', friends: 'Social',
+}
 
 // The story's character to use when "Skip story" is pressed on demo day.
 const SKIP_STORY_TRAIT = 'Heart'
@@ -69,21 +79,29 @@ function App() {
       </BarnInterior>
     )
   }
-  else if (screen === 'home' && app.justFinishedGoal) {
-    // A goal was just finished, so thank the student before showing Home.
+  else if (screen === 'home') {
+    // A goal that was just finished is celebrated in a pop-up over Home.
     content = (
-      <GoalComplete
-        key={app.justFinishedGoal}
-        goalId={app.justFinishedGoal}
-        history={app.history}
-        finishedIds={app.finishedGoalIds}
-        onChoose={app.chooseNextGoal}
-        onTakeBreak={() => app.chooseNextGoal('')}
-      />
+      <>
+        <HomePage app={app}/>
+        {app.justFinishedGoal && (
+          <GoalComplete
+            key={app.justFinishedGoal}
+            goalId={app.justFinishedGoal}
+            history={app.history}
+            finishedIds={app.finishedGoalIds}
+            onChoose={app.chooseNextGoal}
+            onTakeBreak={() => app.chooseNextGoal('')}
+          />
+        )}
+      </>
     )
   }
-  else if (screen === 'home') {
-    content = <HomePage app={app}/>
+  else if (screen === 'organisations') {
+    content = <OrganisationsPage app={app}/>
+  }
+  else if (screen === 'organisation') {
+    content = <OrganisationPage key={app.openOrgId} app={app} backLabel={BACK_LABELS[app.orgReturnTo]} onBack={() => navigate(app.orgReturnTo)}/>
   }
   else if (screen === 'cause') {
     // key makes React start a fresh page (with no old messages) for each cause.
@@ -95,6 +113,9 @@ function App() {
         events={app.events.filter((event) => event.causeId === openCause.id)}
         updates={app.orgUpdates.filter((update) => update.causeId === openCause.id)}
         signupEntry={app.signedUp.find((item) => item.causeId === openCause.id)}
+        following={(orgId) => app.followedOrgIds.includes(orgId)}
+        onToggleFollow={app.toggleFollow}
+        onOpenOrg={app.openOrganisation}
         userRegion={app.profile.region}
         isFavourite={app.isFavourite}
         onToggleFavourite={app.toggleFavourite}
@@ -102,7 +123,8 @@ function App() {
         onInvite={app.inviteFriends}
         onSignUp={() => navigate('signup')}
         onAction={app.recordAction}
-        onBack={() => navigate('home')}
+        backLabel={app.causeReturnTo === 'organisation' ? organisationById(app.openOrgId).name : BACK_LABELS[app.causeReturnTo] || 'Home'}
+        onBack={() => navigate(app.causeReturnTo)}
       />
     )
   }
@@ -123,9 +145,9 @@ function App() {
   else if (screen === 'signup-done') {
     content = (
       <SignupDone
+        app={app}
         cause={openCause}
         entry={app.signedUp.find((item) => item.causeId === openCause.id)}
-        userRegion={app.profile.region}
         onCalendarAnswered={() => app.answerCalendarPrompt(openCause.id)}
         onHome={() => navigate('home')}
         onBackToCause={() => navigate('cause')}
@@ -155,7 +177,6 @@ function App() {
         onAboutChange={(about) => app.setProfile((prev) => ({ ...prev, about }))}
         onGoalChange={app.changeGoal}
         moolah={app.moolah}
-        accessories={app.cow.equipped}
         onReflect={app.wentToSession}
         signedUp={app.signedUp}
         history={app.history}
@@ -226,7 +247,7 @@ function App() {
     !barnScreens.includes(screen) && 'screen-enter',
   ].filter(Boolean).join(' ')
   const studentPage = (
-    <div key={`${screen}-${app.openCauseId}`} className={pageClasses || undefined}>{content}</div>
+    <div key={`${screen}-${app.openCauseId}-${app.openOrgId}`} className={pageClasses || undefined}>{content}</div>
   )
 
   return (
@@ -236,6 +257,7 @@ function App() {
         signedIn={signedIn}
         name={app.profile.name}
         moolah={app.moolah}
+        characterHead={app.quizResult ? CHARACTERS[app.quizResult].head : null}
         onLogo={() => navigate('home')}
       />
 

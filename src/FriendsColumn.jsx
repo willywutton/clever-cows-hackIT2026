@@ -45,7 +45,7 @@ function FriendsColumn({ friendIds, activeId, onPick, onRemove, onAdd }) {
 
             {others.length > 0 && (
                 <div className="friends-column-find">
-                    <p className="eyebrow">Add to your herd</p>
+                    <p className="eyebrow">Add a friend</p>
                     <ul className="friends-column-list">
                         {others.map((student) => (
                             <li key={student.id}>

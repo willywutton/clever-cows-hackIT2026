@@ -13,8 +13,9 @@ function ArtPiece({ id, className }) {
 }
 
 // { accessories } are the ids of what the cow is wearing. { size } is "small", "medium" or "large".
-// { label } describes the picture for screen readers.
-function CowAvatar({ accessories = [], size = "medium", label = "Cow profile picture" }) {
+// { label } describes the picture for screen readers. { face } swaps in a different head,
+// e.g. the student's helper type.
+function CowAvatar({ accessories = [], size = "medium", label = "Cow profile picture", face }) {
     // One accessory per slot, so a hat and a crown don't sit on top of each other.
     const bySlot = {}
     accessories.forEach((id) => {
@@ -25,8 +26,8 @@ function CowAvatar({ accessories = [], size = "medium", label = "Cow profile pic
 
     return (
         <span className={`cow-avatar cow-avatar-${size}`} role="img" aria-label={label}>
-            {COW_FACE.image
-                ? <img className="cow-avatar-face" src={COW_FACE.image} alt=""/>
+            {face || COW_FACE.image
+                ? <img className="cow-avatar-face" src={face || COW_FACE.image} alt=""/>
                 : <span className="cow-avatar-face">{COW_FACE.emoji}</span>}
             {bySlot.head && <ArtPiece id={bySlot.head} className="cow-avatar-head"/>}
             {bySlot.face && <ArtPiece id={bySlot.face} className="cow-avatar-glasses"/>}

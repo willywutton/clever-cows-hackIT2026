@@ -12,7 +12,7 @@ import './DiaryPage.css'
 function DiaryPage({ app }) {
     const [view, setView] = useState("book")
     const [choosing, setChoosing] = useState(false)
-    const signedUpCauses = app.signedUp.map((entry) => causes.find((c) => c.id === entry.causeId))
+    const signedUpCauses = app.allSignups.map((entry) => causes.find((c) => c.id === entry.causeId))
 
     function hoursAt(causeId) {
         return app.attendance.filter((visit) => visit.causeId === causeId).reduce((sum, visit) => sum + visit.hours, 0)

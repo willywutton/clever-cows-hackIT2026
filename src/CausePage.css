@@ -147,3 +147,53 @@
   border-radius: 8px;
   padding: 10px 14px;
 }
+
+.cause-org {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-left: 6px solid var(--org-color);
+  border-radius: 14px;
+}
+
+.cause-org > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.cause-org small {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.cause-org-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  background: var(--org-color);
+  border-radius: 12px;
+  font-size: 22px;
+}
+
+.cause-org-name {
+  padding: 0;
+  background: none;
+  border: none;
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.cause-org-name:hover {
+  color: var(--barn);
+}

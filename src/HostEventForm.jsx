@@ -3,6 +3,7 @@
 // view uses it to add events to its own cause. Nothing is really sent anywhere.
 import { useState } from 'react'
 import { causes } from './data/causes'
+import { organisations } from './data/organisations'
 import { readImageFile } from './imageFile'
 import './HostEventForm.css'
 
@@ -20,7 +21,9 @@ function nowForInput() {
 // { fixedCauseId } hides the cause choice and uses that cause. { submitLabel } is the button text.
 function HostEventForm({ onSubmit, fixedCauseId, submitLabel = "Send for approval" }) {
     const [title, setTitle] = useState("")
-    const [chosenCauseId, setCauseId] = useState(causes[0].id)
+    const [orgId, setOrgId] = useState(organisations[0].id)
+    const [chosenCauseId, setCauseId] = useState(organisations[0].causeIds[0])
+    const programmes = organisations.find((org) => org.id === orgId).causeIds.map((id) => causes.find((c) => c.id === id))
     const causeId = fixedCauseId || chosenCauseId
     const [when, setWhen] = useState("")
     const [place, setPlace] = useState("")
@@ -65,12 +68,27 @@ function HostEventForm({ onSubmit, fixedCauseId, submitLabel = "Send for approva
             </label>
 
             {!fixedCauseId && (
-                <label className="host-field">
-                    <span>Which cause is it for?</span>
-                    <select value={causeId} onChange={(event) => setCauseId(event.target.value)}>
-                        {causes.map((cause) => <option key={cause.id} value={cause.id}>{cause.name}</option>)}
-                    </select>
-                </label>
+                <div className="host-row">
+                    <label className="host-field">
+                        <span>Which organisation?</span>
+                        <select
+                            value={orgId}
+                            onChange={(event) => {
+                                const next = organisations.find((org) => org.id === event.target.value)
+                                setOrgId(next.id)
+                                setCauseId(next.causeIds[0])
+                            }}
+                        >
+                            {organisations.map((org) => <option key={org.id} value={org.id}>{org.emoji} {org.name}</option>)}
+                        </select>
+                    </label>
+                    <label className="host-field">
+                        <span>Which programme (cause)?</span>
+                        <select value={causeId} onChange={(event) => setCauseId(event.target.value)}>
+                            {programmes.map((cause) => <option key={cause.id} value={cause.id}>{cause.name}</option>)}
+                        </select>
+                    </label>
+                </div>
             )}
 
             <div className="host-row">

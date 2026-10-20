@@ -2,7 +2,7 @@
 // the student's name, character and titles, their hours and Moolah, and an editable
 // "About me" line. The name can be changed too (first name only).
 import { useState } from 'react'
-import CowAvatar from './CowAvatar'
+import CowFigure from './CowFigure'
 import './ProfileHeader.css'
 
 // A first name: letters, plus hyphens or apostrophes, with no spaces.
@@ -11,8 +11,8 @@ const ABOUT_LENGTH = 140
 
 // { name }, { about } and their handlers let the student edit their name and About me.
 // { character } is their quiz result. { titles } are every title earned, latest last.
-// { hours }, { moolah } and { accessories } (what Clover is wearing) are shown in the banner.
-function ProfileHeader({ name, onNameChange, about, onAboutChange, character, titles, hours, moolah, accessories }) {
+// { art } is the helper-type cow (see characters.js). { hours } and { moolah } are shown in the banner.
+function ProfileHeader({ name, onNameChange, about, onAboutChange, character, art, titles, hours, moolah }) {
     const [editing, setEditing] = useState(false)
     const [draftName, setDraftName] = useState(name)
     const [draftAbout, setDraftAbout] = useState(about)
@@ -32,7 +32,9 @@ function ProfileHeader({ name, onNameChange, about, onAboutChange, character, ti
 
     return (
         <div className="profile-header card">
-            <CowAvatar accessories={accessories} size="large" label="Your cow, Clover Cowdini"/>
+            <span className="profile-header-figure">
+                <CowFigure art={art} label={`${character.name} cow`}/>
+            </span>
 
             <div className="profile-header-text">
                 <p className="profile-header-hello">Hi, {name || "there"}!</p>

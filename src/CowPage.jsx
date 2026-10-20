@@ -5,8 +5,10 @@ import { cowStages } from './assets/cowStages'
 import { ART } from './assets/cowArt'
 import PageTitle from './PageTitle'
 import CowRoom from './CowRoom'
+import { CHARACTERS } from './assets/characters'
 import CowStats from './CowStats'
 import CowStore from './CowStore'
+import { STAT_MAX } from './data/store'
 import './CowPage.css'
 
 // { app } is everything from useCleverCows: the cow, Moolah, grass and care actions.
@@ -23,6 +25,8 @@ function CowPage({ app }) {
         setHopKey(hopKey + 1)
     }
 
+    const full = app.cow.stats.hunger >= STAT_MAX
+
     function handleFeed() {
         app.feedBasicGrass()
         cheer("Munch munch! Clover loved that grass.")
@@ -34,7 +38,7 @@ function CowPage({ app }) {
 
             <div className="cow-page-columns">
                 <div className="cow-page-main">
-                    <CowRoom key={hopKey} owned={app.cow.owned} equipped={app.cow.equipped} happy={hopKey > 0}/>
+                    <CowRoom key={hopKey} art={CHARACTERS[app.quizResult]} owned={app.cow.owned} equipped={app.cow.equipped} happy={hopKey > 0}/>
                     {message && <p className="cow-page-message" role="status">{message}</p>}
 
                     <section className="card cow-page-grass">
@@ -46,8 +50,8 @@ function CowPage({ app }) {
                                 You earn grass by signing up, writing in your diary and finishing goals.
                             </p>
                         </div>
-                        <button className="button-primary" onClick={handleFeed} disabled={app.basicGrassLeft === 0}>
-                            Feed Clover
+                        <button className="button-primary" onClick={handleFeed} disabled={app.basicGrassLeft === 0 || full}>
+                            {full ? "She's full!" : "Feed Clover"}
                         </button>
                     </section>
                 </div>
@@ -63,6 +67,8 @@ function CowPage({ app }) {
                 moolah={app.moolah}
                 owned={app.cow.owned}
                 equipped={app.cow.equipped}
+                stats={app.cow.stats}
+                headwear={CHARACTERS[app.quizResult].headwear}
                 onBuy={app.buyItem}
                 onToggleAccessory={app.toggleAccessory}
                 onBought={(item) => cheer(`Clover loves her new ${item.name.toLowerCase()}!`)}

@@ -1,13 +1,14 @@
 // HostEventPage.jsx is the Host your own event page: a short checklist, the form
 // for proposing an event, and the events the student has proposed so far.
 import { causes } from './data/causes'
+import { organisationOfCause } from './data/organisations'
 import PageTitle from './PageTitle'
 import HostEventForm from './HostEventForm'
 import EventCard from './EventCard'
 import './HostEventPage.css'
 
 const STEPS = [
-    "Pick a cause and check with them that your idea helps in the way they need.",
+    "Pick the organisation and programme, and check your idea helps in the way they need.",
     "Choose a time, and a place that's easy for everyone to reach.",
     "Invite a few friends so no one has to do it alone.",
     "Think about what to bring and any safety rules.",
@@ -21,7 +22,7 @@ function HostEventPage({ events, onHost }) {
         <div className="host-page">
             <PageTitle
                 title="Host your own event"
-                subtitle="Got an idea? Propose it to an organisation, and they can approve it."
+                subtitle="Got an idea? Propose it to an organisation for one of its programmes, and they can approve it."
             />
 
             <div className="host-page-columns">
@@ -42,7 +43,7 @@ function HostEventPage({ events, onHost }) {
                         <EventCard
                             key={event.id}
                             event={event}
-                            causeName={causes.find((c) => c.id === event.causeId).name}
+                            causeName={`${organisationOfCause(event.causeId).name} · ${causes.find((c) => c.id === event.causeId).name}`}
                         />
                     ))}
                 </section>

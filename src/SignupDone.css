@@ -1,48 +1,241 @@
 /* Styles for the sign-up confirmation. Shared colours and .card / .button-primary are in index.css. */
 
 .signup-done {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 22px;
 }
 
-.signup-done-emoji {
+.signup-done-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.signup-done-cow {
+  --figure-height: 150px;
+  flex-shrink: 0;
+  animation: signup-cow-cheer 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes signup-cow-cheer {
+  0% { transform: translateY(30px) scale(0.6); opacity: 0; }
+  60% { transform: translateY(-10px) scale(1.05) rotate(-3deg); opacity: 1; }
+  100% { transform: none; }
+}
+
+.signup-done-hero > div {
+  padding-bottom: 8px;
+}
+
+.signup-done-hero h1 {
+  font-size: 52px;
+  color: var(--barn);
+}
+
+.signup-done-sub {
+  font-size: 19px;
+  color: var(--text-soft);
+}
+
+/* A ticket: a coloured stub with the countdown, and the session details. */
+.signup-done-ticket {
+  display: flex;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.signup-done-stub {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 130px;
+  padding: 16px 10px;
+  background: var(--cause-color);
+  border-right: 3px dashed var(--card);
+  text-align: center;
+}
+
+.signup-done-stub span {
   font-size: 40px;
   line-height: 1;
 }
 
-.signup-done-sent {
-  padding: 10px 14px;
-  background: #fff;
-  border: 2px dashed var(--border);
-  border-radius: 10px;
+.signup-done-stub strong {
+  font-family: var(--display);
+  font-size: 18px;
+  line-height: 1.2;
+  color: var(--ink);
 }
 
-.signup-done-turn {
-  background: var(--grass-soft);
-  border-left: 4px solid var(--grass);
-  border-radius: 8px;
-  padding: 10px 14px;
-}
-
-/* The one-time calendar prompt. */
-.signup-done-calendar {
+.signup-done-details {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  gap: 8px;
+  padding: 18px 20px;
+}
+
+.signup-done-details > p {
+  font-size: 16px;
+}
+
+.signup-done-rewards,
+.signup-done-steps,
+.signup-done-more {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.signup-done-rewards ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
+}
+
+.signup-done-rewards li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   padding: 12px 14px;
   background: #fff;
   border: 2px solid var(--border);
-  border-radius: 10px;
+  border-radius: 14px;
+  font-size: 14px;
+  color: var(--text-soft);
 }
 
-.signup-done-not-now {
+.signup-done-rewards li span {
+  font-size: 24px;
+}
+
+.signup-done-rewards li strong {
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.signup-done-rewards .signup-done-earned {
+  background: var(--grass-soft);
+  border-color: var(--grass);
+  animation: signup-earned 0.6s ease-out 0.6s both;
+}
+
+@keyframes signup-earned {
+  0% { transform: scale(0.9); opacity: 0; }
+  60% { transform: scale(1.04); opacity: 1; }
+  100% { transform: none; }
+}
+
+.signup-done-goal {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  background: var(--hay-soft);
+  border-radius: 14px;
+}
+
+.signup-done-steps ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.signup-done-steps li {
+  display: flex;
+  gap: 14px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+}
+
+.signup-done-steps li > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.signup-done-steps li p {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.signup-done-check {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: var(--hay-soft);
+  border: 2px solid var(--hay);
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.signup-done-step-done {
+  background: var(--grass-soft);
+  border-color: var(--grass);
+}
+
+.signup-done-step-done .signup-done-check {
+  background: var(--grass);
+  border-color: var(--grass);
+  color: #fff;
+  animation: signup-earned 0.4s ease-out both;
+}
+
+.signup-done-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.signup-done-small {
+  padding: 6px 14px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.signup-done-small:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+}
+
+.signup-done-link {
   padding: 4px 0;
   background: transparent;
   color: var(--text-soft);
   border: none;
   text-decoration: underline;
+}
+
+.signup-done-more-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
 }
 
 .signup-done-buttons {
@@ -61,4 +254,26 @@
 
 .signup-done-secondary:hover {
   background: #fff;
+}
+
+@media (max-width: 560px) {
+  .signup-done-hero {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .signup-done-hero h1 {
+    font-size: 38px;
+  }
+
+  .signup-done-ticket {
+    flex-direction: column;
+  }
+
+  .signup-done-stub {
+    flex-direction: row;
+    width: auto;
+    border-right: none;
+    border-bottom: 3px dashed var(--card);
+  }
 }

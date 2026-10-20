@@ -2,8 +2,8 @@ import { publicPosts } from '../herd'
 import PostTile from '../PostTile'
 import OrgPostUpdate from './OrgPostUpdate'
 
-function OrgUpdates({ app, cause, rows }) {
-    const feedback = publicPosts({ diary: app.diary, name: app.profile.name, accessories: app.cow.equipped })
+function OrgUpdates({ app, org, cause, rows }) {
+    const feedback = publicPosts({ diary: app.diary, name: app.profile.name, accessories: app.cow.equipped, trait: app.quizResult })
         .filter(({ entry }) => entry.causeId === cause.id)
 
     return (
@@ -16,6 +16,7 @@ function OrgUpdates({ app, cause, rows }) {
             <OrgPostUpdate
                 cause={cause}
                 audience={rows.length}
+                followers={org.followers + (app.followedOrgIds.includes(org.id) ? 1 : 0)}
                 updates={app.orgUpdates.filter((update) => update.causeId === cause.id)}
                 onPost={(text) => app.postUpdate(cause.id, text)}
             />

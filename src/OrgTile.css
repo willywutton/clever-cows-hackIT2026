@@ -1,0 +1,92 @@
+.org-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 250px;
+  box-sizing: border-box;
+  padding: 16px;
+  background:
+    linear-gradient(to bottom, var(--org-color) 0 70px, transparent 70px),
+    var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  scroll-snap-align: start;
+}
+
+.org-tile:hover {
+  border-color: var(--hay);
+}
+
+.org-tile:has(.org-tile-open:focus-visible) {
+  outline: 3px solid var(--hay);
+  outline-offset: 2px;
+}
+
+.org-tile-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.org-tile-mark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-top: 8px;
+  background: #fff;
+  border: 3px solid var(--card);
+  border-radius: 18px;
+  box-shadow: 0 3px 0 var(--paper-line);
+  font-size: 34px;
+  transition: transform 0.25s ease-out;
+}
+
+.org-tile:hover .org-tile-mark {
+  transform: rotate(-6deg) scale(1.06);
+}
+
+.org-tile-open {
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.org-tile-open::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.org-tile-open:focus-visible {
+  outline: none;
+}
+
+.org-tile-tagline {
+  font-size: 15px;
+  line-height: 1.45;
+  color: var(--text-soft);
+}
+
+.org-tile-meta {
+  margin-top: auto;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-soft);
+}
+
+.org-tile-note {
+  align-self: flex-start;
+  padding: 2px 10px;
+  background: var(--grass-soft);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--grass);
+}

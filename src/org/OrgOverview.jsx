@@ -4,16 +4,19 @@ import { formatSession } from '../formatSession'
 import { publicPosts } from '../herd'
 import { traitLabels } from '../data/traits'
 import PostTile from '../PostTile'
+import CowAvatar from '../CowAvatar'
+import { CHARACTERS } from '../assets/characters'
 import { TRAIT_TIPS, traitMix } from './orgData'
 import './OrgOverview.css'
 
-function OrgOverview({ app, cause, rows, stats, pending, onGo }) {
+function OrgOverview({ app, org, cause, rows, stats, pending, onGo }) {
     const look = causeLook(cause.id)
+    const followers = org.followers + (app.followedOrgIds.includes(org.id) ? 1 : 0)
     const session = sessionOf(cause)
     const spots = spotsFor(cause, app.signedUp.find((entry) => entry.causeId === cause.id))
     const mix = traitMix(rows)
     const top = mix[0]
-    const feedback = publicPosts({ diary: app.diary, name: app.profile.name, accessories: app.cow.equipped })
+    const feedback = publicPosts({ diary: app.diary, name: app.profile.name, accessories: app.cow.equipped, trait: app.quizResult })
         .filter(({ entry }) => entry.causeId === cause.id)
     const updates = app.orgUpdates.filter((update) => update.causeId === cause.id)
     const lastUpdate = updates.at(-1)
@@ -44,7 +47,7 @@ function OrgOverview({ app, cause, rows, stats, pending, onGo }) {
             <section className="card org-hero" style={{ '--cause-color': look.color }}>
                 <span className="org-hero-mark" aria-hidden="true">{look.emoji}</span>
                 <div className="org-hero-text">
-                    <p className="eyebrow">{cause.topic}</p>
+                    <p className="eyebrow">{org.emoji} {org.name} · {followers} followers</p>
                     <h1>{cause.name}</h1>
                     <p>Next session: {formatSession(session)} · {session.area}</p>
                 </div>
@@ -92,6 +95,7 @@ function OrgOverview({ app, cause, rows, stats, pending, onGo }) {
                     <ul className="org-mix">
                         {mix.map(({ trait, count, share }) => (
                             <li key={trait}>
+                                <CowAvatar face={CHARACTERS[trait].head} size="small" label=""/>
                                 <span>{TRAIT_TIPS[trait].name} <small>{traitLabels[trait].label}</small></span>
                                 <div className="org-mix-bar"><span style={{ width: `${share}%` }}/></div>
                                 <strong>{count}</strong>

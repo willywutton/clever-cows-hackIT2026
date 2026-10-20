@@ -81,8 +81,17 @@
 }
 
 .cover-art {
-  font-size: 64px;
-  line-height: 1;
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  background: rgba(255, 250, 240, 0.12);
+  border: 2px dashed rgba(242, 201, 76, 0.55);
+  border-radius: 50%;
+}
+
+.cover-art .cow-figure {
+  --figure-height: 128px;
 }
 
 .cover-blurb {

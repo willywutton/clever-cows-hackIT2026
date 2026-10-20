@@ -2,7 +2,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 300px;
   box-sizing: border-box;
   background: var(--card);
   border: 2px solid var(--border);

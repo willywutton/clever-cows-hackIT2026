@@ -6,6 +6,8 @@ import {
     friendsGoingTo, matchedCauses,
 } from './causeRows'
 import { publicPosts } from './herd'
+import { organisations } from './data/organisations'
+import OrgTile from './OrgTile'
 import HomeRow from './HomeRow'
 import TopicBar from './TopicBar'
 import CauseTile from './CauseTile'
@@ -100,7 +102,8 @@ function HomeFeed({ app }) {
     const events = app.events
         .filter((event) => event.status === "approved")
         .sort((a, b) => (a.startsAt < b.startsAt ? -1 : 1))
-    const posts = publicPosts({ diary: app.diary, name: profile.name, accessories: app.cow.equipped }).slice(0, 8)
+    const orgRank = (org) => (app.followedOrgIds.includes(org.id) ? 2 : 0) + (org.suits.includes(quizResult) ? 1 : 0)
+    const posts = publicPosts({ diary: app.diary, name: profile.name, accessories: app.cow.equipped, trait: quizResult }).slice(0, 8)
 
     return (
         <div className="home-feed">
@@ -112,7 +115,7 @@ function HomeFeed({ app }) {
             </HomeRow>
 
             {friendsCauses.length > 0 && (
-                <HomeRow eyebrow="Friends" title="Your friends are going" actionLabel="See your herd" onAction={() => app.navigate('friends')}>
+                <HomeRow eyebrow="Friends" title="Your friends are going" actionLabel="See friends" onAction={() => app.navigate('friends')}>
                     {friendsCauses.map((cause) => tile(cause))}
                 </HomeRow>
             )}
@@ -137,7 +140,7 @@ function HomeFeed({ app }) {
                 </HomeRow>
             )}
 
-            <HomeRow eyebrow="Herd" title="From the herd" actionLabel="Open feed" onAction={() => app.navigate('social')}>
+            <HomeRow eyebrow="Social" title="From your friends" actionLabel="Open Social" onAction={() => app.navigate('social')}>
                 {posts.map(({ entry, author }) => (
                     <PostTile key={entry.id} entry={entry} author={author} cause={causeById(entry.causeId)} onOpen={() => app.navigate('social')}/>
                 ))}
@@ -145,6 +148,21 @@ function HomeFeed({ app }) {
 
             <HomeRow eyebrow="Outside your usual match" title="Try something different">
                 {causesOutsideMatch(quizResult).map((cause) => tile(cause))}
+            </HomeRow>
+
+            <HomeRow eyebrow="Who runs your causes" title="Organisations" actionLabel="See all" onAction={() => app.navigate('organisations')}>
+                {[...organisations]
+                    .sort((a, b) => orgRank(b) - orgRank(a))
+                    .map((org) => (
+                        <OrgTile
+                            key={org.id}
+                            org={org}
+                            following={app.followedOrgIds.includes(org.id)}
+                            onToggleFollow={() => app.toggleFollow(org.id)}
+                            onOpen={app.openOrganisation}
+                            note={org.suits.includes(quizResult) ? "Suits you" : null}
+                        />
+                    ))}
             </HomeRow>
 
             <p className="home-feed-note">

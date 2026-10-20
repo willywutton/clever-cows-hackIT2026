@@ -14,7 +14,7 @@ function FriendsLeaderboard({ friendIds, me, showMe }) {
         return { id, name: friend.name, hours: friend.hoursWorked, accessories: friend.accessories, sample: true }
     })
     if (showMe) {
-        rows.push({ id: "me", name: `${me.name} (you)`, hours: me.hours, accessories: me.accessories, sample: false })
+        rows.push({ id: "me", name: `${me.name} (you)`, hours: me.hours, accessories: me.accessories, face: me.face, sample: false })
     }
     rows.sort((a, b) => b.hours - a.hours)
 
@@ -26,7 +26,7 @@ function FriendsLeaderboard({ friendIds, me, showMe }) {
                 {rows.map((row, index) => (
                     <li key={row.id} className={row.sample ? undefined : "leaderboard-me"}>
                         <span className="leaderboard-place">{index + 1}</span>
-                        <CowAvatar accessories={row.accessories} size="small" label={`${row.name}'s cow`}/>
+                        <CowAvatar accessories={row.accessories} face={row.face} size="small" label={`${row.name}'s cow`}/>
                         <span className="leaderboard-name">{row.name} {row.sample && <SampleTag/>}</span>
                         <strong>{row.hours} h</strong>
                     </li>

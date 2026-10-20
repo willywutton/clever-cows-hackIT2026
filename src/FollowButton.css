@@ -1,0 +1,29 @@
+.follow-button {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  padding: 7px 16px;
+  background: var(--barn);
+  color: #fff;
+  border: 2px solid var(--barn);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.follow-button:hover {
+  background: #c24e37;
+  transform: translateY(-1px);
+}
+
+.follow-button[aria-pressed="true"] {
+  background: var(--grass-soft);
+  border-color: var(--grass);
+  color: var(--grass);
+}
+
+.follow-button-small {
+  padding: 4px 12px;
+  font-size: 13px;
+}

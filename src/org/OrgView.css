@@ -90,3 +90,18 @@
     grid-template-columns: 1fr;
   }
 }
+
+.org-identity .org-identity-programme {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-soft);
+}
+
+.org-identity-programme select {
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+}

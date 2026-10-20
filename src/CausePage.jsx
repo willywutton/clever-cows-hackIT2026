@@ -8,6 +8,8 @@ import EventCard from './EventCard'
 import InviteFriends from './InviteFriends'
 import DemoPledge from './DemoPledge'
 import { spotsFor } from './causeRows'
+import { organisationOfCause } from './data/organisations'
+import FollowButton from './FollowButton'
 import './CausePage.css'
 
 // { cause } is the cause to show. { surprise } is true when opened from Surprise me.
@@ -17,12 +19,13 @@ import './CausePage.css'
 // { onSignUp } opens the sign-up screen. { onAction } records Share and the demo pledge.
 // { onBack } returns to Home.
 function CausePage({
-    cause, surprise, events, updates, signupEntry, userRegion,
-    isFavourite, onToggleFavourite, friendIds, onInvite, onSignUp, onAction, onBack,
+    cause, surprise, events, updates, signupEntry, userRegion, following, onToggleFollow, onOpenOrg,
+    isFavourite, onToggleFavourite, backLabel, friendIds, onInvite, onSignUp, onAction, onBack,
 }) {
     const signup = cause.actions.find((action) => action.type === "signup")
     const donate = cause.actions.find((action) => action.type === "donate")
     const look = causeLook(cause.id)
+    const org = organisationOfCause(cause.id)
     const isSignedUp = Boolean(signupEntry)
     const spots = spotsFor(cause, signupEntry)
 
@@ -47,7 +50,7 @@ function CausePage({
 
     return (
         <div className="cause-page">
-            <button className="cause-back" onClick={onBack}>← Back to Home</button>
+            <button className="cause-back" onClick={onBack}>← Back to {backLabel}</button>
 
             <div className="card cause-page-card">
                 {surprise && (
@@ -65,6 +68,15 @@ function CausePage({
 
                 <h2>{cause.name}</h2>
                 <p className="cause-page-description">{cause.description}</p>
+
+                <div className="cause-org" style={{ '--org-color': org.color }}>
+                    <span className="cause-org-mark" aria-hidden="true">{org.emoji}</span>
+                    <div>
+                        <small>Run by</small>
+                        <button className="cause-org-name" onClick={() => onOpenOrg(org.id)}>{org.name} →</button>
+                    </div>
+                    <FollowButton following={following(org.id)} onToggle={() => onToggleFollow(org.id)} name={org.name} size="small"/>
+                </div>
 
                 <div className="cause-buttons">
                     <button className="button-primary" onClick={onSignUp}>

@@ -16,7 +16,7 @@ function NextUp({ signedUp, userRegion, onReflect }) {
             <h3>Next up</h3>
 
             {sessions.length === 0 && (
-                <p className="next-up-empty">No sessions yet. You can sign up from any cause page.</p>
+                <p className="next-up-empty">Nothing coming up. Find your next cause on Home.</p>
             )}
 
             {sessions.map(({ entry, cause, signup }) => (

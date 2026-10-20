@@ -1,27 +1,12 @@
 /* Styles for the goal complete screen. Shared colours and .card are in index.css. */
 
-.goal-complete {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-.goal-complete-emoji {
-  align-self: center;
-  font-size: 56px;
-  line-height: 1;
-  animation: goal-complete-pop 0.6s ease-out both;
-}
-
-@keyframes goal-complete-pop {
-  0% { transform: scale(0.4); opacity: 0; }
-  70% { transform: scale(1.15); opacity: 1; }
-  100% { transform: scale(1); }
-}
-
-.goal-complete h2 {
-  text-align: center;
+.goal-complete-goal {
+  padding: 6px 14px;
+  background: var(--hay-soft);
+  border: 2px dashed var(--hay);
+  border-radius: 999px;
+  font-weight: 600;
+  color: var(--ink);
 }
 
 .goal-complete-thanks {
@@ -121,8 +106,3 @@
   background: var(--grass-soft);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .goal-complete-emoji {
-    animation: none;
-  }
-}

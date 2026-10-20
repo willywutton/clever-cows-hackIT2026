@@ -7,7 +7,9 @@
 //
 // For accessories, "slot" says where it sits on the cow: "head", "face" or "neck".
 
-export const COW_FACE = { emoji: "🐮" }
+import { CLOVER } from './characters'
+
+export const COW_FACE = { emoji: "🐮", image: CLOVER.head }
 
 export const ART = {
   // Furniture

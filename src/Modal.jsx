@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import './Modal.css'
 
-function Modal({ title, icon, onClose, children }) {
+function Modal({ title, icon, eyebrow, wide = false, onClose, children }) {
     const box = useRef(null)
     const closeRef = useRef(onClose)
 
@@ -24,14 +25,16 @@ function Modal({ title, icon, onClose, children }) {
         }
     }, [])
 
-    return (
+    return createPortal(
         <div className="modal-backdrop" onPointerDown={(event) => event.target === event.currentTarget && onClose()}>
-            <div className="modal card" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1} ref={box}>
+            <div className={wide ? "modal modal-wide card" : "modal card"} role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1} ref={box}>
                 {icon && <span className="modal-icon" aria-hidden="true">{icon}</span>}
+                {eyebrow && <p className="eyebrow">{eyebrow}</p>}
                 <h3 id="modal-title">{title}</h3>
                 {children}
             </div>
-        </div>
+        </div>,
+        document.body,
     )
 }
 

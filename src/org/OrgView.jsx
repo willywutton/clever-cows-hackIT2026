@@ -5,7 +5,7 @@
 // Everything here is demo data kept in the app; nothing is sent anywhere.
 import { useState } from 'react'
 import { causes } from '../data/causes'
-import { causeLook } from '../causeColors'
+import { organisationOfCause, organisations } from '../data/organisations'
 import { ORG_NAV } from '../navigation'
 import AppShell from '../AppShell'
 import Sidebar from '../Sidebar'
@@ -18,11 +18,12 @@ import './OrgView.css'
 
 // { app } is everything from useCleverCows, so this view can read and update the demo.
 function OrgView({ app }) {
-    // Until a cause is picked, show the one the student signed up for most recently.
+    // Until a programme is picked, show the one the student signed up for most recently.
     const [chosenCauseId, setCauseId] = useState(null)
     const [section, setSection] = useState("overview")
-    const causeId = chosenCauseId || app.signedUp.at(-1)?.causeId || "cause_01"
+    const causeId = chosenCauseId || app.allSignups.at(-1)?.causeId || "cause_01"
     const cause = causes.find((c) => c.id === causeId)
+    const org = organisationOfCause(causeId)
     const rows = volunteersFor(cause, app)
     const stats = orgStats(cause, rows)
     const pending = app.events.filter((event) => event.causeId === causeId && event.status === "pending")
@@ -39,20 +40,27 @@ function OrgView({ app }) {
 
     const identity = (
         <div className="org-identity">
-            <span className="org-identity-mark" style={{ background: causeLook(causeId).color }} aria-hidden="true">
-                {causeLook(causeId).emoji}
-            </span>
+            <span className="org-identity-mark" style={{ background: org.color }} aria-hidden="true">{org.emoji}</span>
             <label>
                 <span className="visually-hidden">Organisation</span>
+                <select
+                    value={org.id}
+                    onChange={(event) => setCauseId(organisations.find((o) => o.id === event.target.value).causeIds[0])}
+                >
+                    {organisations.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
+                </select>
+            </label>
+            <label className="org-identity-programme">
+                <span>Programme</span>
                 <select value={causeId} onChange={(event) => setCauseId(event.target.value)}>
-                    {causes.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                    {org.causeIds.map((id) => <option key={id} value={id}>{causes.find((c) => c.id === id).name}</option>)}
                 </select>
             </label>
             <small>Coordinator view · demo</small>
         </div>
     )
 
-    const shared = { app, cause, rows, stats, onGo: go }
+    const shared = { app, org, cause, rows, stats, onGo: go }
 
     return (
         <AppShell
@@ -64,7 +72,7 @@ function OrgView({ app }) {
                 {section === "overview" && <OrgOverview {...shared} pending={pending}/>}
                 {section === "volunteers" && <OrgSignups {...shared}/>}
                 {section === "events" && <OrgEvents app={app} cause={cause} pending={pending}/>}
-                {section === "updates" && <OrgUpdates app={app} cause={cause} rows={rows}/>}
+                {section === "updates" && <OrgUpdates app={app} org={org} cause={cause} rows={rows}/>}
             </div>
         </AppShell>
     )

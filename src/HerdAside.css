@@ -22,7 +22,12 @@
   gap: 8px;
 }
 
-.herd-stats-grid p {
+.herd-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  font: inherit;
   padding: 8px 6px;
   background: #fff;
   border: 2px solid var(--border);
@@ -94,7 +99,7 @@
   color: var(--text-soft);
 }
 
-.herd-suggest button {
+.herd-suggest .herd-add {
   flex-shrink: 0;
   padding: 5px 10px;
   background: var(--grass);
@@ -104,7 +109,7 @@
   font-weight: 700;
 }
 
-.herd-suggest button:hover {
+.herd-suggest .herd-add:hover {
   background: #4a7a31;
 }
 
@@ -112,4 +117,49 @@
   .herd-aside {
     position: static;
   }
+}
+
+button.herd-stat {
+  cursor: pointer;
+  transition: transform 0.15s ease-out, border-color 0.15s;
+}
+
+button.herd-stat:hover {
+  border-color: var(--hay);
+  background: var(--hay-soft);
+  transform: translateY(-2px);
+}
+
+.herd-stat .sample-tag {
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.herd-stats-hint {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.herd-org-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  font-size: 22px;
+}
+
+.herd-org-name {
+  padding: 0;
+  background: none;
+  border: none;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: left;
+}
+
+.herd-org-name:hover {
+  color: var(--barn);
+  text-decoration: underline;
 }

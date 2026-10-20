@@ -29,3 +29,17 @@ export const sampleIncomingInvites = [
   { id: "sample_invite_1", fromId: "friend_01", causeId: "cause_05",
     note: "Riverbank clean-up this Sunday, come with me?" },
 ]
+
+// Sample posts from organisations, shown in the Social feed beside friends' diary pages.
+export const sampleOrgPosts = [
+  { id: "org_post_1", orgId: "org_paws", at: "2026-10-15T09:00:00+08:00", likes: 64,
+    text: "Biscuit went home with his new family this week! Thank you to every volunteer who walked him while he learned to trust people again." },
+  { id: "org_post_2", orgId: "org_green", at: "2026-10-13T18:00:00+08:00", likes: 41,
+    text: "Saturday's riverbank cleanup cleared 86 kg of litter. The herons were back by Sunday morning." },
+  { id: "org_post_3", orgId: "org_silver", at: "2026-10-11T12:30:00+08:00", likes: 37,
+    text: "Mdm Lim video-called her grandson in Melbourne for the first time, thanks to our TechBridge volunteers. She hasn't stopped smiling." },
+  { id: "org_post_4", orgId: "org_makers", at: "2026-10-09T16:00:00+08:00", likes: 22,
+    text: "12 bikes fixed up and handed over to workers in Jalan Besar. New volunteers welcome every Saturday, no skills needed." },
+  { id: "org_post_5", orgId: "org_brightpath", at: "2026-10-07T20:00:00+08:00", likes: 29,
+    text: "Our newcomer meetup had its biggest group yet. Friendships started over bubble tea and very competitive card games." },
+]

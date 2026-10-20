@@ -7,9 +7,10 @@ import './OrgPostUpdate.css'
 
 const UPDATE_LENGTH = 200
 
-// { cause } is the cause posting. { audience } is how many volunteers will see it.
+// { cause } is the programme posting. { audience } is how many volunteers will see it,
+// and { followers } how many students follow the organisation.
 // { updates } are this cause's earlier posts. { onPost } receives the new text.
-function OrgPostUpdate({ cause, audience, updates, onPost }) {
+function OrgPostUpdate({ cause, audience, followers, updates, onPost }) {
     const [text, setText] = useState("")
     const [sent, setSent] = useState(false)
 
@@ -39,10 +40,10 @@ function OrgPostUpdate({ cause, audience, updates, onPost }) {
                         }}
                     />
                     <div className="org-post-actions">
-                        <span>{text.length}/{UPDATE_LENGTH} · reaches {audience} {audience === 1 ? "volunteer" : "volunteers"}</span>
+                        <span>{text.length}/{UPDATE_LENGTH} · reaches {audience} {audience === 1 ? "volunteer" : "volunteers"} and {followers} followers</span>
                         <button type="submit" disabled={text.trim() === ""}>Post update</button>
                     </div>
-                    {sent && <p className="org-post-sent" role="status">Posted. Students will hear it from Clover next time they open Home.</p>}
+                    {sent && <p className="org-post-sent" role="status">Posted to the Social feed. Volunteers and followers will hear it from Clover on Home.</p>}
                 </form>
 
                 <div className="org-post-preview" aria-label="Preview of how students see it">

@@ -19,7 +19,7 @@ function FeedCard({ entry, author, baseLikes, liked, reacted, onToggleLike, onTo
     return (
         <article className="card feed-card">
             <header className="feed-card-top">
-                <CowAvatar accessories={author.accessories} size="small" label={`${author.name}'s cow`}/>
+                <CowAvatar accessories={author.accessories} face={author.face} size="small" label={`${author.name}'s cow`}/>
                 <div>
                     <strong>{author.name}</strong> {author.sample && <SampleTag/>}
                     <p className="feed-card-meta">

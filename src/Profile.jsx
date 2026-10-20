@@ -2,6 +2,7 @@
 // Left: Next up, Goals and My answers. Right: Portfolio, History, Privacy and demo tools.
 // On phones the columns stack, left first.
 import { results } from './data/chapters'
+import { CHARACTERS } from './assets/characters'
 import { earnedTitles } from './titles'
 import { goalById } from './goalProgress'
 import ProfileHeader from './ProfileHeader'
@@ -25,13 +26,13 @@ const ABOUT_LABELS = [
 // { profile } holds their name and optional About you answers.
 // { onNameChange } and { onAboutChange } update the name and About me line.
 // { onReflect } records "I went to this session". { onGoalChange } picks a goal.
-// { moolah } and { accessories } (what Clover wears) are shown in the banner.
+// { moolah } is shown in the banner.
 // { signedUp }, { history } and { diary } come from App.
 // { settings } holds the privacy choices and { onSettingsChange } updates them.
 // { calendarConnected } and its handlers drive the Calendar card.
 // { onRetakeStory } and { onResetDemo } are the demo tools at the bottom.
 // { portfolio }, { hoursWorked } and { onOpenPortfolio } are for the Portfolio section.
-function Profile({ calendarConnected, onConnectCalendar, onDisconnectCalendar, quizResult, profile, onNameChange, onAboutChange, onGoalChange, moolah, accessories, onReflect, signedUp, history, diary, settings, onSettingsChange, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
+function Profile({ calendarConnected, onConnectCalendar, onDisconnectCalendar, quizResult, profile, onNameChange, onAboutChange, onGoalChange, moolah, onReflect, signedUp, history, diary, settings, onSettingsChange, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
@@ -51,10 +52,10 @@ function Profile({ calendarConnected, onConnectCalendar, onDisconnectCalendar, q
                 about={profile.about || ""}
                 onAboutChange={onAboutChange}
                 character={character}
+                art={CHARACTERS[quizResult]}
                 titles={titles}
                 hours={hoursWorked}
                 moolah={moolah}
-                accessories={accessories}
             />
 
             <div className="profile-columns">

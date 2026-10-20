@@ -1,6 +1,7 @@
 export const STUDENT_NAV = [
     { screen: "home", emoji: "🏡", label: "Home" },
-    { screen: "social", emoji: "🤝", label: "Herd", also: ["friends", "friend"] },
+    { screen: "social", emoji: "🤝", label: "Social", also: ["friends", "friend"] },
+    { screen: "organisations", emoji: "🏛️", label: "Organisations", short: "Orgs", also: ["organisation"] },
     { screen: "cow", emoji: "🐄", label: "Cow" },
     { screen: "diary", emoji: "📔", label: "Diary" },
     { screen: "favourites", emoji: "⭐", label: "Favourites" },

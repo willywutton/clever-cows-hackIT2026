@@ -9,7 +9,7 @@ function PostTile({ entry, author, cause, onOpen }) {
     return (
         <article className={onOpen ? "post-tile lift" : "post-tile"}>
             <header className="post-tile-top">
-                <CowAvatar accessories={author.accessories} size="small" label={`${author.name}'s cow`}/>
+                <CowAvatar accessories={author.accessories} face={author.face} size="small" label={`${author.name}'s cow`}/>
                 <div>
                     <p className="post-tile-name">
                         {onOpen ? <button className="post-tile-open" onClick={onOpen}>{author.name}</button> : author.name}

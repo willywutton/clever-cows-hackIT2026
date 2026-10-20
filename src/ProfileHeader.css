@@ -10,6 +10,18 @@
     var(--hay-soft);
 }
 
+.profile-header-figure {
+  display: grid;
+  place-items: end center;
+  width: 150px;
+  height: 160px;
+  background: radial-gradient(circle at 50% 60%, var(--card) 0 62px, transparent 64px);
+}
+
+.profile-header-figure .cow-figure {
+  --figure-height: 156px;
+}
+
 .profile-header-text {
   display: flex;
   flex-direction: column;
