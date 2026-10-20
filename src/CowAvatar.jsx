@@ -1,15 +1,16 @@
 // CowAvatar.jsx is a cow's profile picture: the cow's face in a circle, wearing its
 // accessories (hat or crown on top, glasses on the face, bandana or bell at the neck).
 // Used for Clover Cowdini and for sample friends' cows.
+import Graphic from './Graphic'
 import { ART, COW_FACE } from './assets/cowArt'
 import './CowAvatar.css'
 
-// Shows an item's artwork if it has one, otherwise its emoji.
+// Shows an item's supplied artwork or its matching cartoon graphic.
 function ArtPiece({ id, className }) {
     const art = ART[id]
     return art.image
         ? <img className={className} src={art.image} alt=""/>
-        : <span className={className}>{art.emoji}</span>
+        : <span className={className}><Graphic symbol={id}/></span>
 }
 
 // { accessories } are the ids of what the cow is wearing. { size } is "small", "medium" or "large".
@@ -28,7 +29,7 @@ function CowAvatar({ accessories = [], size = "medium", label = "Cow profile pic
         <span className={`cow-avatar cow-avatar-${size}`} role="img" aria-label={label}>
             {face || COW_FACE.image
                 ? <img className="cow-avatar-face" src={face || COW_FACE.image} alt=""/>
-                : <span className="cow-avatar-face">{COW_FACE.emoji}</span>}
+                : <span className="cow-avatar-face"><Graphic symbol={COW_FACE.emoji}/></span>}
             {bySlot.head && <ArtPiece id={bySlot.head} className="cow-avatar-head"/>}
             {bySlot.face && <ArtPiece id={bySlot.face} className="cow-avatar-glasses"/>}
             {bySlot.neck && <ArtPiece id={bySlot.neck} className="cow-avatar-neck"/>}

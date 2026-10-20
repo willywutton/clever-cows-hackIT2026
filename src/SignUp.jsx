@@ -1,6 +1,7 @@
 // SignUp.jsx lets the student sign up for a cause's session: alone or with friends,
 // just this once or every week. Friends can also take turns as a relay group, which
 // shares the commitment: only as many people as the session needs go each time.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { YOU, nameOf } from './people'
 import SessionDetails from './SessionDetails'
@@ -94,10 +95,10 @@ function SignUp({ cause, existing, userRegion, myFriendIds, visitsSoFar, onAddFr
 
             <div className="signup-who" role="group" aria-label="Who's coming?">
                 <button type="button" aria-pressed={!withFriends} onClick={() => setMode("me")}>
-                    <span aria-hidden="true">🙋</span> Sign up alone
+                    <span aria-hidden="true"><Graphic symbol="user"/></span> Sign up alone
                 </button>
                 <button type="button" aria-pressed={withFriends} onClick={() => setMode(mode === "relay" ? "relay" : "friends")}>
-                    <span aria-hidden="true">👫</span> Sign up with friends
+                    <span aria-hidden="true"><Graphic symbol="people"/></span> Sign up with friends
                 </button>
             </div>
 
@@ -116,8 +117,7 @@ function SignUp({ cause, existing, userRegion, myFriendIds, visitsSoFar, onAddFr
             {withFriends && (
                 <fieldset className="signup-choice">
                     <legend>
-                        {mode === "relay" ? "Who's in your relay group?" : "Which friends are coming?"}{" "}
-                        <span className="signup-sample">Sample friends</span>
+                        {mode === "relay" ? "Who's in your relay group?" : "Which friends are coming?"}
                     </legend>
                     {pickable.map((id) => (
                         <label key={id}>

@@ -2,6 +2,7 @@
 // session, what the student earns, their goal progress, a short checklist (calendar,
 // bringing a friend, finding the place, writing in the diary afterwards) and a couple
 // of other causes they might like.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { describeWho, joinNames, nameOf, suggestNextTurn } from './people'
 import { causeLook } from './causeColors'
@@ -35,6 +36,7 @@ function daysUntil(startsAt) {
 function SignupDone({ app, cause, entry, onCalendarAnswered, onHome, onBackToCause }) {
     const [inviting, setInviting] = useState(false)
     const [invited, setInvited] = useState(false)
+    const [openedMap, setOpenedMap] = useState(false)
     const signup = cause.actions.find((action) => action.type === "signup")
     const label = entry.weekly ? signup.weeklyLabel : signup.label
     const look = causeLook(cause.id)
@@ -66,15 +68,15 @@ function SignupDone({ app, cause, entry, onCalendarAnswered, onHome, onBackToCau
 
             <section className="signup-done-ticket" style={{ '--cause-color': look.color }}>
                 <div className="signup-done-stub">
-                    <span aria-hidden="true">{look.emoji}</span>
+                    <span aria-hidden="true"><Graphic symbol={look.emoji}/></span>
                     <strong>{daysUntil(signup.startsAt)}</strong>
                 </div>
                 <div className="signup-done-details">
                     <SessionDetails action={signup} weekly={entry.weekly} userRegion={app.profile.region}/>
-                    <p><span aria-hidden="true">👥</span> {describeWho(entry)} · {spots.going} of {spots.total} places taken</p>
+                    <p><span aria-hidden="true"><Graphic symbol="people"/></span> {describeWho(entry)} · {spots.going} of {spots.total} places taken</p>
                     {entry.weekly && entry.mode === "relay" && (
                         <p>
-                            <span aria-hidden="true">🔁</span> Suggested next turn: {joinNames(suggestNextTurn(entry, signup.peopleNeeded).map(nameOf))}.
+                            <span aria-hidden="true"><Graphic symbol="repeat"/></span> Suggested next turn: {joinNames(suggestNextTurn(entry, signup.peopleNeeded).map(nameOf))}.
                         </p>
                     )}
                 </div>
@@ -83,13 +85,13 @@ function SignupDone({ app, cause, entry, onCalendarAnswered, onHome, onBackToCau
             <section className="signup-done-rewards">
                 <h3>What you get</h3>
                 <ul>
-                    {firstSignup && <li className="signup-done-earned"><span aria-hidden="true">🌱</span><strong>+{GRASS.signup} grass</strong> Clover got it just now</li>}
-                    <li><span aria-hidden="true">🪙</span><strong>+{visitMoolah(visitsSoFar)} Moolah</strong> when the organisation marks you as there</li>
-                    <li><span aria-hidden="true">📔</span><strong>+{REFLECTION_MOOLAH} Moolah</strong> for a diary page afterwards</li>
+                    {firstSignup && <li className="signup-done-earned"><span aria-hidden="true"><Graphic symbol="leaf"/></span><strong>+{GRASS.signup} grass</strong> Clover got it just now</li>}
+                    <li><span aria-hidden="true"><Graphic symbol="coin"/></span><strong>+{visitMoolah(visitsSoFar)} Moolah</strong> when the organisation marks you as there</li>
+                    <li><span aria-hidden="true"><Graphic symbol="book"/></span><strong>+{REFLECTION_MOOLAH} Moolah</strong> for a diary page afterwards</li>
                 </ul>
                 {goal && (
                     <div className="signup-done-goal">
-                        <p><span aria-hidden="true">🎯</span> <strong>{goal.name}</strong></p>
+                        <p><span aria-hidden="true"><Graphic symbol="target"/></span> <strong>{goal.name}</strong></p>
                         <GoalBar progress={goalProgress(goal, app.history)} label={progressText(goal, app.history)}/>
                     </div>
                 )}
@@ -120,7 +122,7 @@ function SignupDone({ app, cause, entry, onCalendarAnswered, onHome, onBackToCau
                             {friendsToo && (
                                 <p>Confirmation sent to {joinNames(entry.friendIds.map(nameOf))}.</p>
                             )}
-                            {!friendsToo && !inviting && (
+                            {!friendsToo && (
                                 <div className="signup-done-row">
                                     <p>{invited ? "Invite sent." : "Helping is easier together."}</p>
                                     {!invited && <button className="signup-done-small" onClick={() => setInviting(true)}>Invite friends</button>}
@@ -128,6 +130,7 @@ function SignupDone({ app, cause, entry, onCalendarAnswered, onHome, onBackToCau
                             )}
                             {inviting && (
                                 <InviteFriends
+                                    causeName={cause.name}
                                     friendIds={app.friendIds}
                                     onSend={(ids) => {
                                         app.inviteFriends(cause.id, ids)
@@ -139,13 +142,21 @@ function SignupDone({ app, cause, entry, onCalendarAnswered, onHome, onBackToCau
                         </div>
                     </li>
 
-                    <li>
-                        <span className="signup-done-check" aria-hidden="true">3</span>
+                    <li className={openedMap ? "signup-done-step-done" : undefined}>
+                        <span className="signup-done-check" aria-hidden="true">{openedMap ? "✓" : "3"}</span>
                         <div>
                             <strong>Know where you're going</strong>
                             <div className="signup-done-row">
                                 <p>{signup.area}. Aim to arrive 10 minutes early.</p>
-                                <a className="signup-done-small" href={mapUrl} target="_blank" rel="noopener noreferrer">Open map</a>
+                                <a
+                                    className="signup-done-small"
+                                    href={mapUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={() => setOpenedMap(true)}
+                                >
+                                    {openedMap ? "Open map again" : "Open map"}
+                                </a>
                             </div>
                         </div>
                     </li>

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { myFriendCode, sampleStudentById, sampleStudents } from './data/friends'
 import CowAvatar from './CowAvatar'
-import SampleTag from './SampleTag'
 import AddFriend from './AddFriend'
 import './FriendsColumn.css'
 
@@ -51,7 +50,7 @@ function FriendsColumn({ friendIds, activeId, onPick, onRemove, onAdd }) {
                             <li key={student.id}>
                                 <span className="friends-column-person">
                                     <CowAvatar accessories={student.accessories} size="small" label=""/>
-                                    <span><strong>{student.name}</strong> <SampleTag/></span>
+                                    <span><strong>{student.name}</strong></span>
                                 </span>
                                 <button className="friends-column-add" onClick={() => onAdd(student.id)}>+ Add</button>
                             </li>

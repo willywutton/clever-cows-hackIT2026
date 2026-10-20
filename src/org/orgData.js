@@ -1,6 +1,7 @@
 import { sampleSignupsFor } from '../data/signups'
 import { sessionHours } from '../data/economy'
-import { sessionOf } from '../causeRows'
+import { sessionOf, spotsFor } from '../causeRows'
+import { causes } from '../data/causes'
 import { describeWho } from '../people'
 
 export const TRAIT_TIPS = {
@@ -66,4 +67,18 @@ export function traitMix(rows) {
     return Object.entries(counts)
         .map(([trait, count]) => ({ trait, count, share: rows.length ? Math.round((count / rows.length) * 100) : 0 }))
         .sort((a, b) => b.count - a.count)
+}
+
+export function programmeSummaries(org, app) {
+    return org.causeIds.map((id) => {
+        const cause = causes.find((c) => c.id === id)
+        const rows = volunteersFor(cause, app)
+        return {
+            cause,
+            rows,
+            stats: orgStats(cause, rows),
+            spots: spotsFor(cause, app.signedUp.find((entry) => entry.causeId === id)),
+            pending: app.events.filter((event) => event.causeId === id && event.status === "pending"),
+        }
+    })
 }

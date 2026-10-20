@@ -47,14 +47,7 @@
   font-weight: 600;
 }
 
-.favourites-event {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
 .favourites-signup {
-  align-self: flex-start;
   padding: 8px 16px;
   background: var(--barn);
   color: #fff;

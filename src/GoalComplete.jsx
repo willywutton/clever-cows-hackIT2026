@@ -1,5 +1,6 @@
 // GoalComplete.jsx celebrates a finished goal: a thank-you, the title earned,
 // and a choice of what to do next. Choosing a next goal is always up to the student.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { goalById, progressText } from './goalProgress'
 import GoalPicker from './GoalPicker'
@@ -19,7 +20,7 @@ function GoalComplete({ goalId, history, finishedIds, onChoose, onTakeBreak }) {
         .map(goalById)
 
     return (
-        <Modal eyebrow="🎯 Goal complete" title={`You finished "${goal.name}"!`} icon="🏆" wide onClose={onTakeBreak}>
+        <Modal eyebrow={<><Graphic symbol="target"/> Goal complete</>} title={`You finished "${goal.name}"!`} icon="🏆" wide onClose={onTakeBreak}>
             <Confetti/>
             <p className="goal-complete-goal">{goal.description}</p>
             <p className="goal-complete-thanks">
@@ -29,7 +30,7 @@ function GoalComplete({ goalId, history, finishedIds, onChoose, onTakeBreak }) {
             <div className="goal-complete-rewards">
                 <GoalReward goal={goal} earned/>
                 <p className="goal-complete-grass">
-                    <span aria-hidden="true">🌱</span> +2 grass for Clover Cowdini
+                    <span aria-hidden="true"><Graphic symbol="leaf"/></span> +2 grass for Clover Cowdini
                 </p>
                 {goal.reward.accessory && (
                     <p className="goal-complete-note">Find the new accessory in the Cow tab and put it on.</p>

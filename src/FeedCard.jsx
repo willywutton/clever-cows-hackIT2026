@@ -1,10 +1,10 @@
 // FeedCard.jsx is one public diary page in the Social feed, with a Like button and
 // a sticker picker for reacting. Sample entries and their like counts are labelled.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { causes } from './data/causes'
 import { stickers } from './assets/stickers'
 import CowAvatar from './CowAvatar'
-import SampleTag from './SampleTag'
 import Sticker from './Sticker'
 import './FeedCard.css'
 
@@ -21,7 +21,7 @@ function FeedCard({ entry, author, baseLikes, liked, reacted, onToggleLike, onTo
             <header className="feed-card-top">
                 <CowAvatar accessories={author.accessories} face={author.face} size="small" label={`${author.name}'s cow`}/>
                 <div>
-                    <strong>{author.name}</strong> {author.sample && <SampleTag/>}
+                    <strong>{author.name}</strong>
                     <p className="feed-card-meta">
                         {cause.name} · {new Date(entry.at).toLocaleDateString('en-SG', { day: 'numeric', month: 'short' })}
                     </p>
@@ -36,10 +36,10 @@ function FeedCard({ entry, author, baseLikes, liked, reacted, onToggleLike, onTo
 
             <div className="feed-card-actions">
                 <button className="feed-card-like" aria-pressed={liked} onClick={onToggleLike}>
-                    {liked ? "💛 Liked" : "🤍 Like"}
+                    <Graphic symbol={liked ? "heart" : "heart-outline"}/> {liked ? "Liked" : "Like"}
                 </button>
                 <span className="feed-card-count">
-                    {likeCount} {likeCount === 1 ? "like" : "likes"} {author.sample && <SampleTag text="Sample count"/>}
+                    {likeCount} {likeCount === 1 ? "like" : "likes"}
                 </span>
                 <button className="feed-card-react" aria-expanded={picking} onClick={() => setPicking(!picking)}>
                     + Sticker

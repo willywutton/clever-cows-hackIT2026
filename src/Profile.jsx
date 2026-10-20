@@ -10,9 +10,7 @@ import NextUp from './NextUp'
 import ProfileGoals from './ProfileGoals'
 import PortfolioSection from './PortfolioSection'
 import HistorySection from './HistorySection'
-import PrivacySettings from './PrivacySettings'
-import DemoTools from './DemoTools'
-import CalendarConnect from './CalendarConnect'
+import ProfileSettings from './ProfileSettings'
 import './Profile.css'
 
 const ABOUT_LABELS = [
@@ -32,7 +30,7 @@ const ABOUT_LABELS = [
 // { calendarConnected } and its handlers drive the Calendar card.
 // { onRetakeStory } and { onResetDemo } are the demo tools at the bottom.
 // { portfolio }, { hoursWorked } and { onOpenPortfolio } are for the Portfolio section.
-function Profile({ calendarConnected, onConnectCalendar, onDisconnectCalendar, quizResult, profile, onNameChange, onAboutChange, onGoalChange, moolah, onReflect, signedUp, history, diary, settings, onSettingsChange, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
+function Profile({ events, onLogOut, calendarConnected, onConnectCalendar, onDisconnectCalendar, quizResult, profile, onNameChange, onAboutChange, onGoalChange, moolah, onReflect, signedUp, history, diary, settings, onSettingsChange, onRetakeStory, onResetDemo, portfolio, hoursWorked, onOpenPortfolio }) {
     const character = results[quizResult]
     const titles = earnedTitles(history, profile.goalHistory)
 
@@ -60,7 +58,7 @@ function Profile({ calendarConnected, onConnectCalendar, onDisconnectCalendar, q
 
             <div className="profile-columns">
                 <div className="profile-column">
-                    <NextUp signedUp={signedUp} userRegion={profile.region} onReflect={onReflect}/>
+                    <NextUp signedUp={signedUp} events={events} userRegion={profile.region} onReflect={onReflect}/>
 
                     <ProfileGoals
                         goalId={profile.goal}
@@ -87,11 +85,16 @@ function Profile({ calendarConnected, onConnectCalendar, onDisconnectCalendar, q
 
                     <HistorySection history={history} titles={titles} titlesVisible={settings.showTitles}/>
 
-                    <CalendarConnect connected={calendarConnected} onConnect={onConnectCalendar} onDisconnect={onDisconnectCalendar}/>
-
-                    <PrivacySettings settings={settings} onChange={onSettingsChange}/>
-
-                    <DemoTools onRetakeStory={onRetakeStory} onResetDemo={onResetDemo}/>
+                    <ProfileSettings
+                        calendarConnected={calendarConnected}
+                        onConnectCalendar={onConnectCalendar}
+                        onDisconnectCalendar={onDisconnectCalendar}
+                        settings={settings}
+                        onSettingsChange={onSettingsChange}
+                        onRetakeStory={onRetakeStory}
+                        onResetDemo={onResetDemo}
+                        onLogOut={onLogOut}
+                    />
                 </div>
             </div>
         </div>

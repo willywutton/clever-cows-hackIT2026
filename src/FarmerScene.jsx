@@ -1,5 +1,6 @@
 // FarmerScene.jsx shows the farmer inside the barn with a speech bubble beside him.
 // The farmer's introduction, the About you questions and the story cover use it.
+import Graphic from './Graphic'
 import { FARMER } from './assets/farmerArt'
 import BarnInterior from './BarnInterior'
 import './FarmerIntro.css'
@@ -15,7 +16,7 @@ function FarmerScene({ bubbleKey, centred, bubble = true, children }) {
                 <div className="farmer-figure">
                     {FARMER.image
                         ? <img src={FARMER.image} alt={FARMER.name}/>
-                        : <span role="img" aria-label={FARMER.name}>{FARMER.emoji}</span>}
+                        : <span role="img" aria-label={FARMER.name}><Graphic symbol={FARMER.emoji}/></span>}
                 </div>
 
                 {bubble

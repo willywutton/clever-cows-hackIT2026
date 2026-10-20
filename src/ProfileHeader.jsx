@@ -1,6 +1,7 @@
 // ProfileHeader.jsx is the banner at the top of Profile: Clover Cowdini's picture,
 // the student's name, character and titles, their hours and Moolah, and an editable
 // "About me" line. The name can be changed too (first name only).
+import Graphic from './Graphic'
 import { useState } from 'react'
 import CowFigure from './CowFigure'
 import './ProfileHeader.css'
@@ -44,7 +45,7 @@ function ProfileHeader({ name, onNameChange, about, onAboutChange, character, ar
                 )}
                 {titles.length > 0 && (
                     <ul className="profile-header-titles" aria-label="Titles earned">
-                        {titles.map((title) => <li key={title.id} title={title.description}>🏅 {title.name}</li>)}
+                        {titles.map((title) => <li key={title.id} title={title.description}><Graphic symbol="medal"/> {title.name}</li>)}
                     </ul>
                 )}
             </div>
@@ -55,7 +56,7 @@ function ProfileHeader({ name, onNameChange, about, onAboutChange, character, ar
                     <p><strong>{moolah}</strong> Moolah</p>
                 </div>
                 {!editing && (
-                    <button className="profile-header-edit" onClick={() => setEditing(true)}>✏️ Edit profile</button>
+                    <button className="profile-header-edit" onClick={() => setEditing(true)}><Graphic symbol="pencil"/> Edit profile</button>
                 )}
             </div>
 

@@ -1,3 +1,4 @@
+import Graphic from './Graphic'
 import FollowButton from './FollowButton'
 import './OrgTile.css'
 
@@ -5,7 +6,7 @@ function OrgTile({ org, following, onToggleFollow, onOpen, note }) {
     return (
         <article className="org-tile lift" style={{ '--org-color': org.color }}>
             <div className="org-tile-top">
-                <span className="org-tile-mark" aria-hidden="true">{org.emoji}</span>
+                <span className="org-tile-mark" aria-hidden="true"><Graphic symbol={org.emoji}/></span>
                 <FollowButton following={following} onToggle={onToggleFollow} name={org.name} size="small"/>
             </div>
             <h4>

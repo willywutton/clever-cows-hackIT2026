@@ -1,5 +1,6 @@
 // HistorySection.jsx shows plain counts of what the student has done,
 // and the titles they have earned. Nothing is compared with anyone else.
+import Graphic from './Graphic'
 import './HistorySection.css'
 
 const COUNTS = [
@@ -31,7 +32,7 @@ function HistorySection({ history, titles, titlesVisible }) {
                     <ul className="history-titles" aria-label="Titles earned">
                         {titles.map((title) => (
                             <li key={title.id} title={title.description}>
-                                <span aria-hidden="true">🏅</span> {title.name}
+                                <span aria-hidden="true"><Graphic symbol="medal"/></span> {title.name}
                             </li>
                         ))}
                     </ul>

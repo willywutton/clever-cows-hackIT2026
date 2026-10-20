@@ -1,3 +1,4 @@
+import Graphic from './Graphic'
 import { ART } from './assets/cowArt'
 import './CowFigure.css'
 
@@ -23,7 +24,7 @@ function CowFigure({ art, label, accessories = [], className = "" }) {
             {Object.entries(bySlot).map(([slot, id]) => (
                 ART[id].image
                     ? <img key={slot} className={`cow-figure-${slot}`} src={ART[id].image} alt=""/>
-                    : <span key={slot} className={`cow-figure-${slot}`} aria-hidden="true">{ART[id].emoji}</span>
+                    : <span key={slot} className={`cow-figure-${slot}`} aria-hidden="true"><Graphic symbol={id}/></span>
             ))}
         </span>
     )

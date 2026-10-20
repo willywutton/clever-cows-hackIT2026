@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { cowStages } from './assets/cowStages'
 import CowFigure from './CowFigure'
 import CowStats from './CowStats'
@@ -12,39 +12,26 @@ const FEED_REASONS = {
 
 const REACTION_TIME = 4000
 
-function shortDay(startsAt) {
-    return new Date(startsAt).toLocaleDateString('en-SG', {
-        weekday: 'long', day: 'numeric', month: 'short', timeZone: 'Asia/Singapore',
-    })
-}
-
-function cowMessage({ name, recentFeeds, note, grassLeft, next }) {
+function feedReaction(recentFeeds) {
     if (recentFeeds.length === 1) {
         const feed = recentFeeds[0]
         return `Yum! +${feed.amount} grass from ${FEED_REASONS[feed.type]} ${feed.causeName}.`
     }
-    if (recentFeeds.length > 1) {
-        const total = recentFeeds.reduce((sum, feed) => sum + feed.amount, 0)
-        return `Yum! +${total} grass from your last ${recentFeeds.length} actions.`
-    }
-    if (note) {
-        return note.text
-    }
-    if (grassLeft > 0) {
-        return `You've saved ${grassLeft} ${grassLeft === 1 ? "handful" : "handfuls"} of grass for me. Snack time?`
-    }
-    if (next) {
-        return `See you at ${next.cause.name} on ${shortDay(next.signup.startsAt)}? Tell me all about it after!`
-    }
-    return `Hi ${name}! Every time you help out, I get a little grass.`
+    const total = recentFeeds.reduce((sum, feed) => sum + feed.amount, 0)
+    return `Yum! +${total} grass from your last ${recentFeeds.length} actions.`
 }
 
-function CowPeek({ name, art, cow, grass, grassLeft, recentFeeds, onReactionDone, note, next, onVisit }) {
+// { notes } come from cowNotes() in cowNotes.js. { urgent } is how many of them just happened:
+// Clover starts with those, otherwise with a different everyday note on each visit ({ visit }).
+function CowPeek({ art, cow, grass, recentFeeds, onReactionDone, notes, urgent, visit, onVisit }) {
     const reached = cowStages.filter((stage) => grass >= stage.minGrass)
     const stage = reached[reached.length - 1]
     const reacting = recentFeeds.length > 0
-    const message = cowMessage({ name, recentFeeds, note, grassLeft, next })
-    const action = !reacting && note ? note.action : null
+    const everyday = notes.length - urgent
+    const [index, setIndex] = useState(urgent > 0 || everyday === 0 ? 0 : urgent + (visit % everyday))
+    const note = notes[index % notes.length]
+    const message = reacting ? feedReaction(recentFeeds) : note.text
+    const action = reacting ? null : note.action
 
     useEffect(() => {
         if (!reacting) {
@@ -58,7 +45,14 @@ function CowPeek({ name, art, cow, grass, grassLeft, recentFeeds, onReactionDone
         <section className="cow-peek" aria-label="Clover Cowdini">
             <div key={message} className="cow-peek-bubble" role="status">
                 <p>{message}</p>
-                {action && <button className="cow-peek-action" onClick={action.onClick}>{action.label}</button>}
+                {(action || notes.length > 1) && (
+                    <div className="cow-peek-bubble-actions">
+                        {action && <button className="cow-peek-action" onClick={action.onClick}>{action.label}</button>}
+                        {!reacting && notes.length > 1 && (
+                            <button className="cow-peek-more" onClick={() => setIndex(index + 1)} aria-label="Tell me something else" title="Tell me something else">›</button>
+                        )}
+                    </div>
+                )}
             </div>
 
             <div className="cow-peek-barn">

@@ -1,0 +1,92 @@
+.org-login {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.org-login h1 {
+  font-size: var(--fs-h2);
+}
+
+.org-login-back {
+  align-self: flex-start;
+  margin: -6px 0 0 -8px;
+  padding: 4px 8px;
+  background: transparent;
+  color: var(--text-soft);
+  border: none;
+  font-weight: 600;
+}
+
+.org-login-back:hover {
+  color: var(--ink);
+}
+
+.org-login-intro {
+  color: var(--text-soft);
+}
+
+.org-login-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.org-login-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-left: 6px solid var(--org-color);
+  border-radius: 14px;
+  text-align: left;
+}
+
+.org-login-option:hover {
+  border-color: var(--hay);
+  border-left-color: var(--org-color);
+  transform: translateY(-2px);
+}
+
+.org-login-option[aria-checked="true"] {
+  background: var(--hay-soft);
+  border-color: var(--barn);
+  border-left-color: var(--org-color);
+  box-shadow: 0 3px 0 var(--barn-dark);
+}
+
+.org-login-option strong {
+  display: block;
+  line-height: 1.25;
+}
+
+.org-login-option small {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.org-login-mark {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  background: var(--org-color);
+  border-radius: 12px;
+  font-size: 22px;
+}
+
+.org-login-go {
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .org-login-go {
+    align-self: stretch;
+  }
+}

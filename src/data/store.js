@@ -2,25 +2,20 @@
 // raises her stats. Her stats also drop a little each week (WEEKLY_STAT_DROP below).
 //
 // How to read one item:
-//   category    furniture, accessory, grass, entertainment or care
+//   category    accessory, grass or care
+//   (Her room is filled with keepsakes from the causes the student helps, see keepsakes.js.)
 //   price       in Moolah
 //   stat        which stat it raises: comfort, hunger, cleanliness or happiness
 //   boost       how much it raises that stat
-//   consumable  true for things used up straight away (grass, washing); otherwise it stays in the room
+//   consumable  true for things used up straight away (grass, washing); accessories are kept
 
 export const CATEGORIES = [
-  { id: "furniture", label: "Furniture", emoji: "🛋️" },
   { id: "accessory", label: "Accessories", emoji: "🎀" },
   { id: "grass", label: "Grass", emoji: "🌾" },
-  { id: "entertainment", label: "Fun", emoji: "🎈" },
   { id: "care", label: "Care", emoji: "🧼" },
 ]
 
 export const STORE_ITEMS = [
-  { id: "lamp", category: "furniture", name: "Barn lamp", price: 15, stat: "comfort", boost: 10 },
-  { id: "blanket", category: "furniture", name: "Cosy blanket", price: 20, stat: "comfort", boost: 15 },
-  { id: "hay-bed", category: "furniture", name: "Hay bed", price: 30, stat: "comfort", boost: 25 },
-
   { id: "bandana", category: "accessory", name: "Red bandana", price: 10, stat: "happiness", boost: 5 },
   { id: "flower-crown", category: "accessory", name: "Flower crown", price: 15, stat: "happiness", boost: 5 },
   { id: "cowbell", category: "accessory", name: "Cowbell", price: 15, stat: "happiness", boost: 5 },
@@ -30,10 +25,6 @@ export const STORE_ITEMS = [
   { id: "clover", category: "grass", name: "Clover bunch", price: 5, stat: "hunger", boost: 15, consumable: true },
   { id: "alfalfa", category: "grass", name: "Sweet alfalfa", price: 10, stat: "hunger", boost: 25, consumable: true },
   { id: "wildflower", category: "grass", name: "Wildflower mix", price: 15, stat: "hunger", boost: 35, consumable: true },
-
-  { id: "ball", category: "entertainment", name: "Bouncy ball", price: 10, stat: "happiness", boost: 15 },
-  { id: "music-box", category: "entertainment", name: "Music box", price: 25, stat: "happiness", boost: 25 },
-  { id: "tyre-swing", category: "entertainment", name: "Tyre swing", price: 30, stat: "happiness", boost: 30 },
 
   { id: "brush", category: "care", name: "Brush", price: 5, stat: "cleanliness", boost: 15, consumable: true },
   { id: "wash", category: "care", name: "Bubble wash", price: 10, stat: "cleanliness", boost: 30, consumable: true },

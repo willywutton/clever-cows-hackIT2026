@@ -1,5 +1,6 @@
 // CowStats.jsx shows Clover Cowdini's four stats as bars. Caring for her raises them,
 // and they drop a little each week.
+import Graphic from './Graphic'
 import { STATS, STAT_MAX } from './data/store'
 import './CowStats.css'
 
@@ -23,7 +24,7 @@ function CowStats({ stats, compact = false }) {
                 return (
                     <li key={stat.id} title={`${stat.label}: ${level.word}`}>
                         <div className="cow-stat-label">
-                            <span><span aria-hidden="true">{stat.emoji}</span> <span className="cow-stat-name">{stat.label}</span></span>
+                            <span><span aria-hidden="true"><Graphic symbol={stat.emoji}/></span> <span className="cow-stat-name">{stat.label}</span></span>
                             {!compact && <strong>{stats[stat.id]}</strong>}
                         </div>
                         <div

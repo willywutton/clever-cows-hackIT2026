@@ -4,6 +4,8 @@
 // It also switches between the student view and the mock organisation view.
 import { useCleverCows } from './state/useCleverCows'
 import Welcome from './Welcome'
+import OrgLogin from './OrgLogin'
+import CowAvatar from './CowAvatar'
 import FarmerIntro from './FarmerIntro'
 import BarnInterior from './BarnInterior'
 import AboutYou from './AboutYou'
@@ -29,15 +31,14 @@ import SocialPage from './SocialPage'
 import FavouritesPage from './FavouritesPage'
 import HostEventPage from './HostEventPage'
 import OrganisationPage from './OrganisationPage'
-import OrganisationsPage from './OrganisationsPage'
 import PageTitle from './PageTitle'
 import { causes } from './data/causes'
 import { CHARACTERS } from './assets/characters'
-import { organisationById } from './data/organisations'
+import { organisationById, organisations } from './data/organisations'
 
 // Where a cause page's Back button says it goes.
 const BACK_LABELS = {
-  home: 'Home', organisations: 'Organisations', social: 'Social',
+  home: 'Home', social: 'Social',
   favourites: 'Favourites', profile: 'Profile', diary: 'Diary', friends: 'Social',
 }
 
@@ -52,7 +53,18 @@ function App() {
   // Pick what to draw for the current screen.
   let content
   if (screen === 'welcome') {
-    content = <Welcome onNext={() => navigate('intro')}/>
+    content = (
+      <Welcome
+        returningName={app.quizResult ? app.profile.name : ''}
+        onStart={() => navigate('intro')}
+        onContinue={app.logInStudent}
+        onStartFresh={app.resetDemo}
+        onOrganisation={() => navigate('org-login')}
+      />
+    )
+  }
+  else if (screen === 'org-login') {
+    content = <OrgLogin onLogIn={app.logInOrganisation} onBack={() => navigate('welcome')}/>
   }
   else if (screen === 'intro') {
     content = <FarmerIntro onDone={app.finishWelcome} onBack={() => navigate('welcome')}/>
@@ -96,9 +108,6 @@ function App() {
         )}
       </>
     )
-  }
-  else if (screen === 'organisations') {
-    content = <OrganisationsPage app={app}/>
   }
   else if (screen === 'organisation') {
     content = <OrganisationPage key={app.openOrgId} app={app} backLabel={BACK_LABELS[app.orgReturnTo]} onBack={() => navigate(app.orgReturnTo)}/>
@@ -168,6 +177,8 @@ function App() {
   else if (screen === 'profile') {
     content = (
       <Profile
+        events={app.events}
+        onLogOut={app.logOut}
         calendarConnected={app.calendarConnected}
         onConnectCalendar={() => app.setCalendarConnected(true)}
         onDisconnectCalendar={app.disconnectCalendar}
@@ -190,6 +201,9 @@ function App() {
         onOpenPortfolio={() => navigate('portfolio')}
       />
     )
+  }
+  else if (screen === 'invites') {
+    content = <SocialPage app={app} initialTab="invites"/>
   }
   else if (screen === 'friends') {
     content = <SocialPage app={app} initialTab="friends"/>
@@ -229,7 +243,7 @@ function App() {
     )
   }
   else if (screen === 'host') {
-    content = <HostEventPage events={app.events} onHost={app.hostEvent}/>
+    content = <HostEventPage events={app.events} friendIds={app.friendIds} onHost={app.hostEvent}/>
   }
   else {
     content = <PageTitle title="Page not found" subtitle="Use the menu to go back to Home."/>
@@ -237,7 +251,7 @@ function App() {
 
   // The menu and student bar appear once there is a character to build on.
   const barnScreens = ['intro', 'about', 'cover', 'quiz']
-  const signedIn = app.quizResult !== null && screen !== 'welcome' && !barnScreens.includes(screen)
+  const signedIn = app.account === 'student' && app.quizResult !== null && !['welcome', 'org-login'].includes(screen) && !barnScreens.includes(screen)
 
   // Reading and form screens stay a comfortable width in the middle.
   // Every other screen fades in when it opens; the barn screens have their own animations.
@@ -254,6 +268,7 @@ function App() {
     <>
       <SiteHeader
         view={app.view}
+        orgName={(organisationById(app.orgAccountId) || organisations[0]).name}
         signedIn={signedIn}
         name={app.profile.name}
         moolah={app.moolah}
@@ -261,28 +276,34 @@ function App() {
         onLogo={() => navigate('home')}
       />
 
-      {/* Both views stay on the page and the other one is just hidden.
-          This way switching back and forth doesn't lose progress in either. */}
       {/* On the Welcome screen the space around the page becomes a barn wall (see Welcome.css).
           While the farmer talks, the inside of the barn fills the screen (see BarnInterior.css). */}
       <main className={app.view !== 'student' ? undefined
-        : screen === 'welcome' ? 'barn-wall'
+        : ['welcome', 'org-login'].includes(screen) ? 'barn-wall'
         : barnScreens.includes(screen) ? 'barn-room' : undefined}>
         <div className="page">
-          <div hidden={app.view !== 'student'}>
-            {signedIn
-              ? (
-                <AppShell
-                  sidebar={<Sidebar items={STUDENT_NAV} screen={screen} onNavigate={navigate} view={app.view} onViewChange={app.setView}/>}
-                >
-                  {studentPage}
-                </AppShell>
-              )
-              : studentPage}
-          </div>
-          <div hidden={app.view !== 'organisation'}>
-            <OrgView app={app}/>
-          </div>
+          {app.view === 'organisation' && <OrgView key={app.orgAccountId} app={app}/>}
+          {app.view === 'student' && (signedIn
+            ? (
+              <AppShell
+                sidebar={
+                  <Sidebar
+                    items={STUDENT_NAV}
+                    screen={screen}
+                    onNavigate={navigate}
+                    account={{
+                      name: app.profile.name,
+                      role: CHARACTERS[app.quizResult].name,
+                      picture: <CowAvatar face={CHARACTERS[app.quizResult].head} size="small" label=""/>,
+                    }}
+                    onLogOut={app.logOut}
+                  />
+                }
+              >
+                {studentPage}
+              </AppShell>
+            )
+            : studentPage)}
         </div>
       </main>
     </>

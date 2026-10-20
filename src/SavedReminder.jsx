@@ -1,5 +1,6 @@
 // SavedReminder.jsx is a gentle note on Home about one saved event the student hasn't
 // signed up for yet. It never says "hurry" or "you missed it": it's just a friendly nudge.
+import Graphic from './Graphic'
 import { causes } from './data/causes'
 import './SavedReminder.css'
 
@@ -20,7 +21,7 @@ function SavedReminder({ events, favourites, signedUp, onSignUp, onOpenFavourite
     return (
         <section className="card saved-reminder">
             <p>
-                <span aria-hidden="true">⭐</span> You saved <strong>{event.title}</strong> with {cause.name}.
+                <span aria-hidden="true"><Graphic symbol="star"/></span> You saved <strong>{event.title}</strong> with {cause.name}.
                 Ready to sign up?
             </p>
             <div className="saved-reminder-buttons">

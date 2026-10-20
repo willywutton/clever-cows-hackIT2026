@@ -1,4 +1,5 @@
-// Sticker.jsx draws one sticker: the team's artwork if it has been added, otherwise its emoji.
+// Sticker.jsx draws the team's artwork when supplied, otherwise a cartoon graphic.
+import Graphic from './Graphic'
 import { stickerById } from './assets/stickers'
 import './Sticker.css'
 
@@ -10,7 +11,7 @@ function Sticker({ id, size = "small" }) {
     }
     return sticker.image
         ? <img className={`sticker sticker-${size}`} src={sticker.image} alt={sticker.label}/>
-        : <span className={`sticker sticker-${size}`} role="img" aria-label={sticker.label}>{sticker.emoji}</span>
+        : <span className={`sticker sticker-${size}`} role="img" aria-label={sticker.label}><Graphic symbol={sticker.id}/></span>
 }
 
 export default Sticker

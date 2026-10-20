@@ -1,6 +1,7 @@
 // CausePage.jsx shows one cause in full: a picture, the description, its sessions
 // and events, news from the organisation, and what the student can do:
 // Sign up, Save, Share and Invite friends. Donating is an optional demo link.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { causeLook } from './causeColors'
 import SessionDetails from './SessionDetails'
@@ -55,22 +56,22 @@ function CausePage({
             <div className="card cause-page-card">
                 {surprise && (
                     <p className="cause-surprise">
-                        <span aria-hidden="true">🎲</span> Surprise pick: not one of your usual matches, but you might enjoy it.
+                        <span aria-hidden="true"><Graphic symbol="dice"/></span> Surprise pick: not one of your usual matches, but you might enjoy it.
                     </p>
                 )}
 
-                {/* The cause's picture: an image if the cause has one, otherwise its colour and emoji. */}
+                {/* The cause's picture: a supplied image or a cartoon graphic. */}
                 <div className="cause-picture" style={{ '--cause-color': look.color }}>
                     {cause.image
                         ? <img src={cause.image} alt={cause.name}/>
-                        : <span aria-hidden="true">{look.emoji}</span>}
+                        : <span aria-hidden="true"><Graphic symbol={look.emoji}/></span>}
                 </div>
 
                 <h2>{cause.name}</h2>
                 <p className="cause-page-description">{cause.description}</p>
 
                 <div className="cause-org" style={{ '--org-color': org.color }}>
-                    <span className="cause-org-mark" aria-hidden="true">{org.emoji}</span>
+                    <span className="cause-org-mark" aria-hidden="true"><Graphic symbol={org.emoji}/></span>
                     <div>
                         <small>Run by</small>
                         <button className="cause-org-name" onClick={() => onOpenOrg(org.id)}>{org.name} →</button>
@@ -87,11 +88,11 @@ function CausePage({
                         aria-pressed={saved}
                         onClick={() => onToggleFavourite("cause", cause.id)}
                     >
-                        {saved ? "★ Saved" : "☆ Save"}
+                        <Graphic symbol={saved ? "star" : "star-outline"}/> {saved ? "Saved" : "Save"}
                     </button>
-                    <button className="cause-button" onClick={handleShare}>↗ Share</button>
+                    <button className="cause-button" onClick={handleShare}><Graphic symbol="share"/> Share</button>
                     <button className="cause-button" onClick={() => setPanel(panel === "invite" ? null : "invite")}>
-                        ✉ Invite friends
+                        <Graphic symbol="mail"/> Invite friends
                     </button>
                 </div>
 
@@ -99,6 +100,7 @@ function CausePage({
 
                 {panel === "invite" && (
                     <InviteFriends
+                        causeName={cause.name}
                         friendIds={friendIds}
                         onSend={(ids) => onInvite(cause.id, ids)}
                         onClose={() => setPanel(null)}

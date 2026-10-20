@@ -20,7 +20,6 @@
 }
 
 .cow-peek-action {
-  margin-top: 8px;
   padding: 5px 12px;
   background: var(--barn);
   color: #fff;
@@ -187,4 +186,34 @@
     left: 60px;
     transform: rotate(135deg);
   }
+}
+
+.cow-peek-bubble-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cow-peek-more {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  padding: 0 0 2px;
+  background: var(--hay-soft);
+  color: var(--ink);
+  border: 2px solid var(--hay);
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.cow-peek-more:hover {
+  background: var(--hay);
+  transform: translateX(2px);
 }

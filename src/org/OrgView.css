@@ -91,17 +91,45 @@
   }
 }
 
-.org-identity .org-identity-programme {
+
+.org-back {
+  align-self: flex-start;
+  margin-bottom: -8px;
+  padding: 6px 12px;
+  background: transparent;
+  color: var(--text-soft);
+  border: 2px solid transparent;
+}
+
+.org-back:hover {
+  border-color: var(--border);
+  background: var(--card);
+}
+
+.org-identity-name {
+  font-family: var(--display);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.org-identity .org-identity-switch {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: 13px;
+  margin-top: 4px;
+  font-size: 12px;
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--text-soft);
 }
 
-.org-identity-programme select {
+.org-identity-switch select {
   font-family: var(--sans);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
 }

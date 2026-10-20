@@ -1,3 +1,4 @@
+import Graphic from '../Graphic'
 import { causeLook } from '../causeColors'
 import { sessionOf, spotsFor } from '../causeRows'
 import { formatSession } from '../formatSession'
@@ -9,9 +10,8 @@ import { CHARACTERS } from '../assets/characters'
 import { TRAIT_TIPS, traitMix } from './orgData'
 import './OrgOverview.css'
 
-function OrgOverview({ app, org, cause, rows, stats, pending, onGo }) {
+function OrgOverview({ app, org, cause, rows, stats, pending, onGo, onBack }) {
     const look = causeLook(cause.id)
-    const followers = org.followers + (app.followedOrgIds.includes(org.id) ? 1 : 0)
     const session = sessionOf(cause)
     const spots = spotsFor(cause, app.signedUp.find((entry) => entry.causeId === cause.id))
     const mix = traitMix(rows)
@@ -44,10 +44,12 @@ function OrgOverview({ app, org, cause, rows, stats, pending, onGo }) {
 
     return (
         <>
+            <button className="org-back" onClick={onBack}>← All programmes</button>
+
             <section className="card org-hero" style={{ '--cause-color': look.color }}>
-                <span className="org-hero-mark" aria-hidden="true">{look.emoji}</span>
+                <span className="org-hero-mark" aria-hidden="true"><Graphic symbol={look.emoji}/></span>
                 <div className="org-hero-text">
-                    <p className="eyebrow">{org.emoji} {org.name} · {followers} followers</p>
+                    <p className="eyebrow"><Graphic symbol={org.emoji}/> {org.name} · Programme</p>
                     <h1>{cause.name}</h1>
                     <p>Next session: {formatSession(session)} · {session.area}</p>
                 </div>
@@ -73,7 +75,6 @@ function OrgOverview({ app, org, cause, rows, stats, pending, onGo }) {
                     <strong>{feedback.length}</strong> diary {feedback.length === 1 ? "page" : "pages"} about you
                 </p>
             </div>
-            <p className="org-section-note">Numbers include sample volunteers.</p>
 
             <div className="org-columns">
                 <section className="card org-section">
@@ -81,9 +82,9 @@ function OrgOverview({ app, org, cause, rows, stats, pending, onGo }) {
                     <ul className="org-tasks">
                         {tasks.map((task) => (
                             <li key={task.text}>
-                                <span aria-hidden="true">{task.icon}</span>
+                                <span aria-hidden="true"><Graphic symbol={task.icon}/></span>
                                 <p>{task.text}</p>
-                                <button onClick={() => onGo(task.section)}>{task.action}</button>
+                                <button onClick={() => onGo(task.section, cause.id)}>{task.action}</button>
                             </li>
                         ))}
                     </ul>
@@ -111,14 +112,14 @@ function OrgOverview({ app, org, cause, rows, stats, pending, onGo }) {
             <section className="org-section">
                 <div className="org-section-head">
                     <h3>What volunteers said</h3>
-                    <button className="org-link" onClick={() => onGo("updates")}>See all feedback</button>
+                    <button className="org-link" onClick={() => onGo("updates", cause.id)}>See all feedback</button>
                 </div>
                 {feedback.length === 0 && (
                     <p className="org-section-note">No public diary pages about {cause.name} yet. They appear here when volunteers share them.</p>
                 )}
                 <div className="org-feedback">
                     {feedback.slice(0, 3).map(({ entry, author }) => (
-                        <PostTile key={entry.id} entry={entry} author={author} cause={cause} onOpen={() => onGo("updates")}/>
+                        <PostTile key={entry.id} entry={entry} author={author} cause={cause} onOpen={() => onGo("updates", cause.id)}/>
                     ))}
                 </div>
             </section>

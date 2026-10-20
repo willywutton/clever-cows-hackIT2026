@@ -1,3 +1,4 @@
+import Graphic from './Graphic'
 import { causes } from './data/causes'
 import { organisationById } from './data/organisations'
 import { traitLabels } from './data/traits'
@@ -10,7 +11,6 @@ import EventTile from './EventTile'
 import OrgPostCard from './OrgPostCard'
 import FollowButton from './FollowButton'
 import CowAvatar from './CowAvatar'
-import SampleTag from './SampleTag'
 import './OrganisationPage.css'
 
 function OrganisationPage({ app, backLabel, onBack }) {
@@ -30,9 +30,9 @@ function OrganisationPage({ app, backLabel, onBack }) {
             <button className="org-page-back" onClick={onBack}>← Back{backLabel ? ` to ${backLabel}` : ""}</button>
 
             <header className="card org-page-hero" style={{ '--org-color': org.color }}>
-                <span className="org-page-mark" aria-hidden="true">{org.emoji}</span>
+                <span className="org-page-mark" aria-hidden="true"><Graphic symbol={org.emoji}/></span>
                 <div className="org-page-title">
-                    <p className="eyebrow">Organisation <SampleTag text="Sample organisation"/></p>
+                    <p className="eyebrow">Organisation</p>
                     <h1>{org.name}</h1>
                     <p>{org.tagline}</p>
                 </div>
@@ -44,7 +44,7 @@ function OrganisationPage({ app, backLabel, onBack }) {
 
             {following && (
                 <p className="org-page-following">
-                    <span aria-hidden="true">🔔</span> You'll hear their updates in your Social feed and from Clover on Home.
+                    <span aria-hidden="true"><Graphic symbol="bell"/></span> You'll hear their updates in your Social feed and from Clover on Home.
                 </p>
             )}
 
@@ -121,7 +121,7 @@ function OrganisationPage({ app, backLabel, onBack }) {
                         <ul className="org-page-facts">
                             {org.goodToKnow.map((fact) => (
                                 <li key={fact.label}>
-                                    <span aria-hidden="true">{fact.icon}</span>
+                                    <span aria-hidden="true"><Graphic symbol={fact.icon}/></span>
                                     <div><strong>{fact.label}</strong><p>{fact.text}</p></div>
                                 </li>
                             ))}
@@ -145,7 +145,7 @@ function OrganisationPage({ app, backLabel, onBack }) {
                     </section>
 
                     <section className="card org-page-section">
-                        <h3>Their impact <SampleTag text="Sample figures"/></h3>
+                        <h3>Their impact</h3>
                         <div className="org-page-impact">
                             {org.impact.map((item) => (
                                 <p key={item.label}><strong>{item.value}</strong>{item.label}</p>

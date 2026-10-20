@@ -2,6 +2,7 @@
 // for proposing an event, and the events the student has proposed so far.
 import { causes } from './data/causes'
 import { organisationOfCause } from './data/organisations'
+import { joinNames, nameOf } from './people'
 import PageTitle from './PageTitle'
 import HostEventForm from './HostEventForm'
 import EventCard from './EventCard'
@@ -10,12 +11,12 @@ import './HostEventPage.css'
 const STEPS = [
     "Pick the organisation and programme, and check your idea helps in the way they need.",
     "Choose a time, and a place that's easy for everyone to reach.",
-    "Invite a few friends so no one has to do it alone.",
+    "Say how many people you need, and invite friends to co-host so no one does it alone.",
     "Think about what to bring and any safety rules.",
 ]
 
-// { events } is every event. { onHost } adds the student's new event.
-function HostEventPage({ events, onHost }) {
+// { events } is every event. { friendIds } are friends who can co-host. { onHost } adds the student's new event.
+function HostEventPage({ events, friendIds, onHost }) {
     const mine = events.filter((event) => event.source === "student")
 
     return (
@@ -26,7 +27,7 @@ function HostEventPage({ events, onHost }) {
             />
 
             <div className="host-page-columns">
-                <HostEventForm onSubmit={onHost}/>
+                <HostEventForm onSubmit={onHost} friendIds={friendIds}/>
 
                 <aside className="card host-steps">
                     <h3>Before you send it</h3>
@@ -44,7 +45,15 @@ function HostEventPage({ events, onHost }) {
                             key={event.id}
                             event={event}
                             causeName={`${organisationOfCause(event.causeId).name} · ${causes.find((c) => c.id === event.causeId).name}`}
-                        />
+                        >
+                            <p className="host-mine-meta">
+                                {event.status === "approved"
+                                    ? "✓ Approved. It's in your Next up."
+                                    : `Waiting for ${organisationOfCause(event.causeId).name} to approve it.`}
+                                {event.spots ? ` · ${event.spots} people needed` : ""}
+                                {event.cohostIds && event.cohostIds.length > 0 ? ` · Co-hosting with ${joinNames(event.cohostIds.map(nameOf))}` : ""}
+                            </p>
+                        </EventCard>
                     ))}
                 </section>
             )}

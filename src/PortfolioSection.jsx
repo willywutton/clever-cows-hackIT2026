@@ -1,5 +1,6 @@
 // PortfolioSection.jsx lists the diary pages the student saved to their portfolio,
 // with a button to open the print-friendly version.
+import Graphic from './Graphic'
 import { causes } from './data/causes'
 import './PortfolioSection.css'
 
@@ -24,7 +25,7 @@ function PortfolioSection({ diary, portfolio, hoursWorked, onOpenPrint }) {
                 ))}
             </ul>
             {entries.length > 0 && (
-                <button className="portfolio-print" onClick={onOpenPrint}>🖨 Print-friendly portfolio</button>
+                <button className="portfolio-print" onClick={onOpenPrint}><Graphic symbol="print"/> Print-friendly portfolio</button>
             )}
         </section>
     )

@@ -3,7 +3,6 @@
 // "Show me on my friends' leaderboard" in Profile. All friends here are sample people.
 import { sampleStudentById } from './data/friends'
 import CowAvatar from './CowAvatar'
-import SampleTag from './SampleTag'
 import './FriendsLeaderboard.css'
 
 // { friendIds } is the student's friends. { me } is { name, hours, accessories }.
@@ -27,7 +26,7 @@ function FriendsLeaderboard({ friendIds, me, showMe }) {
                     <li key={row.id} className={row.sample ? undefined : "leaderboard-me"}>
                         <span className="leaderboard-place">{index + 1}</span>
                         <CowAvatar accessories={row.accessories} face={row.face} size="small" label={`${row.name}'s cow`}/>
-                        <span className="leaderboard-name">{row.name} {row.sample && <SampleTag/>}</span>
+                        <span className="leaderboard-name">{row.name}</span>
                         <strong>{row.hours} h</strong>
                     </li>
                 ))}

@@ -1,5 +1,6 @@
 // Quiz.jsx plays the story quiz one scene at a time, adds up a score
 // for each trait, and shows the player's result identity at the end.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { chapters, results } from './data/chapters'
 import StoryDots from './StoryDots'
@@ -99,7 +100,7 @@ function Quiz({whenDone}){
                         <ul className="quiz-match-tiles">
                             {result.matches.map((match) => (
                                 <li key={match.label}>
-                                    <span aria-hidden="true">{match.emoji}</span>
+                                    <span aria-hidden="true"><Graphic symbol={match.emoji}/></span>
                                     {match.label}
                                 </li>
                             ))}

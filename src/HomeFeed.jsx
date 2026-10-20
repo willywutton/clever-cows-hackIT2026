@@ -1,3 +1,4 @@
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { causes } from './data/causes'
 import { traitLabels } from './data/traits'
@@ -77,8 +78,8 @@ function HomeFeed({ app }) {
             <div className="home-feed">
                 {chips}
                 <section className="home-topic-results" key={topic}>
-                    <p className="eyebrow">{fitting ? "From your sample timetable" : "Browse by topic"}</p>
-                    <h3>{fitting ? "📅 Fits my week" : `${chosen.emoji} ${chosen.label}`}</h3>
+                    <p className="eyebrow">{fitting ? "From your timetable" : "Browse by topic"}</p>
+                    <h3><Graphic symbol={fitting ? "calendar" : chosen.emoji}/> {fitting ? "Fits my week" : chosen.label}</h3>
                     {fitting && (
                         <p className="home-topic-note">
                             Sessions that fit your free time and don't clash with what you've signed up for.
@@ -120,7 +121,7 @@ function HomeFeed({ app }) {
             )}
 
             {interestCauses.length > 1 && (
-                <HomeRow eyebrow="Because you picked" title={`${interest.emoji} ${interest.label}`}>
+                <HomeRow eyebrow="Because you picked" title={<><Graphic symbol={interest.emoji}/> {interest.label}</>}>
                     {interestCauses.map((cause) => tile(cause))}
                 </HomeRow>
             )}
@@ -149,7 +150,7 @@ function HomeFeed({ app }) {
                 {causesOutsideMatch(quizResult).map((cause) => tile(cause))}
             </HomeRow>
 
-            <HomeRow eyebrow="Who runs your causes" title="Organisations" actionLabel="See all" onAction={() => app.navigate('organisations')}>
+            <HomeRow eyebrow="Who runs your causes" title="Organisations">
                 {[...organisations]
                     .sort((a, b) => orgRank(b) - orgRank(a))
                     .map((org) => (
@@ -164,9 +165,6 @@ function HomeFeed({ app }) {
                     ))}
             </HomeRow>
 
-            <p className="home-feed-note">
-                Causes, sessions, places and people shown here are sample data.
-            </p>
             {calendarModal}
         </div>
     )

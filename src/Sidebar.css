@@ -83,10 +83,57 @@
   display: none;
 }
 
-.sidebar-switch {
+.sidebar-account {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-top: 6px;
-  padding-top: 12px;
+  padding: 12px 4px 2px;
   border-top: 2px dashed var(--border);
+}
+
+.sidebar-account-picture {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  font-size: 22px;
+}
+
+.sidebar-account-who {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.sidebar-account-who strong {
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sidebar-account-who small {
+  font-size: 12px;
+  color: var(--text-soft);
+}
+
+.sidebar-logout {
+  flex-shrink: 0;
+  padding: 5px 10px;
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sidebar-logout:hover {
+  border-color: var(--barn);
+  color: var(--barn);
 }
 
 /* Phones: a scrollable bar fixed along the bottom of the screen. */
@@ -146,11 +193,16 @@
     display: block;
   }
 
-  .sidebar-switch {
+  .sidebar-account {
     flex-shrink: 0;
     margin: 0;
-    padding: 0 0 0 4px;
+    padding: 0 0 0 6px;
     border-top: none;
     border-left: 2px dashed var(--border);
+  }
+
+  .sidebar-account-picture,
+  .sidebar-account-who {
+    display: none;
   }
 }

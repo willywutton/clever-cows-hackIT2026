@@ -86,3 +86,10 @@
 .event-card-save[aria-pressed="true"] {
   background: var(--hay);
 }
+
+.event-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}

@@ -2,6 +2,7 @@
 // Feed mixes friends' public diary pages with posts from organisations, beside your people
 // and suggestions to follow,
 // Friends & chat holds the friend list, search and chat, and Invites holds plans to help together.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { organisationPosts, publicPosts } from './herd'
 import OrgPostCard from './OrgPostCard'
@@ -45,7 +46,7 @@ function SocialPage({ app, initialTab }) {
                 <div className="social-tabs" role="tablist" aria-label="Social sections">
                     {TABS.map((t) => (
                         <button key={t.id} role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)}>
-                            <span aria-hidden="true">{t.emoji}</span> {t.label}
+                            <span aria-hidden="true"><Graphic symbol={t.emoji}/></span> {t.label}
                         </button>
                     ))}
                 </div>

@@ -1,5 +1,7 @@
-// CowPage.jsx is the Cow tab: Clover Cowdini's room, her stats, free basic grass
-// from helping, and the store. Caring for her only ever makes things better.
+// CowPage.jsx is the Cow tab: Clover Cowdini's barn with a keepsake from every cause the
+// student has helped, her mailbag of news and thank-yous from organisations, her stats,
+// free basic grass from helping, and the store.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { cowStages } from './assets/cowStages'
 import { ART } from './assets/cowArt'
@@ -9,6 +11,10 @@ import { CHARACTERS } from './assets/characters'
 import CowStats from './CowStats'
 import CowStore from './CowStore'
 import { STAT_MAX } from './data/store'
+import { keepsakesFor } from './data/keepsakes'
+import { mailbagItems } from './cowNotes'
+import CowMailbag from './CowMailbag'
+import KeepsakeCelebration from './KeepsakeCelebration'
 import './CowPage.css'
 
 // { app } is everything from useCleverCows: the cow, Moolah, grass and care actions.
@@ -16,6 +22,13 @@ function CowPage({ app }) {
     const [message, setMessage] = useState("")
     // Changes on every feed or purchase, so the hop animation plays each time.
     const [hopKey, setHopKey] = useState(0)
+    // The keepsake earned since the last visit to the barn drops onto the shelf.
+    // It stops being new once the student leaves the barn (see navigate in useCleverCows).
+    const newCauseId = app.newKeepsake ? app.newKeepsake.causeId : null
+    const keepsakes = keepsakesFor(app.attendance, app.diary)
+    // A new keepsake is celebrated once, when the barn opens.
+    const [celebrating, setCelebrating] = useState(newCauseId)
+    const celebrated = keepsakes.find((item) => item.cause.id === celebrating)
 
     const reached = cowStages.filter((stage) => app.grass >= stage.minGrass)
     const stage = reached[reached.length - 1]
@@ -34,15 +47,32 @@ function CowPage({ app }) {
 
     return (
         <div className="cow-page">
-            <PageTitle title="Clover Cowdini" subtitle={`${stage.name} stage · ${stage.message}`}/>
+            <PageTitle
+                title="Clover Cowdini"
+                subtitle="Clover keeps a memory from everywhere you help, and brings you news from the people you helped."
+            />
 
             <div className="cow-page-columns">
                 <div className="cow-page-main">
-                    <CowRoom key={hopKey} art={CHARACTERS[app.quizResult]} owned={app.cow.owned} equipped={app.cow.equipped} happy={hopKey > 0}/>
+                    <CowRoom
+                        key={hopKey}
+                        art={CHARACTERS[app.quizResult]}
+                        keepsakes={keepsakes}
+                        newCauseId={newCauseId}
+                        equipped={app.cow.equipped}
+                        happy={hopKey > 0}
+                        onWrite={app.startReflection}
+                        onOpenCause={(id) => app.openCause(id)}
+                    />
+                    <p className="cow-page-keepsakes">
+                        <strong>{keepsakes.length}</strong> {keepsakes.length === 1 ? "keepsake" : "keepsakes"}
+                        {" · "}<strong>{keepsakes.filter((k) => k.level === "treasured").length}</strong> treasured
+                        {" · "}{stage.name} stage
+                    </p>
                     {message && <p className="cow-page-message" role="status">{message}</p>}
 
                     <section className="card cow-page-grass">
-                        <span className="cow-page-grass-art" aria-hidden="true">{ART["basic-grass"].emoji}</span>
+                        <span className="cow-page-grass-art" aria-hidden="true"><Graphic symbol={ART["basic-grass"].emoji}/></span>
                         <div>
                             <h3>Basic grass</h3>
                             <p>
@@ -56,12 +86,26 @@ function CowPage({ app }) {
                     </section>
                 </div>
 
-                <section className="card cow-page-stats">
-                    <h3>How she's doing</h3>
-                    <CowStats stats={app.cow.stats}/>
-                    <p className="cow-page-stats-note">These drop a little each week, so check in on Clover when you can.</p>
-                </section>
+                <div className="cow-page-side">
+                    <section className="card cow-page-stats">
+                        <h3>How she's doing</h3>
+                        <CowStats stats={app.cow.stats}/>
+                        <p className="cow-page-stats-note">These dip a little each week. New keepsakes from your sessions lift her Comfort and Happiness.</p>
+                    </section>
+                    <CowMailbag
+                        items={mailbagItems(app)}
+                        readIds={app.readMail}
+                        name={app.profile.name}
+                        onRead={app.markMailRead}
+                        onOpenOrg={app.openOrganisation}
+                        onOpenCause={(id) => app.openCause(id)}
+                    />
+                </div>
             </div>
+
+            {celebrated && (
+                <KeepsakeCelebration item={celebrated} onClose={() => setCelebrating(null)} onWrite={app.startReflection}/>
+            )}
 
             <CowStore
                 moolah={app.moolah}

@@ -1,6 +1,7 @@
 // AboutYou.jsx asks four optional questions before the quiz, one per page,
 // including which goal to work towards. The farmer asks them inside the barn.
 // Every question can be skipped.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { goals } from './data/goals'
 import FarmerScene from './FarmerScene'
@@ -117,7 +118,7 @@ function AboutYou({ profile, onDone }) {
                                 checked={answers[question.id] === option.value}
                                 onChange={() => handleChange(question.id, option.value)}
                             />
-                            {option.icon && <span className="about-option-icon" aria-hidden="true">{option.icon}</span>}
+                            {option.icon && <span className="about-option-icon" aria-hidden="true"><Graphic symbol={option.icon}/></span>}
                             <span className="about-option-label">{option.label}</span>
                             {option.hint && <small>{option.hint}</small>}
                         </label>

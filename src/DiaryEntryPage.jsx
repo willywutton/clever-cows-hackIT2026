@@ -1,5 +1,6 @@
 // DiaryEntryPage.jsx draws one diary entry as a journal page, with buttons to change
 // who can see it, save it to the portfolio, or copy it as a LinkedIn post.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { linkedinText } from './linkedinText'
 import JournalPage from './JournalPage'
@@ -45,7 +46,7 @@ function DiaryEntryPage({ entry, cause, hoursAtCause, inPortfolio, onTogglePortf
 
             <div className="diary-entry-actions">
                 <button onClick={() => onSetPublic(!entry.isPublic)} title="Change who can see this page">
-                    {entry.isPublic ? "🌻 Public" : "🔒 Private"}
+                    <Graphic symbol={entry.isPublic ? "flower" : "lock"}/> {entry.isPublic ? "Public" : "Private"}
                 </button>
                 <button aria-pressed={inPortfolio} onClick={onTogglePortfolio}>
                     {inPortfolio ? "✓ In portfolio" : "Save to portfolio"}

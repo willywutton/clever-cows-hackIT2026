@@ -1,0 +1,86 @@
+.profile-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-settings h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-settings-summary {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-settings-summary li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.profile-settings-summary li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.profile-settings-summary span {
+  color: var(--text-soft);
+}
+
+.profile-settings-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.profile-settings-open,
+.profile-settings-logout {
+  padding: 8px 16px;
+  font-weight: 700;
+}
+
+.profile-settings-open {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  box-shadow: 0 3px 0 #1f130c;
+}
+
+.profile-settings-open:hover {
+  background: #4d3223;
+  transform: translateY(-1px);
+}
+
+.profile-settings-logout {
+  background: #fff;
+  color: var(--text);
+  border: 2px solid var(--border);
+}
+
+.profile-settings-logout:hover {
+  border-color: var(--barn);
+  color: var(--barn);
+}
+
+/* Inside the pop-up, each section is a flat panel instead of a raised card. */
+.profile-settings-body {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.profile-settings-body .card {
+  padding: 18px;
+  box-shadow: none;
+}

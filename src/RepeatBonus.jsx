@@ -1,5 +1,6 @@
 // RepeatBonus.jsx shows how much Moolah each visit to this cause earns, so the student
 // can see that coming back earns more. It's encouragement only: nothing is lost by not returning.
+import Graphic from './Graphic'
 import { SESSION_MOOLAH } from './data/economy'
 import './RepeatBonus.css'
 
@@ -12,7 +13,7 @@ function RepeatBonus({ visitsSoFar }) {
     return (
         <div className="repeat-bonus">
             <p className="repeat-bonus-title">
-                <span aria-hidden="true">🪙</span> Come back again to earn more Moolah
+                <span aria-hidden="true"><Graphic symbol="coin"/></span> Come back again to earn more Moolah
             </p>
             <ol className="repeat-bonus-steps">
                 {SESSION_MOOLAH.map((amount, index) => (

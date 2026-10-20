@@ -1,5 +1,4 @@
 import { causeLook } from './causeColors'
-import SampleTag from './SampleTag'
 import './EventTile.css'
 
 function EventTile({ event, cause, onOpen }) {
@@ -22,7 +21,6 @@ function EventTile({ event, cause, onOpen }) {
                 </h4>
                 <p className="event-tile-meta">{cause.name}</p>
                 <p className="event-tile-meta">{time} · {event.place}</p>
-                {event.sample && <SampleTag/>}
             </div>
         </article>
     )

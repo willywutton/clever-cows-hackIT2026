@@ -69,3 +69,20 @@
     grid-template-columns: 1fr;
   }
 }
+
+.cow-page-side {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+}
+
+.cow-page-keepsakes {
+  font-size: 15px;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+.cow-page-keepsakes strong {
+  color: var(--ink);
+}

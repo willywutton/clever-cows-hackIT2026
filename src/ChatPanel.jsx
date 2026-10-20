@@ -1,9 +1,9 @@
 // ChatPanel.jsx is a simple chat with one friend. The friends are sample people, so each
 // reply is a canned message, clearly labelled. Nothing is sent anywhere.
+import Graphic from './Graphic'
 import { useEffect, useRef, useState } from 'react'
 import { sampleStudentById } from './data/friends'
 import CowAvatar from './CowAvatar'
-import SampleTag from './SampleTag'
 import './ChatPanel.css'
 
 // { activeId } is the friend whose chat is open (or null). { chats } holds the messages,
@@ -30,7 +30,7 @@ function ChatPanel({ activeId, chats, onSend, onViewProfile }) {
     if (!friend) {
         return (
             <section className="card chat-window chat-window-empty">
-                <span aria-hidden="true">💬</span>
+                <span aria-hidden="true"><Graphic symbol="message"/></span>
                 <p>Pick a friend to chat, or plan a session together.</p>
             </section>
         )
@@ -41,7 +41,7 @@ function ChatPanel({ activeId, chats, onSend, onViewProfile }) {
             <header className="chat-header">
                 <CowAvatar accessories={friend.accessories} size="small" label={`${friend.name}'s cow`}/>
                 <div>
-                    <strong>{friend.name}</strong> <SampleTag/>
+                    <strong>{friend.name}</strong>
                     <p>{friend.about}</p>
                 </div>
                 <button className="chat-profile" onClick={() => onViewProfile(friend.id)}>Profile</button>
@@ -53,7 +53,6 @@ function ChatPanel({ activeId, chats, onSend, onViewProfile }) {
                 {messages.map((message, index) => (
                     <li key={index} className={message.from === "me" ? "chat-me" : "chat-them"}>
                         <span>{message.text}</span>
-                        {message.from === "them" && <SampleTag text="Sample reply"/>}
                     </li>
                 ))}
                 <li ref={messagesEnd} aria-hidden="true"/>

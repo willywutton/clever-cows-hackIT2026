@@ -1,5 +1,6 @@
 // GoalCard.jsx shows the student's current goal and progress on Home,
 // or a "Pick a goal" card when they have none. Progress comes from the history each time.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { goalById, goalProgress, progressText } from './goalProgress'
 import GoalPicker from './GoalPicker'
@@ -22,7 +23,7 @@ function GoalCard({ goalId, history, finishedIds, onGoalChange }) {
         <section className="goal-card card">
             {!goal && !picking && (
                 <>
-                    <h3><span aria-hidden="true">🎯</span> Pick a goal</h3>
+                    <h3><span aria-hidden="true"><Graphic symbol="target"/></span> Pick a goal</h3>
                     <p className="goal-card-text">
                         Choose something to work towards. There's no rush, and you can change it any time.
                     </p>
@@ -32,7 +33,7 @@ function GoalCard({ goalId, history, finishedIds, onGoalChange }) {
 
             {goal && !picking && (
                 <>
-                    <h3><span aria-hidden="true">🎯</span> {goal.name}</h3>
+                    <h3><span aria-hidden="true"><Graphic symbol="target"/></span> {goal.name}</h3>
                     <p className="goal-card-text">{goal.description}</p>
                     <GoalBar progress={goalProgress(goal, history)} label={progressText(goal, history)}/>
                     <GoalReward goal={goal}/>

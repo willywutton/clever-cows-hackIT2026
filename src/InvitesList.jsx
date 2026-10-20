@@ -5,7 +5,6 @@ import { sampleIncomingInvites } from './data/sampleSocial'
 import { sampleStudentById } from './data/friends'
 import { joinNames, nameOf } from './people'
 import CowAvatar from './CowAvatar'
-import SampleTag from './SampleTag'
 import './InvitesList.css'
 
 // { joined } is the ids of invites already joined. { onJoin } joins one.
@@ -23,7 +22,7 @@ function InvitesList({ joined, onJoin, sent }) {
                         <article key={invite.id} className="invite-card">
                             <CowAvatar accessories={from.accessories} size="small" label={`${from.name}'s cow`}/>
                             <div className="invite-card-text">
-                                <p><strong>{from.name}</strong> invited you to <strong>{cause.name}</strong> <SampleTag/></p>
+                                <p><strong>{from.name}</strong> invited you to <strong>{cause.name}</strong></p>
                                 <p className="invite-card-note">"{invite.note}"</p>
                             </div>
                             {isJoined

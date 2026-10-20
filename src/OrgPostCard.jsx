@@ -1,6 +1,6 @@
+import Graphic from './Graphic'
 import { causes } from './data/causes'
 import FollowButton from './FollowButton'
-import SampleTag from './SampleTag'
 import './OrgPostCard.css'
 
 function OrgPostCard({ post, following, onToggleFollow, onOpenOrg, liked, onToggleLike }) {
@@ -11,12 +11,11 @@ function OrgPostCard({ post, following, onToggleFollow, onOpenOrg, liked, onTogg
     return (
         <article className="card org-post-card" style={{ '--org-color': post.org.color }}>
             <header className="org-post-card-top">
-                <span className="org-post-card-mark" aria-hidden="true">{post.org.emoji}</span>
+                <span className="org-post-card-mark" aria-hidden="true"><Graphic symbol={post.org.emoji}/></span>
                 <div>
                     <p className="org-post-card-name">
                         {onOpenOrg ? <button onClick={() => onOpenOrg(post.org.id)}>{post.org.name}</button> : <strong>{post.org.name}</strong>}
                         <span className="org-post-card-badge">Organisation</span>
-                        {post.sample && <SampleTag/>}
                     </p>
                     <p className="org-post-card-meta">{programme ? `${programme.name} · ` : ""}{date}</p>
                 </div>
@@ -26,9 +25,9 @@ function OrgPostCard({ post, following, onToggleFollow, onOpenOrg, liked, onTogg
             {onToggleLike && (
                 <div className="org-post-card-actions">
                     <button className="org-post-card-like" aria-pressed={liked} onClick={onToggleLike}>
-                        {liked ? "💛 Liked" : "🤍 Like"}
+                        <Graphic symbol={liked ? "heart" : "heart-outline"}/> {liked ? "Liked" : "Like"}
                     </button>
-                    <span>{likeCount} {likeCount === 1 ? "like" : "likes"} {post.sample && <SampleTag text="Sample count"/>}</span>
+                    <span>{likeCount} {likeCount === 1 ? "like" : "likes"}</span>
                 </div>
             )}
         </article>

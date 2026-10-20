@@ -1,0 +1,181 @@
+.cow-mailbag {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cow-mailbag-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cow-mailbag-head p {
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.cow-mailbag-icon {
+  font-size: 40px;
+  line-height: 1;
+}
+
+.cow-mailbag-count {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 9px;
+  background: var(--barn);
+  border-radius: 999px;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  vertical-align: 3px;
+}
+
+.cow-mailbag-empty {
+  padding: 12px 14px;
+  background: #fff;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  font-size: 15px;
+  color: var(--text-soft);
+}
+
+.cow-mailbag-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
+/* Each note is an envelope: a paper body with a folded flap drawn along the top. */
+.cow-envelope {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 26px 14px 14px;
+  background:
+    linear-gradient(to bottom right, transparent 49.5%, #efe3cc 50%) top left / 50% 22px no-repeat,
+    linear-gradient(to bottom left, transparent 49.5%, #efe3cc 50%) top right / 50% 22px no-repeat,
+    #fffdf6;
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 3px 0 var(--paper-line);
+  text-align: left;
+  transition: transform 0.18s ease-out, border-color 0.18s;
+}
+
+.cow-envelope:hover {
+  border-color: var(--hay);
+  transform: translateY(-2px) rotate(-0.6deg);
+}
+
+.cow-envelope-thanks {
+  background:
+    linear-gradient(to bottom right, transparent 49.5%, #f6dfa0 50%) top left / 50% 22px no-repeat,
+    linear-gradient(to bottom left, transparent 49.5%, #f6dfa0 50%) top right / 50% 22px no-repeat,
+    var(--hay-soft);
+  border-color: var(--hay);
+}
+
+/* An unread note has a red wax seal where the flap meets. */
+.cow-envelope-unread::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translateX(-50%);
+  background: var(--barn);
+  border: 2px solid #fffdf6;
+  border-radius: 50%;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.cow-envelope-stamp {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 46px;
+  background: var(--org-color);
+  border: 3px dashed #fffdf6;
+  outline: 2px solid var(--org-color);
+  font-size: 22px;
+  transform: rotate(3deg);
+}
+
+.cow-envelope-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cow-envelope-text small {
+  font-size: 13px;
+  color: var(--text-soft);
+}
+
+.cow-envelope-unread .cow-envelope-text strong::after {
+  content: " · new";
+  font-size: 13px;
+  color: var(--barn);
+}
+
+.cow-envelope-preview {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+/* The opened letter. */
+.cow-letter {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 18px 22px;
+  background:
+    repeating-linear-gradient(to bottom, transparent 0 31px, var(--paper-line) 31px 32px),
+    #fffdf6;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  text-align: left;
+}
+
+.cow-letter-thanks {
+  border-color: var(--hay);
+}
+
+.modal .cow-letter-date {
+  font-size: 13px;
+  text-align: right;
+}
+
+.cow-letter-greeting,
+.cow-letter-body,
+.cow-letter-sign {
+  font-family: var(--hand);
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--ink);
+}
+
+.cow-letter-body {
+  margin: 6px 0;
+}
+
+.cow-letter-sign {
+  text-align: right;
+}

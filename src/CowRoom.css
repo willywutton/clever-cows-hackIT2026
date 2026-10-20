@@ -3,7 +3,7 @@
 /* Wooden plank wall on top, straw floor on the bottom third. */
 .cow-room {
   position: relative;
-  min-height: 300px;
+  min-height: 340px;
   padding: 24px 20px 20px;
   display: flex;
   flex-direction: column;
@@ -19,33 +19,68 @@
   overflow: hidden;
 }
 
-/* Bought items sit along the wall above the floor. */
-.cow-room-items {
-  position: absolute;
-  top: 22px;
-  left: 16px;
-  right: 16px;
+/* Keepsakes sit on a wooden shelf along the top of the wall. */
+.cow-room-shelf {
+  align-self: stretch;
   list-style: none;
-  margin: 0;
-  padding: 0;
+  margin: 0 0 auto;
+  padding: 0 10px 8px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: center;
+  gap: 10px;
+  border-bottom: 10px solid #8d5a3a;
+  border-radius: 2px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
 }
 
-.cow-room-items li {
+.cow-room-keepsake {
+  position: relative;
   display: grid;
   place-items: center;
-  width: 64px;
-  height: 64px;
-  background: rgba(255, 250, 240, 0.85);
+  width: 58px;
+  height: 58px;
+  padding: 0;
+  background: rgba(255, 250, 240, 0.9);
+  border: 3px solid #fffaf0;
   border-radius: 14px;
-  font-size: 38px;
+  font-size: 34px;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
 }
 
-.cow-room-items img {
-  width: 80%;
+.cow-room-keepsake:hover {
+  transform: translateY(-4px) rotate(-4deg);
+}
+
+.cow-room-keepsake-treasured {
+  background: var(--hay-soft);
+  border-color: var(--hay);
+  box-shadow: 0 0 0 4px rgba(242, 201, 76, 0.45), 0 3px 0 rgba(0, 0, 0, 0.15);
+}
+
+.cow-room-keepsake-treasured::after {
+  content: "★";
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  background: var(--hay);
+  border: 2px solid #fffaf0;
+  border-radius: 50%;
+  font-size: 12px;
+  color: var(--ink);
+}
+
+.cow-room-keepsake-new {
+  animation: cow-room-new 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes cow-room-new {
+  0% { transform: translateY(-30px) scale(0.4); opacity: 0; }
+  100% { transform: none; opacity: 1; }
 }
 
 .cow-room-cow {
@@ -67,10 +102,8 @@
 }
 
 .cow-room-empty {
-  position: absolute;
-  top: 28px;
-  left: 20px;
-  right: 20px;
+  max-width: 30em;
+  margin: 0 auto auto;
   text-align: center;
   color: #fff;
   font-weight: 600;

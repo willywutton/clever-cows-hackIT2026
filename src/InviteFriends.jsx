@@ -1,12 +1,15 @@
-// InviteFriends.jsx lets the student pick friends to invite to a cause.
-// Nothing is really sent: the invite is kept in the app and shown in the Social tab.
+// InviteFriends.jsx is a pop-up for inviting friends to a cause. The invite is kept in
+// the app and shows in the Social tab's Invites.
 import { useState } from 'react'
+import { sampleStudentById } from './data/friends'
 import { joinNames, nameOf } from './people'
+import Modal from './Modal'
+import CowAvatar from './CowAvatar'
 import './InviteFriends.css'
 
-// { friendIds } is the student's friends. { onSend } receives the ids picked.
-// { onClose } closes the picker.
-function InviteFriends({ friendIds, onSend, onClose }) {
+// { causeName } is the cause being shared. { friendIds } is the student's friends.
+// { onSend } receives the ids picked. { onClose } closes the pop-up.
+function InviteFriends({ causeName, friendIds, onSend, onClose }) {
     const [picked, setPicked] = useState([])
     const [sentTo, setSentTo] = useState(null)
 
@@ -21,27 +24,35 @@ function InviteFriends({ friendIds, onSend, onClose }) {
     }
 
     return (
-        <div className="invite">
-            <p className="invite-title">Invite friends to come with you</p>
-            {friendIds.length === 0 && <p className="invite-note">Add friends from the Friends tab first.</p>}
-            <div className="invite-list">
-                {friendIds.map((id) => (
-                    <label key={id} className="invite-friend">
-                        <input type="checkbox" checked={picked.includes(id)} onChange={() => toggle(id)}/>
-                        {nameOf(id)}
-                    </label>
-                ))}
-            </div>
-            {sentTo && (
-                <p className="invite-sent" role="status">
-                    Invite sent to {sentTo}.
-                </p>
+        <Modal eyebrow="Invite friends" title={`Who's coming to ${causeName}?`} icon="mail" onClose={onClose}>
+            {sentTo ? (
+                <p className="invite-sent" role="status">Sent! {sentTo} will see your invite in their Invites.</p>
+            ) : (
+                <>
+                    {friendIds.length === 0 && <p>Add friends in Social → Friends &amp; chat first.</p>}
+                    <div className="invite-list">
+                        {friendIds.map((id) => {
+                            const friend = sampleStudentById(id)
+                            return (
+                                <label key={id} className="invite-friend">
+                                    <input type="checkbox" checked={picked.includes(id)} onChange={() => toggle(id)}/>
+                                    <CowAvatar accessories={friend.accessories} size="small" label=""/>
+                                    <span>{friend.name}</span>
+                                </label>
+                            )
+                        })}
+                    </div>
+                </>
             )}
-            <div className="invite-buttons">
-                <button className="invite-close" onClick={onClose}>Close</button>
-                <button className="invite-send" onClick={handleSend} disabled={picked.length === 0}>Send invite</button>
+            <div className="modal-buttons">
+                <button className="modal-secondary" onClick={onClose}>{sentTo ? "Done" : "Cancel"}</button>
+                {!sentTo && (
+                    <button className="button-primary" onClick={handleSend} disabled={picked.length === 0}>
+                        {picked.length > 0 ? `Invite ${picked.length}` : "Send invite"}
+                    </button>
+                )}
             </div>
-        </div>
+        </Modal>
     )
 }
 

@@ -1,6 +1,7 @@
 // SiteHeader.jsx is the bar across the top of every page: the Clever Cows name on the left,
 // and once the student has a character, their name and Moolah on the right.
 // The Student / Organisation switch lives at the bottom of the side menu.
+import Graphic from './Graphic'
 import CowAvatar from './CowAvatar'
 import { CLOVER } from './assets/characters'
 import './SiteHeader.css'
@@ -8,7 +9,7 @@ import './SiteHeader.css'
 // { view } is 'student' or 'organisation'. { signedIn } is true once the student has
 // finished (or skipped) the story. { name } and { moolah } are shown on the right.
 // { onLogo } goes Home when the logo is clicked.
-function SiteHeader({ view, signedIn, name, moolah, characterHead, onLogo }) {
+function SiteHeader({ view, orgName, signedIn, name, moolah, characterHead, onLogo }) {
     const showStudentBar = signedIn && view === 'student'
 
     return (
@@ -26,13 +27,13 @@ function SiteHeader({ view, signedIn, name, moolah, characterHead, onLogo }) {
                             {name}
                         </p>
                         <p className="site-moolah" title="Moolah is earned by helping. It can't be bought.">
-                            <span aria-hidden="true">🪙</span> <strong key={moolah} className="site-moolah-count">{moolah}</strong>
+                            <span aria-hidden="true"><Graphic symbol="coin"/></span> <strong key={moolah} className="site-moolah-count">{moolah}</strong>
                             <span className="site-moolah-word">Moolah</span>
                         </p>
                     </div>
                 )}
 
-                {view === 'organisation' && <p className="site-org-label">Organisation view</p>}
+                {view === 'organisation' && <p className="site-org-label">{orgName} · Coordinator</p>}
             </div>
         </header>
     )

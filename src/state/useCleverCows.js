@@ -12,6 +12,7 @@ import { sampleChatReplies } from '../data/sampleSocial'
 import { REFLECTION_MOOLAH, sessionHours, visitMoolah } from '../data/economy'
 import { GRASS } from '../assets/cowStages'
 import { goalById, goalProgress } from '../goalProgress'
+import { KEEPSAKE_BOOST, TREASURED_VISITS } from '../data/keepsakes'
 import { BASIC_GRASS_BOOST, STARTING_STATS, STAT_MAX, WEEKLY_STAT_DROP } from '../data/store'
 
 const EMPTY_PROFILE = { name: '', about: '', goal: '', area: '', ageGroup: '', region: '', goalHistory: [] }
@@ -39,11 +40,18 @@ export function useCleverCows() {
     const [quizResult, setQuizResult] = usePersistentState('quizResult', null)
 
     // Which screen is showing. A returning student goes straight to Home.
-    const [screen, setScreen] = useState(() => (quizResult ? 'home' : 'welcome'))
+    // Who is logged in: 'student', 'organisation', or null (logged out, on the Welcome screen).
+    // A student saved before log-in existed counts as logged in.
+    const [account, setAccount] = usePersistentState('account', () => (quizResult ? 'student' : null))
+    // The organisation a coordinator logged in as, e.g. "org_paws".
+    const [orgAccountId, setOrgAccountId] = usePersistentState('orgAccountId', null)
+    const view = account === 'organisation' ? 'organisation' : 'student'
+
+    const [screen, setScreen] = useState(() => (account === 'student' && quizResult ? 'home' : 'welcome'))
 
     // The organisation whose page is open, e.g. "org_paws".
     const [openOrgId, setOpenOrgId] = useState(null)
-    const [orgReturnTo, setOrgReturnTo] = useState('organisations')
+    const [orgReturnTo, setOrgReturnTo] = useState('home')
     const [causeReturnTo, setCauseReturnTo] = useState('home')
 
     // Organisations the student follows, to hear how they're doing.
@@ -116,9 +124,6 @@ export function useCleverCows() {
         showTitles: false, publicDiary: false, showOnLeaderboard: false,
     })
 
-    // 'student' or 'organisation'.
-    const [view, setView] = usePersistentState('view', 'student')
-
     // Actions that have given the cow grass, e.g. "cause_02:signup". Each counts once.
     const [fedActions, setFedActions] = usePersistentState('fedActions', [])
     const grass = fedActions.reduce((total, id) => total + (GRASS[id.split(':')[1]] || 0), 0)
@@ -136,6 +141,16 @@ export function useCleverCows() {
     }), (saved) => applyWeeklyDrop(saved, Date.now()))
     const basicGrassLeft = Math.max(0, grass - cow.grassFed)
 
+    // The keepsake Clover kept most recently, until the student sees it in the barn:
+    // { causeId, level, at }, or null.
+    const [newKeepsake, setNewKeepsake] = usePersistentState('newKeepsake', null)
+
+    // Ids of the student's hosted events approved since they last looked at Next up.
+    const [approvalNews, setApprovalNews] = usePersistentState('approvalNews', [])
+
+    // Ids of mailbag notes the student has opened.
+    const [readMail, setReadMail] = usePersistentState('readMail', [])
+
     // Grass gained since the cow last reacted on Home: { type, causeName, amount }.
     const [recentFeeds, setRecentFeeds] = useState([])
 
@@ -143,7 +158,21 @@ export function useCleverCows() {
     const [justFinishedGoal, setJustFinishedGoal] = useState(null)
     const finishedGoalIds = profile.goalHistory.map((finished) => finished.goalId)
 
+    // How many times Home has been opened this session, so Clover can vary what she says.
+    const [homeVisits, setHomeVisits] = useState(0)
+
     function navigate(nextScreen) {
+        if (nextScreen === 'home') {
+            setHomeVisits((count) => count + 1)
+        }
+        // Opening Profile (Next up) or Host your own event means approvals have been seen.
+        if (nextScreen === 'profile' || nextScreen === 'host') {
+            setApprovalNews([])
+        }
+        // Leaving the barn means the newest keepsake has been seen.
+        if (screen === 'cow' && nextScreen !== 'cow') {
+            setNewKeepsake(null)
+        }
         setScreen(nextScreen)
         window.scrollTo(0, 0)
     }
@@ -216,7 +245,7 @@ export function useCleverCows() {
     }
 
     // Buys a store item with Moolah. Grass and care items are used straight away;
-    // furniture, fun things and accessories stay in her room (accessories are put on).
+    // accessories are kept and put on.
     // Returns false if there isn't enough Moolah.
     // Grass and care items can't be used once that stat is already full.
     function buyItem(item) {
@@ -290,6 +319,7 @@ export function useCleverCows() {
 
     function finishStory(topTrait) {
         setQuizResult(topTrait)
+        setAccount('student')
         navigate('home')
     }
 
@@ -395,6 +425,15 @@ export function useCleverCows() {
             item.causeId === causeId && !item.weekly ? { ...item, done: true } : item
         ))
         earnMoolah(amount, `Session at ${cause.name}`)
+        // A first visit earns a keepsake and the third makes it treasured. Either way,
+        // Clover feels more at home: her Comfort and Happiness go up.
+        if (earlier === 0 || earlier + 1 === TREASURED_VISITS) {
+            setCow((prev) => ({
+                ...prev,
+                stats: raiseStat(raiseStat(prev.stats, 'comfort', KEEPSAKE_BOOST), 'happiness', KEEPSAKE_BOOST),
+            }))
+            setNewKeepsake({ causeId, level: earlier === 0 ? 'keepsake' : 'treasured', at: visit.at })
+        }
         return visit
     }
 
@@ -418,10 +457,14 @@ export function useCleverCows() {
         }])
     }
 
+    // Approving a student's event tells them through Clover, and it joins their Next up.
     function approveEvent(eventId) {
         setEvents((prev) => prev.map((event) =>
-            event.id === eventId ? { ...event, status: 'approved' } : event
+            event.id === eventId ? { ...event, status: 'approved', approvedAt: new Date().toISOString() } : event
         ))
+        if (events.some((event) => event.id === eventId && event.source === 'student')) {
+            setApprovalNews((prev) => (prev.includes(eventId) ? prev : [...prev, eventId]))
+        }
     }
 
     function thankVolunteer(causeId, personId) {
@@ -524,6 +567,27 @@ export function useCleverCows() {
         setCalendarConnected(false)
     }
 
+    // ---- Logging in and out ----
+
+    // A returning student picks up where they left off.
+    function logInStudent() {
+        setAccount('student')
+        navigate('home')
+    }
+
+    function logInOrganisation(orgId) {
+        setOrgAccountId(orgId)
+        setAccount('organisation')
+        window.scrollTo(0, 0)
+    }
+
+    // Logging out keeps everything saved and returns to the Welcome screen.
+    function logOut() {
+        setAccount(null)
+        setScreen('welcome')
+        window.scrollTo(0, 0)
+    }
+
     // Clears everything saved and starts the demo again from the Welcome screen.
     function resetDemo() {
         clearAll()
@@ -534,11 +598,11 @@ export function useCleverCows() {
         // values
         quizResult, screen, openCauseId, openedBySurprise, openOrgId, orgReturnTo, causeReturnTo, followedOrgIds, profile, signedUp, allSignups,
         events, favourites, sentInvites, orgUpdates, thanks, sampleAttendance, attendance, hoursWorked,
-        portfolio, lastVisit, cow, basicGrassLeft, likes, reactions, chats, joinedInvites, viewingFriendId, chatFriendId,
-        friendIds, history, diary, calendarConnected, settings, view,
+        portfolio, lastVisit, cow, basicGrassLeft, newKeepsake, readMail, homeVisits, approvalNews, likes, reactions, chats, joinedInvites, viewingFriendId, chatFriendId,
+        friendIds, history, diary, calendarConnected, settings, view, account, orgAccountId,
         grass, recentFeeds, justFinishedGoal, finishedGoalIds, moolah, moolahLedger,
         // actions
-        navigate, setView, setProfile, setSettings, setCalendarConnected,
+        navigate, logInStudent, logInOrganisation, logOut, setProfile, setSettings, setCalendarConnected,
         changeGoal, chooseNextGoal, recordAction, finishWelcome, finishAboutYou, finishStory,
         retakeStory, openCause, openOrganisation, toggleFollow, signUpFor, surpriseMe, confirmSignup, answerCalendarPrompt,
         startReflection, wentToSession, saveReflection, setEntryPublic, togglePortfolio,
@@ -549,5 +613,6 @@ export function useCleverCows() {
         toggleLike, toggleReaction, sendChat, joinInvite, openFriend, openChat, setChatFriendId,
         disconnectCalendar, resetDemo, earnMoolah, spendMoolah,
         clearRecentFeeds: () => setRecentFeeds([]),
+        markMailRead: (id) => setReadMail((prev) => (prev.includes(id) ? prev : [...prev, id])),
     }
 }

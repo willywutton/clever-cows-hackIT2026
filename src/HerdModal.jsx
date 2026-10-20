@@ -1,9 +1,9 @@
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { sampleStudentById } from './data/friends'
 import { organisationById } from './data/organisations'
 import Modal from './Modal'
 import CowAvatar from './CowAvatar'
-import SampleTag from './SampleTag'
 import './HerdModal.css'
 
 function HerdModal({ app, startTab, onClose }) {
@@ -34,7 +34,7 @@ function HerdModal({ app, startTab, onClose }) {
                         <li key={friend.id}>
                             <CowAvatar accessories={friend.accessories} size="small" label=""/>
                             <div>
-                                <strong>{friend.name}</strong> <SampleTag/>
+                                <strong>{friend.name}</strong>
                                 <small>{friend.hoursWorked} h volunteered</small>
                             </div>
                             <button onClick={() => go(() => app.openChat(friend.id))}>Chat</button>
@@ -51,7 +51,7 @@ function HerdModal({ app, startTab, onClose }) {
                     )}
                     {followed.map((org) => (
                         <li key={org.id}>
-                            <span className="herd-modal-mark" style={{ background: org.color }} aria-hidden="true">{org.emoji}</span>
+                            <span className="herd-modal-mark" style={{ background: org.color }} aria-hidden="true"><Graphic symbol={org.emoji}/></span>
                             <div>
                                 <strong>{org.name}</strong>
                                 <small>{org.tagline}</small>

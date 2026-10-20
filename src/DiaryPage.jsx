@@ -1,5 +1,6 @@
 // DiaryPage.jsx is the Diary tab: every diary entry as a book (with page flips)
 // or as a plain list, and a button to write a new entry.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { causes } from './data/causes'
 import PageTitle from './PageTitle'
@@ -44,11 +45,11 @@ function DiaryPage({ app }) {
         <div className="diary-tab">
             <PageTitle title="Diary" subtitle="Your sessions, in your own words.">
                 <div className="diary-view-toggle" role="group" aria-label="Diary view">
-                    <button aria-pressed={view === "book"} onClick={() => setView("book")}>📖 Book</button>
-                    <button aria-pressed={view === "list"} onClick={() => setView("list")}>☰ List</button>
+                    <button aria-pressed={view === "book"} onClick={() => setView("book")}><Graphic symbol="openbook"/> Book</button>
+                    <button aria-pressed={view === "list"} onClick={() => setView("list")}><Graphic symbol="list"/> List</button>
                 </div>
                 {signedUpCauses.length > 0 && (
-                    <button className="diary-write" onClick={handleWrite}>✏️ Write a diary entry</button>
+                    <button className="diary-write" onClick={handleWrite}><Graphic symbol="pencil"/> Write a diary entry</button>
                 )}
             </PageTitle>
 
@@ -64,7 +65,7 @@ function DiaryPage({ app }) {
 
             {pages.length === 0 && (
                 <JournalPage className="diary-sample">
-                    <p className="diary-sample-tag">Sample page</p>
+                    <p className="diary-sample-tag">Your first page</p>
                     <h4>What a diary page looks like</h4>
                     <p>
                         After a session, press "I went to this session" under Next up on your Profile.

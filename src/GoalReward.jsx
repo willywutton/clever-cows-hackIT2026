@@ -1,7 +1,7 @@
 // GoalReward.jsx shows what finishing a goal earns: Moolah, a title, and sometimes an
 // accessory for Clover Cowdini. It's shown before finishing, so the student knows up front.
+import Graphic from './Graphic'
 import { TITLES } from './titles'
-import { ART } from './assets/cowArt'
 import { STORE_ITEMS } from './data/store'
 import './GoalReward.css'
 
@@ -13,11 +13,11 @@ function GoalReward({ goal, earned = false }) {
     return (
         <div className="goal-reward">
             <span className="goal-reward-label">{earned ? "You earned" : "Reward"}</span>
-            <span className="goal-reward-chip"><span aria-hidden="true">🪙</span> {goal.reward.moolah} Moolah</span>
-            <span className="goal-reward-chip"><span aria-hidden="true">🏅</span> {title.name}</span>
+            <span className="goal-reward-chip"><span aria-hidden="true"><Graphic symbol="coin"/></span> {goal.reward.moolah} Moolah</span>
+            <span className="goal-reward-chip"><span aria-hidden="true"><Graphic symbol="medal"/></span> {title.name}</span>
             {accessory && (
                 <span className="goal-reward-chip">
-                    <span aria-hidden="true">{ART[accessory.id].emoji}</span> {accessory.name} for Clover
+                    <span aria-hidden="true"><Graphic symbol={accessory.id}/></span> {accessory.name} for Clover
                 </span>
             )}
         </div>

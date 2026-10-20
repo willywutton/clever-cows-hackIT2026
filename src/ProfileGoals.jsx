@@ -1,6 +1,7 @@
 // ProfileGoals.jsx is the Goals section on Profile: the current goal (with progress,
 // reward and a way to change it) and the goals already finished, with their titles.
 // Goals that were changed or dropped are simply not listed: nothing counts as a failure.
+import Graphic from './Graphic'
 import { goalById } from './goalProgress'
 import { TITLES } from './titles'
 import GoalCard from './GoalCard'
@@ -24,7 +25,7 @@ function ProfileGoals({ goalId, history, goalHistory, onGoalChange }) {
                             return (
                                 <li key={finished.goalId}>
                                     <span>✓ {goal.name}</span>
-                                    <span className="profile-goals-title">🏅 {title.name}</span>
+                                    <span className="profile-goals-title"><Graphic symbol="medal"/> {title.name}</span>
                                 </li>
                             )
                         })}

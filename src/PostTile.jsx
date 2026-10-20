@@ -1,5 +1,4 @@
 import CowAvatar from './CowAvatar'
-import SampleTag from './SampleTag'
 import Sticker from './Sticker'
 import './PostTile.css'
 
@@ -13,7 +12,6 @@ function PostTile({ entry, author, cause, onOpen }) {
                 <div>
                     <p className="post-tile-name">
                         {onOpen ? <button className="post-tile-open" onClick={onOpen}>{author.name}</button> : author.name}
-                        {author.sample && <SampleTag/>}
                     </p>
                     <p className="post-tile-meta">{cause.name} · {date}</p>
                 </div>

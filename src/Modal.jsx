@@ -1,3 +1,4 @@
+import Graphic from './Graphic'
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import './Modal.css'
@@ -28,7 +29,7 @@ function Modal({ title, icon, eyebrow, wide = false, onClose, children }) {
     return createPortal(
         <div className="modal-backdrop" onPointerDown={(event) => event.target === event.currentTarget && onClose()}>
             <div className={wide ? "modal modal-wide card" : "modal card"} role="dialog" aria-modal="true" aria-labelledby="modal-title" tabIndex={-1} ref={box}>
-                {icon && <span className="modal-icon" aria-hidden="true">{icon}</span>}
+                {icon && <span className="modal-icon" aria-hidden="true"><Graphic symbol={icon}/></span>}
                 {eyebrow && <p className="eyebrow">{eyebrow}</p>}
                 <h3 id="modal-title">{title}</h3>
                 {children}

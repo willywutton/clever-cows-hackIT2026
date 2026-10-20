@@ -12,10 +12,6 @@ import { CLOVER } from './characters'
 export const COW_FACE = { emoji: "🐮", image: CLOVER.head }
 
 export const ART = {
-  // Furniture
-  "hay-bed": { emoji: "🛏️" },
-  "blanket": { emoji: "🧶" },
-  "lamp": { emoji: "🏮" },
   // Accessories
   "straw-hat": { emoji: "👒", slot: "head" },
   "flower-crown": { emoji: "🌼", slot: "head" },
@@ -27,10 +23,6 @@ export const ART = {
   "clover": { emoji: "🍀" },
   "alfalfa": { emoji: "🌿" },
   "wildflower": { emoji: "🌸" },
-  // Entertainment
-  "ball": { emoji: "⚽" },
-  "music-box": { emoji: "🎵" },
-  "tyre-swing": { emoji: "🛞" },
   // Care
   "brush": { emoji: "🪮" },
   "wash": { emoji: "🫧" },

@@ -1,3 +1,4 @@
+import Graphic from './Graphic'
 import { causeLook } from './causeColors'
 import { sessionOf, spotsFor } from './causeRows'
 import { travelLabel } from './travel'
@@ -20,7 +21,7 @@ function CauseTile({ cause, entry, friends = [], userRegion, note, onOpen }) {
     return (
         <article className="cause-tile lift" style={{ '--cause-color': look.color }}>
             <div className="cause-tile-art" aria-hidden="true">
-                <span>{look.emoji}</span>
+                <span><Graphic symbol={look.emoji}/></span>
             </div>
             {entry && <p className="cause-tile-badge">✓ You're going</p>}
 

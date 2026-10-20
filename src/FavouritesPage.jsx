@@ -1,5 +1,6 @@
 // FavouritesPage.jsx lists the causes and events the student has saved,
 // so they can come back to them later without having to sign up straight away.
+import Graphic from './Graphic'
 import { causes } from './data/causes'
 import { causeLook } from './causeColors'
 import PageTitle from './PageTitle'
@@ -21,7 +22,7 @@ function FavouritesPage({ app }) {
             <PageTitle title="Favourites" subtitle="Things you've saved for later. No rush."/>
 
             {savedCauses.length === 0 && savedEvents.length === 0 && (
-                <p className="card favourites-empty">Nothing saved yet. Press ☆ Save on any cause or event.</p>
+                <p className="card favourites-empty">Nothing saved yet. Press <Graphic symbol="star-outline"/> Save on any cause or event.</p>
             )}
 
             {savedCauses.length > 0 && (
@@ -30,7 +31,7 @@ function FavouritesPage({ app }) {
                     <div className="favourites-causes">
                         {savedCauses.map((cause) => (
                             <article key={cause.id} className="card favourites-cause" style={{ '--cause-color': causeLook(cause.id).color }}>
-                                <span className="favourites-emoji" aria-hidden="true">{causeLook(cause.id).emoji}</span>
+                                <span className="favourites-emoji" aria-hidden="true"><Graphic symbol={causeLook(cause.id).emoji}/></span>
                                 <strong>{cause.name}</strong>
                                 <div className="favourites-buttons">
                                     <button onClick={() => app.openCause(cause.id)}>Open</button>
@@ -46,17 +47,17 @@ function FavouritesPage({ app }) {
                 <section className="favourites-section">
                     <h3>Events</h3>
                     {savedEvents.map((event) => (
-                        <div key={event.id} className="favourites-event">
-                            <EventCard
-                                event={event}
-                                causeName={causes.find((c) => c.id === event.causeId).name}
-                                saved
-                                onToggleSave={() => app.toggleFavourite("event", event.id)}
-                            />
+                        <EventCard
+                            key={event.id}
+                            event={event}
+                            causeName={causes.find((c) => c.id === event.causeId).name}
+                            saved
+                            onToggleSave={() => app.toggleFavourite("event", event.id)}
+                        >
                             <button className="favourites-signup" onClick={() => app.signUpFor(event.causeId)}>
                                 Sign up for {causes.find((c) => c.id === event.causeId).name}
                             </button>
-                        </div>
+                        </EventCard>
                     ))}
                 </section>
             )}

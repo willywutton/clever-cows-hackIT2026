@@ -1,6 +1,7 @@
 // OrgSignups.jsx is the Volunteers page: everyone signed up for the cause, with their
 // helper type and how often they've come. Mark attended adds hours to that volunteer;
 // Say thanks sends a short thank-you, which the demo student hears from Clover on Home.
+import Graphic from '../Graphic'
 import { useState } from 'react'
 import { sessionHours } from '../data/economy'
 import { sessionOf } from '../causeRows'
@@ -48,7 +49,7 @@ function OrgSignups({ app, cause, rows, stats }) {
 
             {stats.toThank.length > 0 && (
                 <p className="org-nudge">
-                    <span aria-hidden="true">💛</span> {stats.toThank.length} {stats.toThank.length === 1 ? "person has" : "people have"} come
+                    <span aria-hidden="true"><Graphic symbol="heart"/></span> {stats.toThank.length} {stats.toThank.length === 1 ? "person has" : "people have"} come
                     once and not been thanked yet.
                 </p>
             )}
@@ -58,7 +59,6 @@ function OrgSignups({ app, cause, rows, stats }) {
                     <li key={row.id} className={row.sample ? "org-row" : "org-row org-row-student"}>
                         <div className="org-row-who">
                             <strong>{row.name}</strong>
-                            {row.sample && <span className="org-sample">Sample</span>}
                             <span className={`org-chip org-chip-${row.status.id}`}>{row.status.label}</span>
                             {row.weekly && <span className="org-chip">Every week</span>}
                             <span className="org-row-detail">
@@ -72,7 +72,7 @@ function OrgSignups({ app, cause, rows, stats }) {
                             {row.attended > 0 && (
                                 row.thanked
                                     ? <span className="org-row-thanked">Thanked ✓</span>
-                                    : <button className="org-row-thank" onClick={() => app.thankVolunteer(cause.id, row.id)}>💛 Say thanks</button>
+                                    : <button className="org-row-thank" onClick={() => app.thankVolunteer(cause.id, row.id)}><Graphic symbol="heart"/> Say thanks</button>
                             )}
                         </div>
                     </li>

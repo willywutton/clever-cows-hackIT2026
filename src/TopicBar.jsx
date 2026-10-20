@@ -1,3 +1,4 @@
+import Graphic from './Graphic'
 import { TOPICS } from './causeRows'
 import { useHorizontalScroll } from './useHorizontalScroll'
 import './TopicBar.css'
@@ -15,7 +16,7 @@ function TopicBar({ topic, onChange, calendarConnected, onLockedCalendar }) {
                 aria-label="Browse causes"
             >
                 <button aria-pressed={topic === "all"} onClick={() => onChange("all")}>
-                    <span aria-hidden="true">✨</span> For you
+                    <span aria-hidden="true"><Graphic symbol="spark"/></span> For you
                 </button>
                 <button
                     className={calendarConnected ? "topic-bar-calendar" : "topic-bar-calendar topic-bar-locked"}
@@ -23,12 +24,12 @@ function TopicBar({ topic, onChange, calendarConnected, onLockedCalendar }) {
                     aria-label={calendarConnected ? "Fits my week" : "Fits my week (connect your calendar first)"}
                     onClick={() => (calendarConnected ? onChange("calendar") : onLockedCalendar())}
                 >
-                    <span aria-hidden="true">{calendarConnected ? "📅" : "🔒"}</span> Fits my week
+                    <span aria-hidden="true"><Graphic symbol={calendarConnected ? "calendar" : "lock"}/></span> Fits my week
                 </button>
                 <span className="topic-bar-divider" aria-hidden="true"/>
                 {TOPICS.map((option) => (
                     <button key={option.id} aria-pressed={topic === option.id} onClick={() => onChange(option.id)}>
-                        <span aria-hidden="true">{option.emoji}</span> {option.label}
+                        <span aria-hidden="true"><Graphic symbol={option.emoji}/></span> {option.label}
                     </button>
                 ))}
             </div>

@@ -1,3 +1,4 @@
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { causes } from './data/causes'
 import { sampleStudentById } from './data/friends'
@@ -5,7 +6,6 @@ import { sampleIncomingInvites } from './data/sampleSocial'
 import { organisations } from './data/organisations'
 import { suggestedFriends } from './herd'
 import CowAvatar from './CowAvatar'
-import SampleTag from './SampleTag'
 import FollowButton from './FollowButton'
 import FriendsLeaderboard from './FriendsLeaderboard'
 import HerdModal from './HerdModal'
@@ -35,7 +35,7 @@ function HerdAside({ app, onOpenInvites }) {
                         <strong>{app.followedOrgIds.length}</strong> following
                     </button>
                     <p className="herd-stat">
-                        <strong>{friendHours}</strong> friends' hours <SampleTag/>
+                        <strong>{friendHours}</strong> friends' hours
                     </p>
                 </div>
                 <p className="herd-stats-hint">Tap friends or following to see who they are.</p>
@@ -47,7 +47,7 @@ function HerdAside({ app, onOpenInvites }) {
                         const from = sampleStudentById(invite.fromId)
                         return (
                             <p key={invite.id}>
-                                <span aria-hidden="true">💌</span> <strong>{from.name}</strong> invited you to{" "}
+                                <span aria-hidden="true"><Graphic symbol="mail"/></span> <strong>{from.name}</strong> invited you to{" "}
                                 <strong>{causes.find((c) => c.id === invite.causeId).name}</strong>
                             </p>
                         )
@@ -62,7 +62,7 @@ function HerdAside({ app, onOpenInvites }) {
                     <ul>
                         {orgsToFollow.map((org) => (
                             <li key={org.id}>
-                                <span className="herd-org-mark" style={{ background: org.color }} aria-hidden="true">{org.emoji}</span>
+                                <span className="herd-org-mark" style={{ background: org.color }} aria-hidden="true"><Graphic symbol={org.emoji}/></span>
                                 <div>
                                     <button className="herd-org-name" onClick={() => app.openOrganisation(org.id)}>{org.name}</button>
                                     <small>{org.suits.includes(app.quizResult) ? `Suits ${CHARACTERS[app.quizResult].name.replace("The ", "")}s like you` : org.tagline}</small>
@@ -82,7 +82,7 @@ function HerdAside({ app, onOpenInvites }) {
                             <li key={student.id}>
                                 <CowAvatar accessories={student.accessories} size="small" label=""/>
                                 <div>
-                                    <strong>{student.name}</strong> <SampleTag/>
+                                    <strong>{student.name}</strong>
                                     <small>{reason}</small>
                                     {mutual.length > 0 && <small>{mutual[0].name} goes there too</small>}
                                 </div>

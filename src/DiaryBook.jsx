@@ -1,5 +1,6 @@
 // DiaryBook.jsx shows the diary as a book: a cover, then one page per entry.
 // Turning a page plays a page-flip animation, done with CSS only.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import './DiaryBook.css'
 
@@ -23,7 +24,7 @@ function DiaryBook({ name, pages }) {
                 <div key={index} className={`diary-book-page diary-book-flip-${direction}`}>
                     {index === 0 ? (
                         <div className="diary-book-cover">
-                            <span aria-hidden="true">📔</span>
+                            <span aria-hidden="true"><Graphic symbol="book"/></span>
                             <p className="diary-book-cover-title">{name ? `${name}'s diary` : "My diary"}</p>
                             <p className="diary-book-cover-count">
                                 {last} {last === 1 ? "page" : "pages"}

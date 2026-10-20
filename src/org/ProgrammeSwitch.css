@@ -1,0 +1,49 @@
+.programme-switch {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.programme-switch-label {
+  margin-right: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.programme-switch button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--card);
+  color: var(--text);
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.programme-switch button:hover {
+  border-color: var(--hay);
+}
+
+.programme-switch button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+
+.programme-switch-badge {
+  min-width: 20px;
+  padding: 0 6px;
+  background: var(--barn);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}

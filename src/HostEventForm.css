@@ -91,3 +91,104 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.host-stepper {
+  display: flex;
+  align-items: stretch;
+  align-self: flex-start;
+}
+
+.host-stepper button {
+  width: 42px;
+  padding: 0;
+  background: var(--hay-soft);
+  color: var(--ink);
+  border: 2px solid var(--border);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.host-stepper button:first-child {
+  border-radius: 10px 0 0 10px;
+}
+
+.host-stepper button:last-child {
+  border-radius: 0 10px 10px 0;
+}
+
+.host-stepper button:hover:not(:disabled) {
+  background: var(--hay);
+}
+
+.host-stepper button:disabled {
+  opacity: 0.4;
+}
+
+.host-field .host-stepper input {
+  width: 64px;
+  border-width: 2px 0;
+  border-radius: 0;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.host-stepper input::-webkit-inner-spin-button,
+.host-stepper input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.host-field small {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-soft);
+}
+
+.host-cohosts {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.host-cohosts legend {
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+.host-cohost-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.host-cohost {
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 5px 8px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.host-cohost:hover {
+  border-color: var(--hay);
+}
+
+.host-cohost:has(input:checked) {
+  border-color: var(--barn);
+  background: var(--hay-soft);
+}
+
+.host-cohost:has(input:disabled) {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.host-cohost input {
+  margin: 0;
+  accent-color: var(--barn);
+}

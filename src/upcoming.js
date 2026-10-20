@@ -13,3 +13,10 @@ export function upcomingSessions(signedUp, now = new Date()) {
         .filter((item) => item.entry.weekly || new Date(item.signup.startsAt) > now)
         .sort((a, b) => new Date(a.signup.startsAt) - new Date(b.signup.startsAt))
 }
+
+// The student's own events that an organisation approved and that haven't happened yet, soonest first.
+export function hostedUpcoming(events, now = new Date()) {
+    return events
+        .filter((event) => event.source === "student" && event.status === "approved" && new Date(event.startsAt) > now)
+        .sort((a, b) => new Date(a.startsAt) - new Date(b.startsAt))
+}

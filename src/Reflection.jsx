@@ -2,6 +2,7 @@
 // a short message, a few stickers, and whether the entry is public or private.
 // It looks like a journal page, and the photo shows as an instant-camera print.
 // The photo stays on this device; it is never uploaded.
+import Graphic from './Graphic'
 import { useState } from 'react'
 import { stickers } from './assets/stickers'
 import { readImageFile } from './imageFile'
@@ -54,7 +55,7 @@ function Reflection({ cause, publicByDefault, visit, onSave, onCancel }) {
 
             {/* The real file input sits inside the label, so the styled label works as the button. */}
             <label className="reflection-photo-button">
-                <span aria-hidden="true">📷</span> {photoUrl ? "Choose a different photo" : "Add a photo (optional)"}
+                <span aria-hidden="true"><Graphic symbol="camera"/></span> {photoUrl ? "Choose a different photo" : "Add a photo (optional)"}
                 <input type="file" accept="image/*" onChange={handlePhotoChange}/>
             </label>
             <p className="reflection-note">Please don't include other people's faces.</p>
@@ -89,11 +90,11 @@ function Reflection({ cause, publicByDefault, visit, onSave, onCancel }) {
                 <legend>Who can see this page?</legend>
                 <label>
                     <input type="radio" name="visibility" checked={!isPublic} onChange={() => setIsPublic(false)}/>
-                    <span><span aria-hidden="true">🔒</span> Private: only you</span>
+                    <span><span aria-hidden="true"><Graphic symbol="lock"/></span> Private: only you</span>
                 </label>
                 <label>
                     <input type="radio" name="visibility" checked={isPublic} onChange={() => setIsPublic(true)}/>
-                    <span><span aria-hidden="true">🌻</span> Public: friends can see it on Social</span>
+                    <span><span aria-hidden="true"><Graphic symbol="flower"/></span> Public: friends can see it on Social</span>
                 </label>
             </fieldset>
 
