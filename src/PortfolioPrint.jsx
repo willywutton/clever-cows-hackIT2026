@@ -37,7 +37,7 @@ function PortfolioPrint({ name, quizResult, hoursWorked, diary, portfolio, onBac
                 )
             })}
 
-            <footer>Made with Clever Cows (a HackIT 2026 student project).</footer>
+            <footer>Made with Moomunity, by team Clever Cows (a HackIT 2026 student project).</footer>
         </article>
     )
 }

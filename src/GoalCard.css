@@ -16,10 +16,11 @@
   padding: 8px 14px;
   background: #fff;
   color: var(--text);
-  border: 2px solid var(--grass);
+  border: 2px solid var(--border);
   font-weight: 600;
 }
 
 .goal-card-button:hover {
-  background: var(--grass-soft);
+  background: var(--hay-soft);
+  border-color: var(--hay);
 }

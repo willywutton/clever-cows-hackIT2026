@@ -144,6 +144,7 @@ function App() {
         existing={app.signedUp.find((item) => item.causeId === openCause.id) || null}
         userRegion={app.profile.region}
         myFriendIds={app.friendIds}
+        myFace={CHARACTERS[app.quizResult].head}
         visitsSoFar={app.attendance.filter((visit) => visit.causeId === openCause.id).length}
         onAddFriend={app.addFriend}
         onConfirm={app.confirmSignup}
@@ -255,7 +256,7 @@ function App() {
 
   // Reading and form screens stay a comfortable width in the middle.
   // Every other screen fades in when it opens; the barn screens have their own animations.
-  const narrowScreens = ['cause', 'signup', 'signup-done', 'reflection']
+  const narrowScreens = ['cause', 'signup-done', 'reflection']
   const pageClasses = [
     narrowScreens.includes(screen) && 'page-narrow',
     !barnScreens.includes(screen) && 'screen-enter',

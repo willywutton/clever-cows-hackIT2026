@@ -1,0 +1,79 @@
+.relay-rota {
+  overflow-x: auto;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+}
+
+.relay-rota table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.relay-rota th,
+.relay-rota td {
+  padding: 8px 6px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.relay-rota thead th {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-soft);
+  border-bottom: 2px solid var(--border);
+}
+
+.relay-rota tbody tr + tr {
+  border-top: 1px solid var(--border);
+}
+
+.relay-rota tbody th {
+  text-align: left;
+  font-weight: 600;
+}
+
+.relay-rota-go,
+.relay-rota-rest {
+  display: inline-block;
+  min-width: 52px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.relay-rota-go {
+  background: var(--grass);
+  color: #fff;
+}
+
+.relay-rota-rest {
+  background: #f1e7da;
+  color: var(--text-soft);
+}
+
+/* On a phone, dates wrap onto two lines and the pills shrink so all four weeks fit. */
+@media (max-width: 520px) {
+  .relay-rota th,
+  .relay-rota td {
+    padding: 6px 3px;
+  }
+
+  .relay-rota thead th {
+    white-space: normal;
+    font-size: 11px;
+  }
+
+  .relay-rota tbody th {
+    font-size: 13px;
+  }
+
+  .relay-rota-go,
+  .relay-rota-rest {
+    min-width: 0;
+    padding: 2px 6px;
+    font-size: 11px;
+  }
+}

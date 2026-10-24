@@ -85,7 +85,7 @@
   display: block;
   font-family: var(--display);
   font-size: 28px;
-  color: var(--barn);
+  color: var(--ink);
 }
 
 .profile-header-edit {

@@ -58,7 +58,7 @@ export const causes = [
         startsAt: "2026-11-08T14:00:00+08:00",
         durationMinutes: 120,
         peopleNeeded: 3,
-        spots: 6,
+        spots: 8,
         area: "Toa Payoh",
         region: "Central"
       }
@@ -190,7 +190,7 @@ export const causes = [
         startsAt: "2026-11-10T17:30:00+08:00",
         durationMinutes: 60,
         peopleNeeded: 2,
-        spots: 6,
+        spots: 8,
         area: "Woodlands",
         region: "North"
       }

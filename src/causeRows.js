@@ -27,6 +27,11 @@ export function spotsFor(cause, entry) {
     }
 }
 
+// Places still free for the next session, not counting the student's own sign-up.
+export function openPlaces(cause) {
+    return Math.max(0, sessionOf(cause).spots - sampleSignupsFor(cause.id).length)
+}
+
 export function friendsGoingTo(causeId, friendIds) {
     return sampleStudents.filter((student) => friendIds.includes(student.id) && student.goingTo.includes(causeId))
 }

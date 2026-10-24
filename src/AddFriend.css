@@ -51,12 +51,13 @@
   padding: 9px 18px;
   background: #fff;
   color: var(--text);
-  border: 2px solid var(--grass);
+  border: 2px solid var(--border);
   font-weight: 600;
 }
 
 .add-friend-button:hover:not(:disabled) {
-  background: var(--grass-soft);
+  background: var(--hay-soft);
+  border-color: var(--hay);
 }
 
 .add-friend-button:disabled {

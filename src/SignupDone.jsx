@@ -4,7 +4,7 @@
 // of other causes they might like.
 import Graphic from './Graphic'
 import { useState } from 'react'
-import { describeWho, joinNames, nameOf, suggestNextTurn } from './people'
+import { describeWho, joinNames, nameOf, planLabel, suggestNextTurn } from './people'
 import { causeLook } from './causeColors'
 import { friendsGoingTo, matchedCauses, spotsFor } from './causeRows'
 import { REFLECTION_MOOLAH, visitMoolah } from './data/economy'
@@ -38,7 +38,7 @@ function SignupDone({ app, cause, entry, onCalendarAnswered, onHome, onBackToCau
     const [invited, setInvited] = useState(false)
     const [openedMap, setOpenedMap] = useState(false)
     const signup = cause.actions.find((action) => action.type === "signup")
-    const label = entry.weekly ? signup.weeklyLabel : signup.label
+    const label = planLabel(signup, entry)
     const look = causeLook(cause.id)
     const org = organisationOfCause(cause.id)
     const followingOrg = app.followedOrgIds.includes(org.id)
@@ -72,11 +72,11 @@ function SignupDone({ app, cause, entry, onCalendarAnswered, onHome, onBackToCau
                     <strong>{daysUntil(signup.startsAt)}</strong>
                 </div>
                 <div className="signup-done-details">
-                    <SessionDetails action={signup} weekly={entry.weekly} userRegion={app.profile.region}/>
+                    <SessionDetails action={signup} weekly={entry.weekly} weeks={entry.weeks} userRegion={app.profile.region}/>
                     <p><span aria-hidden="true"><Graphic symbol="people"/></span> {describeWho(entry)} · {spots.going} of {spots.total} places taken</p>
                     {entry.weekly && entry.mode === "relay" && (
                         <p>
-                            <span aria-hidden="true"><Graphic symbol="repeat"/></span> Suggested next turn: {joinNames(suggestNextTurn(entry, signup.peopleNeeded).map(nameOf))}.
+                            <span aria-hidden="true"><Graphic symbol="repeat"/></span> Suggested next turn: {joinNames(suggestNextTurn(entry, signup.peopleNeeded).map(nameOf))}
                         </p>
                     )}
                 </div>

@@ -2,7 +2,7 @@
 // Nothing is read from or sent to the student's calendar: the student
 // chooses to open the Google link or download the .ics file themselves.
 import { sessionEnd } from './formatSession'
-import { describeWho } from './people'
+import { describeWho, planLabel } from './people'
 
 // Calendars expect times like 20261107T010000Z (UTC, no dashes or colons).
 function toUtcStamp(date) {
@@ -11,10 +11,10 @@ function toUtcStamp(date) {
 
 function eventInfo(cause, entry) {
     const signup = cause.actions.find((action) => action.type === "signup")
-    const label = entry.weekly ? signup.weeklyLabel : signup.label
+    const label = planLabel(signup, entry)
     return {
         title: `${cause.name}: ${label}`,
-        details: `Who's going: ${describeWho(entry)}\n\nSession from Clever Cows`,
+        details: `Who's going: ${describeWho(entry)}\n\nSession from Moomunity`,
         location: `${signup.area}, Singapore`,
         start: toUtcStamp(new Date(signup.startsAt)),
         end: toUtcStamp(sessionEnd(signup)),
@@ -33,9 +33,14 @@ export function googleCalendarUrl(cause, entry) {
         ctz: 'Asia/Singapore',
     })
     if (entry.weekly) {
-        params.set('recur', 'RRULE:FREQ=WEEKLY')
+        params.set('recur', repeatRule(entry))
     }
     return `https://calendar.google.com/calendar/render?${params}`
+}
+
+// A weekly repeat; a sign-up for a set number of weeks stops after that many sessions.
+function repeatRule(entry) {
+    return entry.weeks ? `RRULE:FREQ=WEEKLY;COUNT=${entry.weeks}` : 'RRULE:FREQ=WEEKLY'
 }
 
 // In .ics files, backslashes, commas, semicolons and new lines must be escaped.
@@ -67,11 +72,11 @@ export function buildIcs(cause, entry) {
     const lines = [
         'BEGIN:VCALENDAR',
         'VERSION:2.0',
-        'PRODID:-//Clever Cows//HackIT 2026//EN',
+        'PRODID:-//Moomunity//HackIT 2026//EN',
         'CALSCALE:GREGORIAN',
         'METHOD:PUBLISH',
         'BEGIN:VEVENT',
-        `UID:${cause.id}-${event.start}@clever-cows.demo`,
+        `UID:${cause.id}-${event.start}@moomunity.app`,
         `DTSTAMP:${toUtcStamp(new Date())}`,
         `DTSTART:${event.start}`,
         `DTEND:${event.end}`,
@@ -80,7 +85,7 @@ export function buildIcs(cause, entry) {
         `LOCATION:${escapeText(event.location)}`,
     ]
     if (entry.weekly) {
-        lines.push('RRULE:FREQ=WEEKLY')
+        lines.push(repeatRule(entry))
     }
     lines.push('END:VEVENT', 'END:VCALENDAR')
     return lines.map(foldLine).join('\r\n') + '\r\n'

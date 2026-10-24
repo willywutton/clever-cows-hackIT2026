@@ -42,7 +42,7 @@
   display: block;
   font-family: var(--display);
   font-size: 24px;
-  color: var(--barn);
+  color: var(--ink);
 }
 
 .herd-invite {
@@ -102,7 +102,7 @@
 .herd-suggest .herd-add {
   flex-shrink: 0;
   padding: 5px 10px;
-  background: var(--grass);
+  background: var(--ink);
   color: #fff;
   border: none;
   font-size: 14px;
@@ -110,7 +110,7 @@
 }
 
 .herd-suggest .herd-add:hover {
-  background: #4a7a31;
+  background: #4d3223;
 }
 
 @media (max-width: 1100px) {

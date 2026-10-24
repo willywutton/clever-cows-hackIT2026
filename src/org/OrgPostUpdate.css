@@ -29,10 +29,15 @@
 
 .org-post-form button {
   padding: 8px 16px;
-  background: var(--ink);
+  background: var(--barn);
   color: #fff;
   border: none;
   font-weight: 700;
+  box-shadow: 0 3px 0 var(--barn-dark);
+}
+
+.org-post-form button:hover:not(:disabled) {
+  background: #c24e37;
 }
 
 .org-post-form button:disabled {

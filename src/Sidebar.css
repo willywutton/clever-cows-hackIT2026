@@ -85,8 +85,9 @@
 
 .sidebar-account {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 8px 10px;
   margin-top: 6px;
   padding: 12px 4px 2px;
   border-top: 2px dashed var(--border);
@@ -110,10 +111,8 @@
 }
 
 .sidebar-account-who strong {
-  overflow: hidden;
   font-size: 15px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .sidebar-account-who small {
@@ -122,8 +121,8 @@
 }
 
 .sidebar-logout {
-  flex-shrink: 0;
-  padding: 5px 10px;
+  flex: 1 0 100%;
+  padding: 6px 10px;
   background: #fff;
   color: var(--text);
   border: 2px solid var(--border);
@@ -160,6 +159,7 @@
 
   .sidebar ul {
     flex: 1;
+    min-width: 0;
     flex-direction: row;
     gap: 2px;
     overflow-x: auto;
@@ -172,7 +172,7 @@
   .sidebar ul button {
     flex-direction: column;
     gap: 2px;
-    padding: 6px 10px;
+    padding: 6px 8px;
     font-size: 13px;
     text-align: center;
   }
@@ -193,7 +193,12 @@
     display: block;
   }
 
+  .sidebar-logout {
+    flex: 0 0 auto;
+  }
+
   .sidebar-account {
+    flex-wrap: nowrap;
     flex-shrink: 0;
     margin: 0;
     padding: 0 0 0 6px;

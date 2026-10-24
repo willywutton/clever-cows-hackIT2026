@@ -101,7 +101,7 @@ button.friends-column-person:hover {
 
 .friends-column-add {
   padding: 6px 12px;
-  background: var(--grass);
+  background: var(--ink);
   color: #fff;
   border: none;
   font-size: 14px;
@@ -109,7 +109,7 @@ button.friends-column-person:hover {
 }
 
 .friends-column-add:hover {
-  background: #4a7a31;
+  background: #4d3223;
 }
 
 .friends-column-empty {

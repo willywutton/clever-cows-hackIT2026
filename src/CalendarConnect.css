@@ -12,12 +12,13 @@
   padding: 10px 16px;
   background: #fff;
   color: var(--text);
-  border: 2px solid var(--grass);
+  border: 2px solid var(--border);
   font-weight: 600;
 }
 
 .calendar-connect-button:hover {
-  background: var(--grass-soft);
+  background: var(--hay-soft);
+  border-color: var(--hay);
 }
 
 .calendar-connect-disconnect {

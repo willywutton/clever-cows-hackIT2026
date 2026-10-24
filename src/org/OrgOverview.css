@@ -92,7 +92,7 @@
   font-family: var(--display);
   font-size: 36px;
   line-height: 1.1;
-  color: var(--barn);
+  color: var(--ink);
 }
 
 .org-stat small {
@@ -100,12 +100,8 @@
 }
 
 .org-stat-key {
-  background: var(--grass-soft);
-  border-color: var(--grass);
-}
-
-.org-stat-key strong {
-  color: var(--grass);
+  background: var(--hay-soft);
+  border-color: var(--hay);
 }
 
 .org-tasks {

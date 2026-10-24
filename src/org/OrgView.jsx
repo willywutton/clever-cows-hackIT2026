@@ -65,7 +65,7 @@ function OrgView({ app }) {
                     screen={section}
                     onNavigate={(next) => go(next)}
                     top={identity}
-                    account={{ name: org.name, role: "Coordinator", picture: <Graphic symbol={org.emoji}/> }}
+                    account={{ name: "Coordinator", role: org.name, picture: <Graphic symbol={org.emoji}/> }}
                     onLogOut={app.logOut}
                 />
             }
@@ -78,7 +78,7 @@ function OrgView({ app }) {
                     <OrgOverview {...shared} pending={active.pending} onBack={() => go("overview")}/>
                 )}
                 {section === "volunteers" && <>{switcher}<OrgSignups {...shared}/></>}
-                {section === "events" && <>{switcher}<OrgEvents app={app} cause={active.cause} pending={active.pending}/></>}
+                {section === "events" && <>{switcher}<OrgEvents app={app} cause={active.cause} pending={active.pending} followers={org.followers + (app.followedOrgIds.includes(org.id) ? 1 : 0)} onGo={go}/></>}
                 {section === "updates" && <>{switcher}<OrgUpdates app={app} org={org} cause={active.cause} rows={active.rows}/></>}
             </div>
         </AppShell>

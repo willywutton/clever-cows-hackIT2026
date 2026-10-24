@@ -5,16 +5,17 @@ import { formatSession } from './formatSession'
 import { travelLabel } from './travel'
 import './SessionDetails.css'
 
-// { action } is a cause's sign-up action. { weekly } shows "Every week from".
+// { action } is a cause's sign-up action. { weekly } shows "Every week from", and
+// { weeks } (if set) says how many weeks a fixed run lasts.
 // { userRegion } is the student's optional region from About you ('' if not answered).
-function SessionDetails({ action, weekly, userRegion }) {
+function SessionDetails({ action, weekly, weeks, userRegion }) {
     const travel = travelLabel(userRegion, action.region)
 
     return (
         <ul className="session-details">
             <li>
                 <span aria-hidden="true"><Graphic symbol="calendar"/></span>
-                {weekly ? `Every week from ${formatSession(action)}` : formatSession(action)}
+                {weekly ? `${weeks ? `Weekly for ${weeks} weeks` : "Every week"} from ${formatSession(action)}` : formatSession(action)}
             </li>
             <li>
                 <span aria-hidden="true"><Graphic symbol="pin"/></span>

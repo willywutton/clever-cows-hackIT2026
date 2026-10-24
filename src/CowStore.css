@@ -102,7 +102,8 @@
 }
 
 .cow-store-wear[aria-pressed="true"] {
-  background: var(--grass-soft);
+  background: var(--hay-soft);
+  border-color: var(--hay);
 }
 
 

@@ -66,8 +66,8 @@
 }
 
 .diary-entry-actions button[aria-pressed="true"] {
-  border-color: var(--grass);
-  background: var(--grass-soft);
+  border-color: var(--hay);
+  background: var(--hay-soft);
 }
 
 .diary-entry-copied,

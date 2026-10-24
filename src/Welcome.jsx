@@ -22,7 +22,7 @@ function Welcome({ returningName, onStart, onContinue, onStartFresh, onOrganisat
                 </div>
 
                 <div className="welcome-body">
-                    <h1>{returningName ? `Welcome back, ${returningName}` : "Welcome to Clever Cows"}</h1>
+                    <h1>{returningName ? `Welcome back, ${returningName}` : "Welcome to Moomunity"}</h1>
                     {returningName ? (
                         <p className="welcome-intro">
                             Clover's been keeping your barn warm. Pick up where you left off.
@@ -34,7 +34,7 @@ function Welcome({ returningName, onStart, onContinue, onStartFresh, onOrganisat
                                 where to start, and harder to keep going.
                             </p>
                             <p className="welcome-intro">
-                                Clever Cows matches you with causes that suit you, and makes it easy to keep
+                                Moomunity matches you with causes that suit you, and makes it easy to keep
                                 showing up: with friends, around your week, and without guilt.
                             </p>
                         </>

@@ -13,6 +13,15 @@ import './HostEventForm.css'
 const DESCRIPTION_LENGTH = 300
 const MIN_SPOTS = 2
 const MAX_SPOTS = 30
+const DURATIONS = [
+    { minutes: 30, label: "30 minutes" },
+    { minutes: 60, label: "1 hour" },
+    { minutes: 90, label: "1½ hours" },
+    { minutes: 120, label: "2 hours" },
+    { minutes: 180, label: "3 hours" },
+    { minutes: 240, label: "4 hours" },
+    { minutes: 360, label: "6 hours (half day or more)" },
+]
 
 // The current date and time as "YYYY-MM-DDTHH:MM", the format datetime inputs use,
 // so past times can't be picked.
@@ -32,6 +41,7 @@ function HostEventForm({ onSubmit, fixedCauseId, friendIds = [], submitLabel = "
     const programmes = organisations.find((org) => org.id === orgId).causeIds.map((id) => causes.find((c) => c.id === id))
     const causeId = fixedCauseId || chosenCauseId
     const [when, setWhen] = useState("")
+    const [duration, setDuration] = useState(120)
     const [place, setPlace] = useState("")
     const [description, setDescription] = useState("")
     const [spots, setSpots] = useState(6)
@@ -54,7 +64,7 @@ function HostEventForm({ onSubmit, fixedCauseId, friendIds = [], submitLabel = "
             return
         }
         onSubmit({
-            title: title.trim(), causeId, startsAt: `${when}:00+08:00`, durationMinutes: 120,
+            title: title.trim(), causeId, startsAt: `${when}:00+08:00`, durationMinutes: duration,
             place: place.trim(), description: description.trim(), photoUrl,
             ...(fixedCauseId ? {} : { spots, cohostIds }),
         })
@@ -62,6 +72,7 @@ function HostEventForm({ onSubmit, fixedCauseId, friendIds = [], submitLabel = "
         setSpots(6)
         setTitle("")
         setWhen("")
+        setDuration(120)
         setPlace("")
         setDescription("")
         setPhotoUrl(null)
@@ -102,10 +113,19 @@ function HostEventForm({ onSubmit, fixedCauseId, friendIds = [], submitLabel = "
 
             <div className="host-row">
                 <label className="host-field">
-                    <span>Date and time</span>
+                    <span>Date and start time</span>
                     <input type="datetime-local" value={when} min={nowForInput()} required
                         onChange={(event) => setWhen(event.target.value)}/>
                 </label>
+                <label className="host-field host-field-short">
+                    <span>How long?</span>
+                    <select value={duration} onChange={(event) => setDuration(Number(event.target.value))}>
+                        {DURATIONS.map((d) => <option key={d.minutes} value={d.minutes}>{d.label}</option>)}
+                    </select>
+                </label>
+            </div>
+
+            <div className="host-row">
                 <label className="host-field">
                     <span>Place</span>
                     <input type="text" value={place} maxLength={60} required

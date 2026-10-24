@@ -192,3 +192,8 @@
   margin: 0;
   accent-color: var(--barn);
 }
+
+.host-field-short {
+  flex: 0 1 200px;
+  min-width: 160px;
+}

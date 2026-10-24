@@ -60,20 +60,20 @@ function OrgSignups({ app, cause, rows, stats }) {
                         <div className="org-row-who">
                             <strong>{row.name}</strong>
                             <span className={`org-chip org-chip-${row.status.id}`}>{row.status.label}</span>
-                            {row.weekly && <span className="org-chip">Every week</span>}
+                            {row.weekly && <span className="org-chip">{row.weeks ? `For ${row.weeks} weeks` : "Every week"}</span>}
                             <span className="org-row-detail">
                                 {row.trait ? TRAIT_TIPS[row.trait].name.slice(0, -1) : "Helper type unknown"}
                                 {row.who && row.who !== "Just you" ? ` · ${row.who}` : ""}
                             </span>
                         </div>
                         <div className="org-row-attend">
-                            <span>{row.attended} {row.attended === 1 ? "visit" : "visits"} · {row.attended * hours} h</span>
+                            <span className="org-row-count">{row.attended} {row.attended === 1 ? "visit" : "visits"} · {row.attended * hours} h</span>
                             <button className="org-row-mark" onClick={() => markAttended(row)}>Mark attended</button>
-                            {row.attended > 0 && (
-                                row.thanked
+                            {row.attended === 0
+                                ? <span className="org-row-thank-slot" aria-hidden="true"/>
+                                : row.thanked
                                     ? <span className="org-row-thanked">Thanked ✓</span>
-                                    : <button className="org-row-thank" onClick={() => app.thankVolunteer(cause.id, row.id)}><Graphic symbol="heart"/> Say thanks</button>
-                            )}
+                                    : <button className="org-row-thank" onClick={() => app.thankVolunteer(cause.id, row.id)}><Graphic symbol="heart"/> Say thanks</button>}
                         </div>
                     </li>
                 ))}

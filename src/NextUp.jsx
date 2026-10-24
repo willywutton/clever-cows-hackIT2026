@@ -4,7 +4,7 @@ import { hostedUpcoming, upcomingSessions } from './upcoming'
 import { causes } from './data/causes'
 import { organisationOfCause } from './data/organisations'
 import { formatSession } from './formatSession'
-import { describeWho, joinNames, nameOf, suggestNextTurn } from './people'
+import { describeWho, joinNames, nameOf, planLabel, suggestNextTurn } from './people'
 import SessionDetails from './SessionDetails'
 import AddToCalendar from './AddToCalendar'
 import './NextUp.css'
@@ -40,8 +40,8 @@ function NextUp({ signedUp, events = [], userRegion, onReflect }) {
 
             {sessions.map(({ entry, cause, signup }) => (
                 <div className="next-up-item" key={cause.id}>
-                    <strong>{cause.name}: {entry.weekly ? signup.weeklyLabel : signup.label}</strong>
-                    <SessionDetails action={signup} weekly={entry.weekly} userRegion={userRegion}/>
+                    <strong>{cause.name}: {planLabel(signup, entry)}</strong>
+                    <SessionDetails action={signup} weekly={entry.weekly} weeks={entry.weeks} userRegion={userRegion}/>
                     <p className="next-up-who">{describeWho(entry)}</p>
                     {entry.weekly && entry.mode === "relay" && (
                         <p className="next-up-who">

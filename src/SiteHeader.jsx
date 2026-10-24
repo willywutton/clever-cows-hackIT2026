@@ -17,7 +17,7 @@ function SiteHeader({ view, orgName, signedIn, name, moolah, characterHead, onLo
             <div className="site-header-inner">
                 <button className="site-logo" onClick={onLogo} disabled={!showStudentBar}>
                     <span className="site-logo-mark" aria-hidden="true"><img src={CLOVER.head} alt=""/></span>
-                    Clever Cows
+                    Moomunity
                 </button>
 
                 {showStudentBar && (

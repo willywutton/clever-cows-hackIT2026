@@ -3,9 +3,9 @@
   z-index: 1;
   flex-shrink: 0;
   padding: 7px 16px;
-  background: var(--barn);
+  background: var(--ink);
   color: #fff;
-  border: 2px solid var(--barn);
+  border: 2px solid var(--ink);
   border-radius: 999px;
   font-size: 15px;
   font-weight: 700;
@@ -13,14 +13,14 @@
 }
 
 .follow-button:hover {
-  background: #c24e37;
+  background: #4d3223;
   transform: translateY(-1px);
 }
 
 .follow-button[aria-pressed="true"] {
-  background: var(--grass-soft);
-  border-color: var(--grass);
-  color: var(--grass);
+  background: var(--hay-soft);
+  border-color: var(--hay);
+  color: var(--ink);
 }
 
 .follow-button-small {

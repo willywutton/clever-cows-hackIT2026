@@ -51,7 +51,7 @@
 .friend-profile-hours strong {
   font-family: var(--display);
   font-size: 24px;
-  color: var(--barn);
+  color: var(--ink);
 }
 
 .friend-profile-chat {

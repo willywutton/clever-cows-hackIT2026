@@ -1,0 +1,78 @@
+.week-strip {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--weeks, 4), minmax(0, 1fr));
+  gap: 4px;
+}
+
+.week-strip li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.week-strip li + li::before {
+  content: "";
+  position: absolute;
+  top: 11px;
+  right: calc(50% + 12px);
+  width: calc(100% - 20px);
+  border-top: 2px dashed var(--border);
+}
+
+.week-strip-dot {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  background: #fff;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.week-strip-going .week-strip-dot {
+  background: var(--grass);
+  border-color: var(--grass);
+}
+
+.week-strip small {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text-soft);
+  text-align: center;
+}
+
+.week-strip-going small {
+  color: var(--ink);
+}
+
+/* The "and on" end of a plan that carries on every week. */
+.week-strip-on .week-strip-dot {
+  background: transparent;
+  border-style: dashed;
+  color: var(--grass);
+}
+
+.week-strip-compact {
+  gap: 2px;
+}
+
+.week-strip-compact .week-strip-dot {
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+}
+
+.week-strip-compact li + li::before {
+  top: 8px;
+  right: calc(50% + 9px);
+  width: calc(100% - 16px);
+}
